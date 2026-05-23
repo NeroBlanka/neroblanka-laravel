@@ -1,0 +1,145 @@
+@import url("https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&family=DM+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-nero: #0a0a0a;
+  --color-blanka: #ffffff;
+  --color-perle: #e8e7e2;
+  --color-gris: #888780;
+  --color-gris-light: #b8b6b0;
+  --color-gris-dark: #555350;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--color-nero);
+  color: var(--color-perle);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+/* Grain / noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  background-repeat: repeat;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Clash Grotesk', system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+/* Text selection */
+::selection {
+  background-color: var(--color-perle);
+  color: var(--color-nero);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-nero);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gris-dark);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gris);
+}
+
+/* Scroll-driven animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.fade-in.is-visible {
+  opacity: 1;
+}
+
+/* Stagger delays for children */
+.stagger > *:nth-child(1) { transition-delay: 0ms; }
+.stagger > *:nth-child(2) { transition-delay: 80ms; }
+.stagger > *:nth-child(3) { transition-delay: 160ms; }
+.stagger > *:nth-child(4) { transition-delay: 240ms; }
+.stagger > *:nth-child(5) { transition-delay: 320ms; }
+.stagger > *:nth-child(6) { transition-delay: 400ms; }
+.stagger > *:nth-child(7) { transition-delay: 480ms; }
+
+/* Marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center font-semibold px-6 py-3 rounded-sm transition-opacity bg-white text-[#0a0a0a] hover:opacity-85;
+    font-family: 'Clash Grotesk', sans-serif;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-sm transition border border-white/20 text-[#e8e7e2] hover:border-white/60;
+    font-family: 'Clash Grotesk', sans-serif;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded transition text-[#888780] hover:text-white;
+  }
+
+  .input-base {
+    @apply w-full border border-white/10 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-white/40 transition bg-white/[0.04] text-[#e8e7e2] placeholder-[#555350];
+  }
+
+  .card {
+    @apply bg-white/[0.03] border border-white/[0.07] rounded-sm;
+  }
+
+  .label-mono {
+    @apply font-mono text-xs uppercase tracking-widest text-[#888780];
+    font-family: 'DM Mono', monospace;
+  }
+}
