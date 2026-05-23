@@ -15,7 +15,7 @@ nixPkgs = [
 [phases.install]
 cmds = [
   "composer install --no-dev --optimize-autoloader --no-interaction",
-  "npm install"
+  "rm -f package-lock.json && npm install"
 ]
 
 [phases.build]
