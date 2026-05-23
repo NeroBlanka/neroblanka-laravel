@@ -7,7 +7,9 @@ nixPkgs = [
   "php84Extensions.gd",
   "php84Extensions.bcmath",
   "php84Extensions.curl",
-  "php84Extensions.zip"
+  "php84Extensions.zip",
+  "nodejs",
+  "nodePackages.npm"
 ]
 
 [phases.install]
