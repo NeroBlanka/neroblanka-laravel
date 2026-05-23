@@ -13,33 +13,40 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::firstOrCreate(['email' => 'admin@neroblanka.com'], [
-            'full_name' => 'Admin Neroblanka',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
-        ]);
+        $adminEmail = env('ADMIN_EMAIL', 'contact@neroblanka.com');
+        $adminPassword = env('ADMIN_PASSWORD');
 
-        User::firstOrCreate(['email' => 'client1@test.com'], [
-            'full_name' => 'Client Test 1',
-            'password' => Hash::make('password'),
-            'role' => 'client',
-            'company' => 'Entreprise Alpha',
-        ]);
+        if ($adminPassword) {
+            User::withoutGlobalScopes()->firstOrCreate(['email' => $adminEmail], [
+                'full_name' => 'Nadir Allek',
+                'password' => Hash::make($adminPassword),
+                'role' => 'admin',
+            ]);
+        }
 
-        User::firstOrCreate(['email' => 'client2@test.com'], [
-            'full_name' => 'Client Test 2',
-            'password' => Hash::make('password'),
-            'role' => 'client',
-            'company' => 'Startup Beta',
-        ]);
+        if (app()->isLocal()) {
+            User::firstOrCreate(['email' => 'client1@test.com'], [
+                'full_name' => 'Client Test 1',
+                'password' => Hash::make('password'),
+                'role' => 'client',
+                'company' => 'Entreprise Alpha',
+            ]);
 
-        User::firstOrCreate(['email' => 'freelance@test.com'], [
-            'full_name' => 'Freelance Test',
-            'password' => Hash::make('password'),
-            'role' => 'freelance',
-            'specialties' => ['Branding', 'Motion Design', '3D'],
-            'is_available' => true,
-        ]);
+            User::firstOrCreate(['email' => 'client2@test.com'], [
+                'full_name' => 'Client Test 2',
+                'password' => Hash::make('password'),
+                'role' => 'client',
+                'company' => 'Startup Beta',
+            ]);
+
+            User::firstOrCreate(['email' => 'freelance@test.com'], [
+                'full_name' => 'Freelance Test',
+                'password' => Hash::make('password'),
+                'role' => 'freelance',
+                'specialties' => ['Branding', 'Motion Design', '3D'],
+                'is_available' => true,
+            ]);
+        }
 
         Service::firstOrCreate(['type' => 'identite_visuelle'], [
             'name' => 'Identité Visuelle',
