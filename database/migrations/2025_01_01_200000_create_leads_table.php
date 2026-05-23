@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('deadline_range')->nullable();
             $table->string('client_type')->nullable(); // startup, pme, event, export
             $table->string('source')->nullable(); // organic, referral, social, direct
-            $table->jsonb('utm')->nullable();
-            $table->jsonb('raw_payload')->nullable();
-            $table->jsonb('social_links')->nullable();
+            $table->json('utm')->nullable();
+            $table->json('raw_payload')->nullable();
+            $table->json('social_links')->nullable();
             $table->text('internal_notes')->nullable();
             $table->timestampsTz();
         });

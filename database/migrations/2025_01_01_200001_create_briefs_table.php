@@ -12,7 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('lead_id');
             $table->foreign('lead_id')->references('id')->on('leads')->cascadeOnDelete();
-            $table->jsonb('answers'); // réponses du wizard par étape
+            $table->json('answers'); // réponses du wizard par étape
             $table->timestampsTz();
         });
     }

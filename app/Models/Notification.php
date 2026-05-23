@@ -32,7 +32,7 @@ class Notification extends Model
     protected static function boot(): void
     {
         parent::boot();
-        static::creating(fn($m) => $m->id = Str::uuid());
+        static::creating(fn($m) => $m->id = (string) Str::uuid());
     }
 
     public function user(): BelongsTo

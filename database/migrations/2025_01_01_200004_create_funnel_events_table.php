@@ -14,8 +14,8 @@ return new class extends Migration
             $table->foreign('lead_id')->references('id')->on('leads')->nullOnDelete();
             $table->string('event'); // brief_started, step_completed, brief_submitted, page_viewed
             $table->string('session_id')->nullable();
-            $table->jsonb('metadata')->nullable();
-            $table->jsonb('utm')->nullable();
+            $table->json('metadata')->nullable();
+            $table->json('utm')->nullable();
             $table->string('ip', 45)->nullable();
             $table->timestampTz('created_at')->useCurrent();
         });

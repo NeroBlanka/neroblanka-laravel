@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 // MFA admin — routes hors du middleware mfa pour éviter la boucle
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/mfa', [Admin\MfaController::class, 'showVerify'])->name('mfa.verify');
-    Route::post('/mfa', [Admin\MfaController::class, 'verify'])->name('mfa.check');
+    Route::post('/mfa', [Admin\MfaController::class, 'verify'])->middleware('throttle:5,1')->name('mfa.check');
     Route::get('/mfa/setup', [Admin\MfaController::class, 'showSetup'])->name('mfa.setup');
     Route::post('/mfa/enable', [Admin\MfaController::class, 'enable'])->name('mfa.enable');
     Route::post('/mfa/disable', [Admin\MfaController::class, 'disable'])->name('mfa.disable');

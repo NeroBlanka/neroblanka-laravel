@@ -15,7 +15,7 @@ class AssignmentController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'project_id' => ['required', 'uuid', 'exists:projects,id'],
+            'project_id' => ['required', 'uuid'],
             'freelance_id' => ['required', 'uuid', 'exists:users,id'],
             'internal_notes' => ['nullable', 'string', 'max:2000'],
         ]);

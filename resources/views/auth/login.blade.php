@@ -43,9 +43,5 @@
             </button>
         </form>
 
-        <p class="mt-6 text-center text-sm text-[#888780]">
-            Pas encore de compte ?
-            <a href="{{ route('register') }}" class="text-[#0a0a0a] font-medium hover:underline">Créer un compte</a>
-        </p>
     </div>
 </x-guest-layout>

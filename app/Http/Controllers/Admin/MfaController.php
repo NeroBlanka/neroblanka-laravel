@@ -58,8 +58,6 @@ class MfaController extends Controller
             $user->totp_secret,
         );
 
-        $qrCode = \BaconQrCode\Renderer\ImageRenderer::class;
-
         return view('admin.mfa.setup', [
             'secret' => $user->totp_secret,
             'qrUrl' => $qrCodeUrl,

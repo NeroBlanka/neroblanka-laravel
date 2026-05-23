@@ -163,7 +163,7 @@ class LeadService
             'Ce lead a déjà été converti en projet.'
         );
 
-        return DB::transaction(function () use ($lead, $adminId) {
+        [$project, $isNew, $clientEmail] = DB::transaction(function () use ($lead, $adminId) {
             $isNew = false;
             $client = User::withoutGlobalScopes()->where('email', $lead->email)->first();
 
@@ -193,12 +193,14 @@ class LeadService
 
             $this->changeStatus($lead, LeadStatus::WON, "Converti en projet #{$project->id}", $adminId);
 
-            if ($isNew) {
-                Password::sendResetLink(['email' => $client->email]);
-            }
-
-            return $project;
+            return [$project, $isNew, $client->email];
         });
+
+        if ($isNew) {
+            Password::sendResetLink(['email' => $clientEmail]);
+        }
+
+        return $project;
     }
 
     private function sanitizeAnswers(array $answers): array
