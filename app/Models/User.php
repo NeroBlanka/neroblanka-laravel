@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Scopes\FreelanceOwnedScope;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -78,5 +80,15 @@ class User extends Authenticatable
     public function isFreelance(): bool
     {
         return $this->role === 'freelance';
+    }
+
+    public function freelanceProfile(): HasOne
+    {
+        return $this->hasOne(FreelanceProfile::class, 'user_id');
+    }
+
+    public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'freelance_skills', 'freelance_id', 'skill_id');
     }
 }

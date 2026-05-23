@@ -30,9 +30,9 @@
                                 </div>
                                 <p class="text-sm text-[#888780]">{{ $freelance->email }}</p>
 
-                                @if(!empty($freelance->specialities))
+                                @if(!empty($freelance->specialties))
                                     <div class="flex flex-wrap gap-1.5 mt-2">
-                                        @foreach((array) $freelance->specialities as $spec)
+                                        @foreach((array) $freelance->specialties as $spec)
                                             <span class="label-mono bg-[#e8e7e2] px-2 py-0.5 rounded text-[10px]">{{ $spec }}</span>
                                         @endforeach
                                     </div>

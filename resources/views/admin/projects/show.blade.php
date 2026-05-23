@@ -89,6 +89,10 @@
                         </div>
                     @endif
                 </div>
+
+                {{-- Freelance Matcher --}}
+                <livewire:admin.freelance-matcher :project-id="$project->id" />
+
             </div>
 
             {{-- Sidebar --}}
@@ -123,33 +127,6 @@
                         <h2 class="text-base font-semibold">Freelance assigné</h2>
                         <p class="text-sm text-[#555350]">{{ $assignment->freelance->full_name ?? '—' }}</p>
                         <x-status-badge :status="is_string($assignment->status) ? $assignment->status : ($assignment->status?->value ?? 'active')" />
-                    </div>
-                @endif
-
-                {{-- Assigner un freelance --}}
-                @if($availableFreelances->isNotEmpty())
-                    <div class="card p-6">
-                        <h2 class="text-base font-semibold mb-4">{{ $assignment ? 'Réassigner' : 'Assigner un freelance' }}</h2>
-                        <form method="POST" action="{{ route('admin.assignments.store') }}">
-                            @csrf
-                            <input type="hidden" name="project_id" value="{{ $project->id }}">
-                            <div class="space-y-3">
-                                <select name="freelance_id" required
-                                        class="w-full text-sm border border-black/10 rounded px-3 py-2 bg-white focus:outline-none focus:ring-1 focus:ring-black/20">
-                                    <option value="">Choisir un freelance…</option>
-                                    @foreach($availableFreelances as $freelance)
-                                        <option value="{{ $freelance->id }}">{{ $freelance->full_name }}</option>
-                                    @endforeach
-                                </select>
-                                <textarea name="internal_notes" rows="2"
-                                          class="w-full text-sm border border-black/10 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-black/20 resize-none"
-                                          placeholder="Notes internes (optionnel)"></textarea>
-                                <button type="submit"
-                                        class="w-full px-4 py-2 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors">
-                                    Assigner
-                                </button>
-                            </div>
-                        </form>
                     </div>
                 @endif
             </div>
