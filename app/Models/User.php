@@ -29,11 +29,14 @@ class User extends Authenticatable
         'company',
         'specialties',
         'is_available',
+        'totp_secret',
+        'totp_enabled',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'totp_secret',
     ];
 
     protected static function boot(): void
@@ -49,6 +52,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'specialties' => 'array',
             'is_available' => 'boolean',
+            'totp_enabled' => 'boolean',
         ];
     }
 

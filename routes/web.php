@@ -36,7 +36,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// MFA admin — routes hors du middleware mfa pour éviter la boucle
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/mfa', [Admin\MfaController::class, 'showVerify'])->name('mfa.verify');
+    Route::post('/mfa', [Admin\MfaController::class, 'verify'])->name('mfa.check');
+    Route::get('/mfa/setup', [Admin\MfaController::class, 'showSetup'])->name('mfa.setup');
+    Route::post('/mfa/enable', [Admin\MfaController::class, 'enable'])->name('mfa.enable');
+    Route::post('/mfa/disable', [Admin\MfaController::class, 'disable'])->name('mfa.disable');
+});
+
+Route::middleware(['auth', 'admin', 'admin.mfa'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/leads', [Admin\LeadController::class, 'index'])->name('leads');
     Route::get('/leads/{lead}', [Admin\LeadController::class, 'show'])->name('leads.show');
