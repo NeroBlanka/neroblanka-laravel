@@ -25,6 +25,10 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # JS build
 RUN rm -f package-lock.json && npm install && npm run build
 
+# Storage + cache dirs with correct permissions
+RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
 EXPOSE 8080
 
 CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
