@@ -30,6 +30,9 @@ class Lead extends Model
         'raw_payload',
         'social_links',
         'internal_notes',
+        'ai_summary',
+        'ai_score_adjustment',
+        'ai_analyzed_at',
     ];
 
     protected function casts(): array
@@ -41,6 +44,8 @@ class Lead extends Model
             'raw_payload' => 'array',
             'social_links' => 'array',
             'score' => 'integer',
+            'ai_score_adjustment' => 'integer',
+            'ai_analyzed_at' => 'datetime',
         ];
     }
 

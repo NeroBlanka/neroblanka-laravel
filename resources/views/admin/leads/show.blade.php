@@ -47,6 +47,26 @@
         <div class="grid grid-cols-3 gap-6 mb-8">
             <div class="col-span-2 space-y-6">
 
+                {{-- Analyse IA --}}
+                @if($lead->ai_summary)
+                    <div class="border border-black/10 rounded p-5 bg-[#fafaf9]">
+                        <div class="flex items-center justify-between mb-3">
+                            <h2 class="font-semibold text-sm uppercase tracking-wider text-gray-400">Analyse IA</h2>
+                            <span class="text-xs text-gray-300">{{ $lead->ai_analyzed_at?->format('d/m à H:i') }}</span>
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed">{{ $lead->ai_summary }}</p>
+                        @if($lead->ai_score_adjustment !== 0)
+                            <p class="text-xs mt-2 {{ $lead->ai_score_adjustment > 0 ? 'text-green-600' : 'text-red-500' }}">
+                                Ajustement score IA : {{ $lead->ai_score_adjustment > 0 ? '+' : '' }}{{ $lead->ai_score_adjustment }} pts
+                            </p>
+                        @endif
+                    </div>
+                @elseif(! $lead->ai_analyzed_at)
+                    <div class="border border-dashed border-black/10 rounded p-4 text-xs text-gray-400 text-center">
+                        Analyse IA en attente de traitement (queue:ai)
+                    </div>
+                @endif
+
                 {{-- Brief --}}
                 @if($lead->brief)
                     <div class="border border-black/10 rounded p-5">

@@ -7,11 +7,16 @@ use App\Http\Controllers\DeliverableController;
 use App\Http\Controllers\Freelance;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Public\BriefWizard;
+use App\Models\PortfolioItem;
 use Illuminate\Support\Facades\Route;
 
 // Site public
 Route::get('/', fn() => view('public.home'))->name('home');
 Route::get('/work', fn() => view('public.work'))->name('work');
+Route::get('/work/{slug}', function (string $slug) {
+    $item = PortfolioItem::published()->where('slug', $slug)->firstOrFail();
+    return view('public.work-show', compact('item'));
+})->name('work.show');
 Route::get('/services', fn() => view('public.services'))->name('services');
 Route::get('/services/{slug}', fn(string $slug) => view('public.service', ['slug' => $slug]))->name('services.show');
 Route::get('/brief', BriefWizard::class)

@@ -6,6 +6,7 @@ use App\Enums\LeadStatus;
 use App\Enums\ProjectStatus;
 use App\Enums\ServiceType;
 use App\Enums\UserRole;
+use App\Jobs\AnalyzeLeadWithAIJob;
 use App\Jobs\NotifyAdminNewLeadJob;
 use App\Jobs\SendBriefConfirmationJob;
 use App\Models\Brief;
@@ -66,6 +67,7 @@ class LeadService
 
             dispatch(new SendBriefConfirmationJob($lead))->onQueue('emails');
             dispatch(new NotifyAdminNewLeadJob($lead))->onQueue('emails');
+            dispatch(new AnalyzeLeadWithAIJob($lead))->onQueue('ai')->delay(now()->addSeconds(5));
 
             return $lead;
         });
