@@ -10,6 +10,9 @@ use App\Livewire\Public\BriefWizard;
 use App\Models\PortfolioItem;
 use Illuminate\Support\Facades\Route;
 
+// Health check
+Route::get('/up', fn() => response('', 204))->name('health');
+
 // Site public
 Route::get('/', fn() => view('public.home'))->name('home');
 Route::get('/work', fn() => view('public.work'))->name('work');
