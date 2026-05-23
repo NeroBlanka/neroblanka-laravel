@@ -20,7 +20,7 @@ class ProjectService
 
         $admin = User::withoutGlobalScopes()->where('role', 'admin')->first();
         if ($admin) {
-            SendProjectBriefReceived::dispatch($admin, $project);
+            SendProjectBriefReceived::dispatch($admin, $project)->onQueue('emails');
         }
 
         return $project;

@@ -16,7 +16,7 @@ class DeliverableService
 {
     public function submit(Assignment $assignment, UploadedFile $file, ?string $message = null): Deliverable
     {
-        return DB::transaction(function () use ($assignment, $file, $message) {
+        $deliverable = DB::transaction(function () use ($assignment, $file, $message) {
             $path = Storage::disk('s3')->put('deliverables', $file);
 
             $lastVersion = Deliverable::where('assignment_id', $assignment->id)->max('version') ?? 0;
@@ -31,41 +31,44 @@ class DeliverableService
 
             $assignment->project->update(['status' => 'submitted']);
 
-            $client = $assignment->project->client;
-            SendDeliverableSubmitted::dispatch($client, $deliverable);
-
             return $deliverable;
         });
+
+        SendDeliverableSubmitted::dispatch($assignment->project->client, $deliverable)->onQueue('emails');
+
+        return $deliverable;
     }
 
     public function approve(Deliverable $deliverable): Deliverable
     {
-        return DB::transaction(function () use ($deliverable) {
+        $locked = DB::transaction(function () use ($deliverable) {
             $locked = Deliverable::lockForUpdate()->findOrFail($deliverable->id);
             $locked->update(['approved_at' => now()]);
 
             $locked->assignment->update(['status' => 'completed']);
             $locked->assignment->project->update(['status' => 'approved']);
 
-            $freelance = $locked->assignment->freelance;
-            SendDeliverableApproved::dispatch($freelance, $locked);
-
             return $locked;
         });
+
+        SendDeliverableApproved::dispatch($locked->assignment->freelance, $locked)->onQueue('emails');
+
+        return $locked;
     }
 
     public function revision(Deliverable $deliverable, string $revisionNotes): Deliverable
     {
-        return DB::transaction(function () use ($deliverable, $revisionNotes) {
+        $locked = DB::transaction(function () use ($deliverable, $revisionNotes) {
             $locked = Deliverable::lockForUpdate()->findOrFail($deliverable->id);
             $locked->update(['revision_notes' => $revisionNotes]);
 
             $locked->assignment->project->update(['status' => 'revision']);
 
-            $freelance = $locked->assignment->freelance;
-            SendDeliverableRevision::dispatch($freelance, $locked);
-
             return $locked;
         });
+
+        SendDeliverableRevision::dispatch($locked->assignment->freelance, $locked)->onQueue('emails');
+
+        return $locked;
     }
 }

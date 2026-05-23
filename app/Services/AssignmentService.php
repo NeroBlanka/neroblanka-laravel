@@ -12,7 +12,7 @@ class AssignmentService
 {
     public function create(Project $project, User $freelance, ?string $internalNotes = null): Assignment
     {
-        return DB::transaction(function () use ($project, $freelance, $internalNotes) {
+        $assignment = DB::transaction(function () use ($project, $freelance, $internalNotes) {
             $assignment = Assignment::withoutGlobalScopes()->create([
                 'project_id' => $project->id,
                 'freelance_id' => $freelance->id,
@@ -22,9 +22,11 @@ class AssignmentService
 
             $project->update(['status' => 'assigned']);
 
-            SendAssignmentCreated::dispatch($freelance, $assignment);
-
             return $assignment;
         });
+
+        SendAssignmentCreated::dispatch($freelance, $assignment)->onQueue('emails');
+
+        return $assignment;
     }
 }
