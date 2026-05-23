@@ -34,4 +34,4 @@ RUN chmod +x /start.sh
 
 EXPOSE 8080
 
-CMD ["/start.sh"]
+CMD ["sh", "-c", "echo 'PHP:' && php -v | head -1 && echo 'APP_KEY:' && echo $APP_KEY | cut -c1-20 && echo 'DB_HOST:' && echo $DB_HOST && echo 'PORT:' && echo $PORT && php artisan migrate --force 2>&1 && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
