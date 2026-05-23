@@ -9,6 +9,9 @@
                 <span class="label-mono text-[#888780]">Admin</span>
             </div>
             <div class="flex items-center gap-1">
+                <a href="{{ route('admin.leads') }}" class="text-sm text-[#b8b6b0] hover:text-white px-3 py-1.5 rounded hover:bg-white/10 transition">
+                    Leads @if(($stats['leads_new'] ?? 0) > 0)<span class="ml-1 bg-green-500 text-white text-xs rounded-full px-1.5 py-0.5">{{ $stats['leads_new'] }}</span>@endif
+                </a>
                 <a href="{{ route('admin.freelances') }}" class="text-sm text-[#b8b6b0] hover:text-white px-3 py-1.5 rounded hover:bg-white/10 transition">
                     Freelances
                 </a>
@@ -79,7 +82,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-[#888780]">{{ $project->created_at->format('d/m/Y') }}</td>
                                     <td class="px-6 py-4">
-                                        <x-status-badge :status="$project->status" />
+                                        <x-status-badge :status="is_string($project->status) ? $project->status : $project->status?->value" />
                                     </td>
                                     <td class="px-6 py-4">
                                         <form method="POST" action="{{ route('admin.assignments.store') }}" class="flex items-center gap-2">

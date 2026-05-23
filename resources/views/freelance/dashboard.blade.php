@@ -19,12 +19,13 @@
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-3 mb-1">
                                 <p class="font-medium truncate">{{ $assignment->project->title ?? '—' }}</p>
-                                <x-status-badge :status="$assignment->status ?? 'assigned'" />
+                                <x-status-badge :status="is_string($assignment->status) ? $assignment->status : ($assignment->status?->value ?? 'active')" />
                             </div>
                             <p class="text-xs text-[#888780]">
                                 Client : {{ $assignment->project->client->full_name ?? '—' }}
-                                &middot;
-                                Assigné le {{ $assignment->created_at->format('d/m/Y') }}
+                                @if($assignment->assigned_at)
+                                    &middot; Assigné le {{ \Carbon\Carbon::parse($assignment->assigned_at)->format('d/m/Y') }}
+                                @endif
                             </p>
                         </div>
                         <a href="{{ route('freelance.deliverables.create', $assignment->id) }}"
