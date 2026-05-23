@@ -35,6 +35,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/', [Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/leads', [Admin\LeadController::class, 'index'])->name('leads');
     Route::get('/leads/{lead}', [Admin\LeadController::class, 'show'])->name('leads.show');
+    Route::post('/leads/{lead}/convert', [Admin\LeadController::class, 'convert'])->name('leads.convert');
     Route::get('/freelances', [Admin\FreelanceController::class, 'index'])->name('freelances');
     Route::post('/freelances/{user}/toggle-availability', [Admin\FreelanceController::class, 'toggleAvailability'])->name('freelances.toggle');
     Route::get('/projets/{project}', [Admin\ProjectController::class, 'show'])->name('projects.show');

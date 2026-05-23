@@ -9,9 +9,9 @@
 
         <div class="flex items-start justify-between gap-4 mb-8">
             <div>
-                <p class="label-mono mb-2">{{ $project->service_type ?? 'Projet' }}</p>
+                <p class="label-mono mb-2">{{ is_string($project->service_type) ? $project->service_type : ($project->service_type?->label() ?? 'Projet') }}</p>
                 <h1 class="text-3xl mb-3">{{ $project->title }}</h1>
-                <x-status-badge :status="$project->status" />
+                <x-status-badge :status="is_string($project->status) ? $project->status : $project->status?->value" />
             </div>
         </div>
 
@@ -66,15 +66,17 @@
                                         @endif
                                     </div>
                                     <div class="flex items-center gap-2 shrink-0">
-                                        @if($deliverable->file_url)
-                                            <a href="{{ $deliverable->file_url }}" target="_blank" class="btn-ghost text-xs px-3 py-1.5">
+                                        @if(isset($deliverableUrls[$deliverable->id]))
+                                            <a href="{{ $deliverableUrls[$deliverable->id] }}" target="_blank" rel="noopener"
+                                               class="btn-ghost text-xs px-3 py-1.5">
                                                 Télécharger
                                             </a>
                                         @endif
                                     </div>
                                 </div>
 
-                                @if($project->status === 'submitted')
+                                @php $statusValue = is_string($project->status) ? $project->status : $project->status?->value; @endphp
+                                @if($statusValue === 'submitted')
                                     <div class="mt-4 flex items-start gap-3">
                                         <form method="POST" action="{{ route('client.projects.approve', $project->id) }}">
                                             @csrf

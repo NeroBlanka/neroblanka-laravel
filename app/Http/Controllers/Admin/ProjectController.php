@@ -14,14 +14,22 @@ class ProjectController extends Controller
         $project->load([
             'client',
             'assignments.freelance',
-            'assignments.deliverables',
+            'assignments.deliverables' => fn($q) => $q->orderByDesc('version'),
         ]);
 
-        $availableFreelances = User::where('role', 'freelance')
+        $deliverables = $project->assignments
+            ->flatMap(fn($a) => $a->deliverables)
+            ->sortByDesc('version')
+            ->values();
+
+        $assignment = $project->assignments->sortByDesc('created_at')->first();
+
+        $availableFreelances = User::withoutGlobalScopes()
+            ->where('role', 'freelance')
             ->where('is_available', true)
             ->orderBy('full_name')
             ->get();
 
-        return view('admin.projects.show', compact('project', 'availableFreelances'));
+        return view('admin.projects.show', compact('project', 'deliverables', 'assignment', 'availableFreelances'));
     }
 }

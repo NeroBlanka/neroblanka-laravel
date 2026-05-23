@@ -55,6 +55,11 @@ class Lead extends Model
         return $this->hasOne(Brief::class);
     }
 
+    public function project(): HasOne
+    {
+        return $this->hasOne(Project::class);
+    }
+
     public function files(): HasMany
     {
         return $this->hasMany(LeadFile::class);

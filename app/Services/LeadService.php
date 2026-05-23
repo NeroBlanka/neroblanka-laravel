@@ -3,14 +3,20 @@
 namespace App\Services;
 
 use App\Enums\LeadStatus;
+use App\Enums\ProjectStatus;
 use App\Enums\ServiceType;
+use App\Enums\UserRole;
 use App\Jobs\NotifyAdminNewLeadJob;
 use App\Jobs\SendBriefConfirmationJob;
 use App\Models\Brief;
 use App\Models\Lead;
 use App\Models\LeadEvent;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class LeadService
 {
@@ -139,6 +145,58 @@ class LeadService
         }
 
         return min(100, $score);
+    }
+
+    /**
+     * Convertit un lead qualifié en projet client.
+     * Crée l'utilisateur client si inexistant, puis crée le projet.
+     * Envoie un email de réinitialisation de mot de passe si l'utilisateur est nouveau.
+     */
+    public function convertToProject(Lead $lead, string $adminId): Project
+    {
+        abort_unless($lead->status === LeadStatus::QUALIFIED, 422, 'Seul un lead qualifié peut être converti.');
+        abort_if(
+            Project::withoutGlobalScopes()->where('lead_id', $lead->id)->exists(),
+            422,
+            'Ce lead a déjà été converti en projet.'
+        );
+
+        return DB::transaction(function () use ($lead, $adminId) {
+            $isNew = false;
+            $client = User::withoutGlobalScopes()->where('email', $lead->email)->first();
+
+            if (! $client) {
+                $isNew = true;
+                $client = User::withoutGlobalScopes()->create([
+                    'full_name' => $lead->full_name,
+                    'email' => $lead->email,
+                    'password' => bcrypt(Str::random(32)),
+                    'role' => UserRole::CLIENT->value,
+                    'email_verified_at' => now(),
+                ]);
+            }
+
+            $answers = $lead->brief?->answers ?? [];
+            $description = $answers['project_description'] ?? $lead->service_type->label();
+
+            $project = Project::withoutGlobalScopes()->create([
+                'lead_id' => $lead->id,
+                'client_id' => $client->id,
+                'title' => $lead->full_name . ' — ' . $lead->service_type->label(),
+                'description' => strip_tags($description),
+                'service_type' => $lead->service_type->value,
+                'status' => ProjectStatus::DRAFT->value,
+                'notes' => $lead->company ? 'Entreprise : ' . $lead->company : null,
+            ]);
+
+            $this->changeStatus($lead, LeadStatus::WON, "Converti en projet #{$project->id}", $adminId);
+
+            if ($isNew) {
+                Password::sendResetLink(['email' => $client->email]);
+            }
+
+            return $project;
+        });
     }
 
     private function sanitizeAnswers(array $answers): array

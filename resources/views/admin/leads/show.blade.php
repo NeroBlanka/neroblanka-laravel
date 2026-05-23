@@ -3,6 +3,12 @@
 
     <div class="max-w-4xl mx-auto px-6 py-8">
 
+        @if(session('success'))
+            <div class="mb-6 bg-green-50 border border-green-200 text-green-800 text-sm px-4 py-3 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="flex items-start justify-between mb-8">
             <div>
                 <a href="{{ route('admin.leads') }}" class="text-sm text-gray-400 hover:text-gray-700 mb-3 inline-block">← Lead Inbox</a>
@@ -13,10 +19,29 @@
                     <p class="text-gray-500 text-sm mt-1">{{ $lead->company }}</p>
                 @endif
             </div>
-            <span class="inline-block px-3 py-1.5 text-sm font-semibold rounded text-white
-                {{ $lead->isHot() ? 'bg-green-600' : ($lead->isWarm() ? 'bg-yellow-500' : 'bg-red-500') }}">
-                Score {{ $lead->score }}/100
-            </span>
+            <div class="flex items-center gap-3">
+                <span class="inline-block px-3 py-1.5 text-sm font-semibold rounded text-white
+                    {{ $lead->isHot() ? 'bg-green-600' : ($lead->isWarm() ? 'bg-yellow-500' : 'bg-red-500') }}">
+                    Score {{ $lead->score }}/100
+                </span>
+
+                @if($lead->status === \App\Enums\LeadStatus::QUALIFIED && ! $lead->project)
+                    <form method="POST" action="{{ route('admin.leads.convert', $lead) }}"
+                          onsubmit="return confirm('Convertir ce lead en projet client ?')">
+                        @csrf
+                        <button type="submit"
+                                class="px-4 py-2 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors"
+                                style="font-family: 'Clash Grotesk', sans-serif;">
+                            → Convertir en projet
+                        </button>
+                    </form>
+                @elseif($lead->project)
+                    <a href="{{ route('admin.projects.show', $lead->project) }}"
+                       class="px-4 py-2 border border-black/20 text-[#0a0a0a] text-sm font-medium rounded-sm hover:border-black/50 transition-colors">
+                        Voir le projet →
+                    </a>
+                @endif
+            </div>
         </div>
 
         <div class="grid grid-cols-3 gap-6 mb-8">

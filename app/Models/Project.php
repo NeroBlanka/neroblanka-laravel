@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProjectStatus;
 use App\Scopes\ClientOwnedScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,7 @@ class Project extends Model
     public $incrementing = false;
 
     protected $fillable = [
+        'lead_id',
         'client_id',
         'title',
         'description',
@@ -30,6 +32,7 @@ class Project extends Model
     {
         return [
             'deadline' => 'date',
+            'status' => ProjectStatus::class,
         ];
     }
 
@@ -48,6 +51,11 @@ class Project extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(User::class, 'client_id');
+    }
+
+    public function lead(): BelongsTo
+    {
+        return $this->belongsTo(Lead::class);
     }
 
     public function assignments(): HasMany

@@ -20,20 +20,21 @@ class ProjectController extends Controller
 
         $project->load([
             'assignments.freelance',
-            'assignments.deliverables',
+            'assignments.deliverables' => fn($q) => $q->orderByDesc('version'),
         ]);
 
-        $deliverableUrls = [];
-        foreach ($project->assignments as $assignment) {
-            foreach ($assignment->deliverables as $deliverable) {
-                $deliverableUrls[$deliverable->id] = Storage::disk('s3')->temporaryUrl(
-                    $deliverable->file_url,
-                    now()->addMinutes(30),
-                );
-            }
-        }
+        $deliverables = $project->assignments
+            ->flatMap(fn($a) => $a->deliverables)
+            ->sortByDesc('version')
+            ->values();
 
-        return view('client.projects.show', compact('project', 'deliverableUrls'));
+        $deliverableUrls = $deliverables
+            ->filter(fn($d) => $d->file_url)
+            ->mapWithKeys(fn($d) => [
+                $d->id => Storage::disk('r2')->temporaryUrl($d->file_url, now()->addMinutes(30)),
+            ]);
+
+        return view('client.projects.show', compact('project', 'deliverables', 'deliverableUrls'));
     }
 
     public function approve(Project $project): RedirectResponse
