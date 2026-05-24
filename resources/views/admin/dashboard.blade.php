@@ -15,6 +15,9 @@
                 <a href="{{ route('admin.freelances') }}" class="text-sm text-[#b8b6b0] hover:text-white px-3 py-1.5 rounded hover:bg-white/10 transition">
                     Freelances
                 </a>
+                <a href="{{ route('admin.portfolio.index') }}" class="text-sm text-[#b8b6b0] hover:text-white px-3 py-1.5 rounded hover:bg-white/10 transition">
+                    Portfolio
+                </a>
                 <a href="{{ route('admin.mfa.setup') }}" class="text-sm text-[#b8b6b0] hover:text-white px-3 py-1.5 rounded hover:bg-white/10 transition flex items-center gap-1.5">
                     <span class="{{ auth()->user()->totp_enabled ? 'text-green-400' : 'text-yellow-400' }}">●</span> MFA
                 </a>

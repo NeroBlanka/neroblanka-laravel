@@ -59,6 +59,14 @@ Route::middleware(['auth', 'admin', 'admin.mfa'])->prefix('admin')->name('admin.
     Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
     Route::post('/deliverables/{deliverable}/approve', [DeliverableController::class, 'approve'])->name('deliverables.approve');
     Route::post('/deliverables/{deliverable}/revision', [DeliverableController::class, 'revision'])->name('deliverables.revision');
+
+    Route::get('/portfolio', [Admin\PortfolioController::class, 'index'])->name('portfolio.index');
+    Route::get('/portfolio/create', [Admin\PortfolioController::class, 'create'])->name('portfolio.create');
+    Route::post('/portfolio', [Admin\PortfolioController::class, 'store'])->name('portfolio.store');
+    Route::get('/portfolio/{portfolio}/edit', [Admin\PortfolioController::class, 'edit'])->name('portfolio.edit');
+    Route::put('/portfolio/{portfolio}', [Admin\PortfolioController::class, 'update'])->name('portfolio.update');
+    Route::delete('/portfolio/{portfolio}', [Admin\PortfolioController::class, 'destroy'])->name('portfolio.destroy');
+    Route::post('/portfolio/{portfolio}/toggle-published', [Admin\PortfolioController::class, 'togglePublished'])->name('portfolio.toggle-published');
 });
 
 Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(function () {
