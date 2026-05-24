@@ -5,7 +5,7 @@
         <div class="w-full max-w-sm">
 
             <div class="text-center mb-8">
-                <p class="font-semibold text-[#0a0a0a] text-xl mb-1" style="font-family: 'Clash Grotesk', sans-serif;">Neroblanka</p>
+                <p class="font-semibold text-[#0a0a0a] text-xl mb-1">Neroblanka</p>
                 <p class="text-sm text-[#888780]">Authentification à deux facteurs</p>
             </div>
 
@@ -25,8 +25,7 @@
                         @enderror
                     </div>
                     <button type="submit"
-                            class="w-full py-2.5 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors"
-                            style="font-family: 'Clash Grotesk', sans-serif;">
+                            class="w-full py-2.5 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors">
                         Vérifier
                     </button>
                 </form>

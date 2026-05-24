@@ -3,7 +3,7 @@
         <div class="max-w-6xl mx-auto">
 
             <p class="label-mono mb-6 fade-in">Expertise</p>
-            <h1 class="text-4xl md:text-5xl font-semibold text-white mb-4 fade-up" style="font-family: 'Clash Grotesk', sans-serif;">
+            <h1 class="text-4xl md:text-5xl font-semibold text-white mb-4 fade-up">
                 7 pôles de création
             </h1>
             <p class="text-[#888780] text-base mb-16 max-w-xl fade-up" style="transition-delay: 60ms;">
@@ -64,8 +64,7 @@
 
                                 {{-- Label + short desc --}}
                                 <div class="flex-1 min-w-0">
-                                    <h2 class="text-white text-base md:text-lg font-semibold group-hover:text-[#e8e7e2] transition-colors"
-                                        style="font-family: 'Clash Grotesk', sans-serif;">
+                                    <h2 class="text-white text-base md:text-lg font-semibold group-hover:text-[#e8e7e2] transition-colors">
                                         {{ $service->label() }}
                                     </h2>
                                     <p class="text-[#555350] text-sm mt-0.5 group-hover:text-[#888780] transition-colors">
@@ -106,7 +105,7 @@
             {{-- Bottom CTA --}}
             <div class="mt-20 border border-white/[0.06] rounded-sm p-10 md:p-14 text-center fade-up">
                 <p class="label-mono mb-4">Votre besoin ne rentre pas dans une case ?</p>
-                <h2 class="text-2xl md:text-3xl font-semibold text-white mb-6" style="font-family: 'Clash Grotesk', sans-serif;">
+                <h2 class="text-2xl md:text-3xl font-semibold text-white mb-6">
                     Parlez-nous de votre projet.
                 </h2>
                 <a href="/brief" class="btn-primary px-7 py-4">

@@ -34,7 +34,7 @@
         style="background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);">
 
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="/" class="text-white font-semibold text-lg tracking-tight" style="font-family: 'Clash Grotesk', sans-serif;">
+            <a href="/" class="font-clash text-white font-semibold text-lg tracking-tight">
                 Neroblanka
             </a>
 
@@ -42,7 +42,7 @@
             <nav class="hidden md:flex items-center gap-6 text-sm text-[#888780]">
                 <a href="/work" class="hover:text-white transition-colors">Travaux</a>
                 <a href="/services" class="hover:text-white transition-colors">Services</a>
-                <a href="/brief" class="ml-4 px-4 py-2 bg-white text-[#0a0a0a] text-sm font-medium rounded-sm hover:bg-[#e8e7e2] transition-colors" style="font-family: 'Clash Grotesk', sans-serif;">
+                <a href="/brief" class="ml-4 px-4 py-2 bg-white text-[#0a0a0a] text-sm font-medium rounded-sm hover:bg-[#e8e7e2] transition-colors">
                     Diagnostic créatif
                 </a>
             </nav>
@@ -77,8 +77,7 @@
             <a href="/work" @click="open = false" class="hover:text-white transition-colors py-1">Travaux</a>
             <a href="/services" @click="open = false" class="hover:text-white transition-colors py-1">Services</a>
             <a href="/brief" @click="open = false"
-               class="mt-2 px-5 py-3 bg-white text-[#0a0a0a] text-sm font-medium rounded-sm hover:bg-[#e8e7e2] transition-colors text-center"
-               style="font-family: 'Clash Grotesk', sans-serif;">
+               class="mt-2 px-5 py-3 bg-white text-[#0a0a0a] text-sm font-medium rounded-sm hover:bg-[#e8e7e2] transition-colors text-center">
                 Diagnostic créatif
             </a>
         </div>
@@ -88,7 +87,7 @@
 
     <footer class="border-t border-white/[0.08] mt-32 py-12">
         <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm text-[#888780]">
-            <span class="text-white font-semibold" style="font-family: 'Clash Grotesk', sans-serif;">Neroblanka</span>
+            <span class="text-white font-semibold">Neroblanka</span>
             <span>Du contraste naît la clarté.</span>
             <div class="flex items-center gap-6">
                 <a href="/services" class="hover:text-white transition-colors">Services</a>

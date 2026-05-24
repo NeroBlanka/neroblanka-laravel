@@ -12,7 +12,7 @@
         <div class="flex items-start justify-between mb-8">
             <div>
                 <a href="{{ route('admin.leads') }}" class="text-sm text-gray-400 hover:text-gray-700 mb-3 inline-block">← Lead Inbox</a>
-                <h1 class="text-2xl font-semibold text-[#0a0a0a]" style="font-family: 'Clash Grotesk', sans-serif;">
+                <h1 class="text-2xl font-semibold text-[#0a0a0a]">
                     {{ $lead->full_name }}
                 </h1>
                 @if($lead->company)
@@ -30,8 +30,7 @@
                           onsubmit="return confirm('Convertir ce lead en projet client ?')">
                         @csrf
                         <button type="submit"
-                                class="px-4 py-2 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors"
-                                style="font-family: 'Clash Grotesk', sans-serif;">
+                                class="px-4 py-2 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors">
                             → Convertir en projet
                         </button>
                     </form>

@@ -101,7 +101,7 @@ $service = $services[$slug] ?? null;
 @if(! $service)
     <x-slot:title>Service introuvable — Neroblanka</x-slot:title>
     <section class="pt-32 pb-24 text-center">
-        <h1 class="text-4xl font-semibold" style="font-family:'Clash Grotesk',sans-serif;">404</h1>
+        <h1 class="text-4xl font-semibold">404</h1>
         <p class="text-[#888780] mt-4">Ce service n'existe pas.</p>
         <a href="/services" class="mt-8 inline-block underline text-sm">Voir tous les services</a>
     </section>
@@ -112,10 +112,10 @@ $service = $services[$slug] ?? null;
     {{-- Hero --}}
     <section class="pt-32 pb-20 border-b border-white/[0.06]">
         <div class="max-w-4xl mx-auto px-6">
-            <p class="text-[#888780] text-sm uppercase tracking-widest mb-4" style="font-family:'Clash Grotesk',sans-serif;">
+            <p class="text-[#888780] text-sm uppercase tracking-widest mb-4">
                 {{ $service['enum']->icon() }} {{ $service['enum']->label() }}
             </p>
-            <h1 class="text-5xl md:text-6xl font-semibold text-white leading-tight mb-6" style="font-family:'Clash Grotesk',sans-serif;">
+            <h1 class="text-5xl md:text-6xl font-semibold text-white leading-tight mb-6">
                 {{ $service['tagline'] }}
             </h1>
             <p class="text-[#888780] text-lg max-w-2xl leading-relaxed">
@@ -123,8 +123,7 @@ $service = $services[$slug] ?? null;
             </p>
             <div class="flex flex-wrap gap-4 mt-10">
                 <a href="/brief"
-                   class="px-6 py-3 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors"
-                   style="font-family:'Clash Grotesk',sans-serif;">
+                   class="px-6 py-3 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors">
                     Demander un diagnostic
                 </a>
                 <a href="/services" class="px-6 py-3 border border-white/20 text-[#888780] text-sm rounded-sm hover:border-white/40 hover:text-white transition-colors">
@@ -140,7 +139,7 @@ $service = $services[$slug] ?? null;
 
             {{-- Livrables --}}
             <div class="md:col-span-2">
-                <h2 class="text-sm uppercase tracking-widest text-[#888780] mb-6" style="font-family:'Clash Grotesk',sans-serif;">Ce que vous recevez</h2>
+                <h2 class="text-sm uppercase tracking-widest text-[#888780] mb-6">Ce que vous recevez</h2>
                 <ul class="space-y-3">
                     @foreach($service['deliverables'] as $item)
                         <li class="flex items-start gap-3 text-[#e8e7e2]">
@@ -150,7 +149,7 @@ $service = $services[$slug] ?? null;
                     @endforeach
                 </ul>
 
-                <h2 class="text-sm uppercase tracking-widest text-[#888780] mt-12 mb-6" style="font-family:'Clash Grotesk',sans-serif;">Fait pour vous si</h2>
+                <h2 class="text-sm uppercase tracking-widest text-[#888780] mt-12 mb-6">Fait pour vous si</h2>
                 <ul class="space-y-2">
                     @foreach($service['for'] as $who)
                         <li class="text-[#888780] text-sm flex items-center gap-2">
@@ -169,11 +168,10 @@ $service = $services[$slug] ?? null;
                 </div>
                 <div class="border border-white/[0.08] rounded p-6">
                     <p class="text-xs uppercase tracking-widest text-[#888780] mb-1">À partir de</p>
-                    <p class="text-white font-medium text-xl" style="font-family:'Clash Grotesk',sans-serif;">{{ $service['starting'] }}</p>
+                    <p class="text-white font-medium text-xl">{{ $service['starting'] }}</p>
                 </div>
                 <a href="/brief"
-                   class="block w-full text-center px-5 py-3 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors"
-                   style="font-family:'Clash Grotesk',sans-serif;">
+                   class="block w-full text-center px-5 py-3 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors">
                     Démarrer ce projet →
                 </a>
             </div>
@@ -184,16 +182,15 @@ $service = $services[$slug] ?? null;
     {{-- CTA bas de page --}}
     <section class="border-t border-white/[0.06] py-20">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <p class="text-[#888780] text-sm uppercase tracking-widest mb-4" style="font-family:'Clash Grotesk',sans-serif;">Prochaine étape</p>
-            <h2 class="text-3xl md:text-4xl font-semibold text-white mb-6" style="font-family:'Clash Grotesk',sans-serif;">
+            <p class="text-[#888780] text-sm uppercase tracking-widest mb-4">Prochaine étape</p>
+            <h2 class="text-3xl md:text-4xl font-semibold text-white mb-6">
                 Du contraste naît la clarté.
             </h2>
             <p class="text-[#888780] max-w-lg mx-auto mb-8">
                 Partagez votre projet en 3 minutes. Nous revenons vers vous sous 48h avec une vision claire et un plan d'action.
             </p>
             <a href="/brief"
-               class="inline-block px-8 py-4 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors"
-               style="font-family:'Clash Grotesk',sans-serif;">
+               class="inline-block px-8 py-4 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors">
                 Demander un diagnostic créatif
             </a>
         </div>

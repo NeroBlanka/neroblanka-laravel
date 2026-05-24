@@ -33,7 +33,7 @@
     <header class="border-b border-black/[0.08] bg-white sticky top-0 z-40">
         <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
             <a href="{{ auth()->check() ? route(auth()->user()->role . '.dashboard') : '/' }}"
-               class="font-semibold text-lg tracking-tight text-[#0a0a0a]" style="font-family: 'Clash Grotesk', system-ui, sans-serif;">
+               class="font-clash font-semibold text-lg tracking-tight text-[#0a0a0a]">
                 Neroblanka
             </a>
 

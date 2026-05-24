@@ -7,8 +7,7 @@
 
                 <p class="label-mono mb-8 fade-in">Studio créatif · Alger</p>
 
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-semibold leading-[1.02] tracking-tight text-white mb-8 fade-up"
-                    style="font-family: 'Clash Grotesk', sans-serif;">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-semibold leading-[1.02] tracking-tight text-white mb-8 fade-up">
                     Du contraste<br>naît la clarté.
                 </h1>
 
@@ -45,7 +44,7 @@
             <div class="flex items-end justify-between mb-16 fade-up">
                 <div>
                     <p class="label-mono mb-3">Expertise</p>
-                    <h2 class="text-3xl md:text-4xl font-semibold text-white" style="font-family: 'Clash Grotesk', sans-serif;">
+                    <h2 class="text-3xl md:text-4xl font-semibold text-white">
                         7 pôles d'expertise
                     </h2>
                 </div>
@@ -72,7 +71,7 @@
                             class="group p-8 bg-[#0a0a0a] hover:bg-white/[0.03] transition-all duration-300 flex flex-col gap-4 fade-up">
                             <span class="text-2xl transition-transform duration-300 group-hover:scale-110 inline-block" aria-hidden="true">{{ $service->icon() }}</span>
                             <div class="flex-1">
-                                <h3 class="text-sm font-medium text-white mb-2" style="font-family: 'Clash Grotesk', sans-serif;">
+                                <h3 class="text-sm font-medium text-white mb-2">
                                     {{ $service->label() }}
                                 </h3>
                                 <p class="text-xs text-[#555350] leading-relaxed group-hover:text-[#888780] transition-colors duration-300">
@@ -101,7 +100,7 @@
             <div class="flex items-end justify-between mb-16 fade-up">
                 <div>
                     <p class="label-mono mb-3">Portfolio</p>
-                    <h2 class="text-3xl md:text-4xl font-semibold text-white" style="font-family: 'Clash Grotesk', sans-serif;">
+                    <h2 class="text-3xl md:text-4xl font-semibold text-white">
                         Quelques projets
                     </h2>
                 </div>
@@ -146,7 +145,7 @@
                                 <span class="text-4xl opacity-30 transition-transform duration-500 group-hover:scale-125">{{ $icon }}</span>
                                 {{-- Hover overlay --}}
                                 <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-                                    <span class="text-white text-sm font-medium" style="font-family: 'Clash Grotesk', sans-serif;">
+                                    <span class="text-white text-sm font-medium">
                                         Voir le projet →
                                     </span>
                                 </div>
@@ -156,7 +155,7 @@
                                 <p class="text-xs text-[#555350] uppercase tracking-wider mb-2">
                                     {{ $item->client_name }} · {{ $item->published_at->format('Y') }}
                                 </p>
-                                <h3 class="text-white text-sm font-medium" style="font-family: 'Clash Grotesk', sans-serif;">
+                                <h3 class="text-white text-sm font-medium">
                                     {{ $item->title }}
                                 </h3>
                             </div>
@@ -177,8 +176,7 @@
         <div class="max-w-6xl mx-auto px-6">
             <div class="max-w-3xl">
                 <p class="label-mono mb-8 fade-in">Pourquoi Neroblanka</p>
-                <p class="text-3xl md:text-4xl lg:text-5xl font-semibold text-white leading-[1.15] tracking-tight fade-up"
-                   style="font-family: 'Clash Grotesk', sans-serif;">
+                <p class="text-3xl md:text-4xl lg:text-5xl font-semibold text-white leading-[1.15] tracking-tight fade-up">
                     La médiocrité coûte plus cher que l'excellence.
                 </p>
                 <p class="mt-8 text-lg text-[#888780] max-w-xl leading-relaxed fade-up" style="transition-delay: 80ms;">
@@ -196,8 +194,7 @@
     <section class="py-32">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <p class="label-mono mb-6 fade-in">Votre projet</p>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-[1.1] tracking-tight mb-8 fade-up"
-                style="font-family: 'Clash Grotesk', sans-serif;">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-[1.1] tracking-tight mb-8 fade-up">
                 Votre projet mérite mieux<br class="hidden md:block"> que l'ordinaire.
             </h2>
             <p class="text-[#888780] text-lg mb-12 max-w-lg mx-auto fade-up" style="transition-delay: 80ms;">
@@ -228,8 +225,7 @@
             }
         ">
         <a href="/brief"
-            class="px-5 py-3 bg-white text-[#0a0a0a] text-sm font-medium rounded-sm shadow-2xl hover:bg-[#e8e7e2] transition-colors"
-            style="font-family: 'Clash Grotesk', sans-serif;">
+            class="px-5 py-3 bg-white text-[#0a0a0a] text-sm font-medium rounded-sm shadow-2xl hover:bg-[#e8e7e2] transition-colors">
             Diagnostic créatif →
         </a>
     </div>

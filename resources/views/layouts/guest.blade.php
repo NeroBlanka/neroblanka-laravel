@@ -15,7 +15,7 @@
 <body class="min-h-screen bg-[#e8e7e2] flex flex-col items-center justify-center px-4">
 
     <div class="mb-8">
-        <a href="/" class="font-semibold text-2xl tracking-tight text-[#0a0a0a]" style="font-family: 'Clash Grotesk', system-ui, sans-serif;">
+        <a href="/" class="font-clash font-semibold text-2xl tracking-tight text-[#0a0a0a]">
             Neroblanka
         </a>
     </div>

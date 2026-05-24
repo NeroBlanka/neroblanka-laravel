@@ -3,7 +3,7 @@
 
     <div class="max-w-lg mx-auto px-6 py-16">
 
-        <h1 class="text-2xl font-semibold text-[#0a0a0a] mb-2" style="font-family: 'Clash Grotesk', sans-serif;">
+        <h1 class="text-2xl font-semibold text-[#0a0a0a] mb-2">
             Configurer l'authentification 2FA
         </h1>
         <p class="text-sm text-[#888780] mb-8">
@@ -43,8 +43,7 @@
                            class="flex-1 text-center text-xl tracking-[0.4em] border border-black/20 rounded px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-black/30 font-mono"
                            placeholder="000000">
                     <button type="submit"
-                            class="px-5 py-2.5 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors whitespace-nowrap"
-                            style="font-family: 'Clash Grotesk', sans-serif;">
+                            class="px-5 py-2.5 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors whitespace-nowrap">
                         Activer le MFA
                     </button>
                 </div>

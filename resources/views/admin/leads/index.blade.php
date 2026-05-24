@@ -3,7 +3,7 @@
 
     <div class="max-w-7xl mx-auto px-6 py-8">
         <div class="flex items-center justify-between mb-8">
-            <h1 class="text-2xl font-semibold text-[#0a0a0a]" style="font-family: 'Clash Grotesk', sans-serif;">
+            <h1 class="text-2xl font-semibold text-[#0a0a0a]">
                 Lead Inbox
             </h1>
         </div>

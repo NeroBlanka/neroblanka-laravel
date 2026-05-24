@@ -34,19 +34,19 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
             <div class="card p-6">
                 <p class="label-mono mb-2">Total projets</p>
-                <p class="text-3xl font-semibold" style="font-family: 'Clash Grotesk', system-ui, sans-serif;">{{ $stats['total'] ?? 0 }}</p>
+                <p class="text-3xl font-semibold">{{ $stats['total'] ?? 0 }}</p>
             </div>
             <div class="card p-6">
                 <p class="label-mono mb-2">En attente</p>
-                <p class="text-3xl font-semibold" style="font-family: 'Clash Grotesk', system-ui, sans-serif;">{{ $stats['pending'] ?? 0 }}</p>
+                <p class="text-3xl font-semibold">{{ $stats['pending'] ?? 0 }}</p>
             </div>
             <div class="card p-6">
                 <p class="label-mono mb-2">Freelances actifs</p>
-                <p class="text-3xl font-semibold" style="font-family: 'Clash Grotesk', system-ui, sans-serif;">{{ $stats['active_freelances'] ?? 0 }}</p>
+                <p class="text-3xl font-semibold">{{ $stats['active_freelances'] ?? 0 }}</p>
             </div>
             <div class="card p-6">
                 <p class="label-mono mb-2">Terminés ce mois</p>
-                <p class="text-3xl font-semibold" style="font-family: 'Clash Grotesk', system-ui, sans-serif;">{{ $stats['completed_month'] ?? 0 }}</p>
+                <p class="text-3xl font-semibold">{{ $stats['completed_month'] ?? 0 }}</p>
             </div>
         </div>
 

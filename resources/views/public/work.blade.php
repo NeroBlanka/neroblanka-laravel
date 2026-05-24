@@ -3,7 +3,7 @@
         <div class="max-w-6xl mx-auto">
 
             <p class="label-mono mb-6 fade-in">Portfolio</p>
-            <h1 class="text-4xl md:text-5xl font-semibold text-white mb-4 fade-up" style="font-family: 'Clash Grotesk', sans-serif;">
+            <h1 class="text-4xl md:text-5xl font-semibold text-white mb-4 fade-up">
                 Travaux sélectionnés
             </h1>
             <p class="text-[#888780] text-base mb-12 fade-up" style="transition-delay: 60ms;">
@@ -85,7 +85,7 @@
                                     {{-- Hover reveal overlay --}}
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                                         <div class="flex items-center justify-between w-full">
-                                            <span class="text-white font-medium text-sm" style="font-family: 'Clash Grotesk', sans-serif;">
+                                            <span class="text-white font-medium text-sm">
                                                 {{ $item->title }}
                                             </span>
                                             <span class="text-white text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -99,7 +99,7 @@
                                         <p class="text-xs text-[#555350] uppercase tracking-wider mb-1.5">
                                             {{ $item->client_name }} · {{ $item->published_at->format('Y') }}
                                         </p>
-                                        <h2 class="text-white text-sm font-medium group-hover:text-[#e8e7e2] transition-colors" style="font-family: 'Clash Grotesk', sans-serif;">
+                                        <h2 class="text-white text-sm font-medium group-hover:text-[#e8e7e2] transition-colors">
                                             {{ $item->title }}
                                         </h2>
                                         @if($item->excerpt)
@@ -152,7 +152,7 @@
                                 </span>
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                                     <div class="flex items-center justify-between w-full">
-                                        <span class="text-white font-medium text-sm" style="font-family: 'Clash Grotesk', sans-serif;">{{ $item->title }}</span>
+                                        <span class="text-white font-medium text-sm">{{ $item->title }}</span>
                                         <span class="text-white">→</span>
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                                     <p class="text-xs text-[#555350] uppercase tracking-wider mb-1.5">
                                         {{ $item->client_name }} · {{ $item->published_at->format('Y') }}
                                     </p>
-                                    <h2 class="text-white text-sm font-medium" style="font-family: 'Clash Grotesk', sans-serif;">{{ $item->title }}</h2>
+                                    <h2 class="text-white text-sm font-medium">{{ $item->title }}</h2>
                                     @if($item->excerpt)
                                         <p class="text-[#888780] text-xs mt-1.5 leading-relaxed">{{ $item->excerpt }}</p>
                                     @endif
