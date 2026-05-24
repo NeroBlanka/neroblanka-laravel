@@ -9,8 +9,8 @@
 
         {{-- Header étape --}}
         <div class="mb-10">
-            <p class="text-[#888780] text-xs font-mono tracking-widest uppercase mb-3">Étape {{ $step }} / {{ $totalSteps }}</p>
-            <h1 class="text-2xl font-semibold text-white" style="font-family: 'Clash Grotesk', sans-serif;">
+            <p class="label-mono mb-3">Étape {{ $step }} / {{ $totalSteps }}</p>
+            <h1 class="text-2xl font-semibold text-white">
                 @switch($step)
                     @case(1) Quel est votre besoin ? @break
                     @case(2) Qui êtes-vous ? @break
@@ -231,8 +231,7 @@
                 @endif
 
                 <button type="submit"
-                    class="px-6 py-3 bg-white text-[#0a0a0a] text-sm font-medium rounded-sm hover:bg-[#e8e7e2] transition-colors disabled:opacity-40"
-                    style="font-family: 'Clash Grotesk', sans-serif;"
+                    class="btn-primary disabled:opacity-40"
                     wire:loading.attr="disabled">
                     <span wire:loading.remove>
                         {{ $step === $totalSteps ? 'Envoyer mon diagnostic' : 'Continuer →' }}
