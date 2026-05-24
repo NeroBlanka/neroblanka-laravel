@@ -44,9 +44,8 @@
         </div>
 
         {{-- Upload form --}}
-        <form method="POST" action="{{ route('freelance.deliverables.store') }}" enctype="multipart/form-data" class="space-y-6">
+        <form method="POST" action="{{ route('freelance.deliverables.store', $assignment) }}" enctype="multipart/form-data" class="space-y-6">
             @csrf
-            <input type="hidden" name="assignment_id" value="{{ $assignment->id }}" />
 
             <div class="card p-6 space-y-5">
                 <h2 class="text-base font-semibold">Nouveau livrable</h2>
@@ -101,8 +100,8 @@
                             </div>
                             <div class="flex items-center gap-3 shrink-0">
                                 <x-status-badge :status="$deliverable->status ?? 'submitted'" />
-                                @if($deliverable->file_url)
-                                    <a href="{{ $deliverable->file_url }}" target="_blank"
+                                @if(isset($deliverableUrls[$deliverable->id]))
+                                    <a href="{{ $deliverableUrls[$deliverable->id] }}" target="_blank"
                                        class="btn-ghost text-xs px-3 py-1.5">
                                         Télécharger
                                     </a>

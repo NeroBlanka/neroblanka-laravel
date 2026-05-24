@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
@@ -24,12 +25,18 @@ class ProjectController extends Controller
 
         $assignment = $project->assignments->sortByDesc('created_at')->first();
 
+        $deliverableUrls = $deliverables
+            ->filter(fn($d) => $d->file_url)
+            ->mapWithKeys(fn($d) => [
+                $d->id => Storage::disk('s3')->temporaryUrl($d->file_url, now()->addMinutes(30)),
+            ]);
+
         $availableFreelances = User::withoutGlobalScopes()
             ->where('role', 'freelance')
             ->where('is_available', true)
             ->orderBy('full_name')
             ->get();
 
-        return view('admin.projects.show', compact('project', 'deliverables', 'assignment', 'availableFreelances'));
+        return view('admin.projects.show', compact('project', 'deliverables', 'deliverableUrls', 'assignment', 'availableFreelances'));
     }
 }

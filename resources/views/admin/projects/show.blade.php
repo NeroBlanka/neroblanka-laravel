@@ -62,8 +62,8 @@
                                         </p>
                                     </div>
                                     <div class="flex items-center gap-2 shrink-0">
-                                        @if($deliverable->file_url)
-                                            <a href="{{ $deliverable->file_url }}" target="_blank"
+                                        @if(isset($deliverableUrls[$deliverable->id]))
+                                            <a href="{{ $deliverableUrls[$deliverable->id] }}" target="_blank"
                                                class="btn-ghost text-xs px-3 py-1.5">
                                                 Télécharger
                                             </a>

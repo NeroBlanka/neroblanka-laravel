@@ -7,6 +7,7 @@ use App\Models\Assignment;
 use App\Services\DeliverableService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class DeliverableController extends Controller
@@ -17,9 +18,17 @@ class DeliverableController extends Controller
     {
         $this->authorize('view', $assignment);
 
-        $assignment->load('project');
+        $assignment->load(['project', 'deliverables' => fn($q) => $q->orderByDesc('version')]);
 
-        return view('freelance.deliverables.create', compact('assignment'));
+        $deliverables = $assignment->deliverables;
+
+        $deliverableUrls = $deliverables
+            ->filter(fn($d) => $d->file_url)
+            ->mapWithKeys(fn($d) => [
+                $d->id => Storage::disk('s3')->temporaryUrl($d->file_url, now()->addMinutes(30)),
+            ]);
+
+        return view('freelance.deliverables.create', compact('assignment', 'deliverables', 'deliverableUrls'));
     }
 
     public function store(Request $request, Assignment $assignment): RedirectResponse
