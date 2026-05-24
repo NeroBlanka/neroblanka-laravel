@@ -29,7 +29,7 @@ class LeadService
      */
     public function submitBrief(array $data, array $answers, array $files = []): Lead
     {
-        return DB::transaction(function () use ($data, $answers, $files) {
+        $lead = DB::transaction(function () use ($data, $answers, $files) {
             $lead = Lead::create([
                 'full_name' => strip_tags($data['full_name']),
                 'email' => $data['email'],
@@ -65,12 +65,15 @@ class LeadService
                 'note' => "Score initial: {$score}/100",
             ]);
 
-            dispatch(new SendBriefConfirmationJob($lead))->onQueue('emails');
-            dispatch(new NotifyAdminNewLeadJob($lead))->onQueue('emails');
-            dispatch(new AnalyzeLeadWithAIJob($lead))->onQueue('ai')->delay(now()->addSeconds(5));
-
             return $lead;
         });
+
+        // Dispatched outside the transaction — workers must not run before commit
+        dispatch(new SendBriefConfirmationJob($lead))->onQueue('emails');
+        dispatch(new NotifyAdminNewLeadJob($lead))->onQueue('emails');
+        dispatch(new AnalyzeLeadWithAIJob($lead))->onQueue('ai')->delay(now()->addSeconds(5));
+
+        return $lead;
     }
 
     public function changeStatus(Lead $lead, LeadStatus $newStatus, ?string $note = null, ?string $adminId = null): void

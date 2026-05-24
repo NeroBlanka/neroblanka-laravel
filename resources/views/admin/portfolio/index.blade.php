@@ -38,9 +38,7 @@
                                     <p class="text-xs text-gray-400 mt-0.5">{{ $item->client_name }}</p>
                                 </td>
                                 <td class="px-4 py-3 text-gray-500">
-                                    {{ $item->service_type instanceof \App\Enums\ServiceType
-                                        ? $item->service_type->label()
-                                        : $item->service_type }}
+                                    {{ $item->service_type->label() }}
                                 </td>
                                 <td class="px-4 py-3 text-center">
                                     @if($item->featured)

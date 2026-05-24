@@ -16,8 +16,7 @@
 
                 $serviceLabels = [];
                 foreach ($serviceTypes as $type) {
-                    try { $serviceLabels[$type] = \App\Enums\ServiceType::from($type)->label(); }
-                    catch (\ValueError $e) { $serviceLabels[$type] = $type; }
+                    $serviceLabels[$type->value] = $type->label();
                 }
             @endphp
 
@@ -36,10 +35,10 @@
                         </button>
                         @foreach($serviceTypes as $type)
                             <button
-                                @click="active = '{{ $type }}'"
-                                :class="active === '{{ $type }}' ? 'bg-white text-[#0a0a0a]' : 'border border-white/[0.12] text-[#888780] hover:text-white'"
+                                @click="active = '{{ $type->value }}'"
+                                :class="active === '{{ $type->value }}' ? 'bg-white text-[#0a0a0a]' : 'border border-white/[0.12] text-[#888780] hover:text-white'"
                                 class="px-4 py-2 text-xs rounded-sm transition-all duration-200 font-mono tracking-wider uppercase">
-                                {{ $serviceLabels[$type] ?? $type }}
+                                {{ $serviceLabels[$type->value] ?? $type->value }}
                             </button>
                         @endforeach
                     </div>
@@ -59,14 +58,13 @@
                                     'automation'            => '#1a0a0a',
                                     'mixed_project'         => '#1a1010',
                                 ];
-                                $bg = $colors[$item->service_type] ?? '#111';
-                                try { $icon = \App\Enums\ServiceType::from($item->service_type)->icon(); }
-                                catch (\ValueError $e) { $icon = '◆'; }
+                                $bg = $colors[$item->service_type->value] ?? '#111';
+                                $icon = $item->service_type->icon();
                                 $isFeatured = $item->featured;
                             @endphp
 
                             <a href="/work/{{ $item->slug }}"
-                               x-show="active === 'all' || active === '{{ $item->service_type }}'"
+                               x-show="active === 'all' || active === '{{ $item->service_type->value }}'"
                                x-transition:enter="transition duration-300 ease-out"
                                x-transition:enter-start="opacity-0 scale-95"
                                x-transition:enter-end="opacity-100 scale-100"
@@ -137,9 +135,8 @@
                                 'automation'            => '#1a0a0a',
                                 'mixed_project'         => '#1a1010',
                             ];
-                            $bg = $colors[$item->service_type] ?? '#111';
-                            try { $icon = \App\Enums\ServiceType::from($item->service_type)->icon(); }
-                            catch (\ValueError $e) { $icon = '◆'; }
+                            $bg = $colors[$item->service_type->value] ?? '#111';
+                            $icon = $item->service_type->icon();
                         @endphp
 
                         <a href="/work/{{ $item->slug }}"

@@ -29,6 +29,7 @@ class PortfolioItem extends Model
     protected function casts(): array
     {
         return [
+            'service_type' => ServiceType::class,
             'gallery' => 'array',
             'tags' => 'array',
             'featured' => 'boolean',
