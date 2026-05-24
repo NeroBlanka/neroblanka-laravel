@@ -132,7 +132,7 @@ class BriefWizard extends Component
         return view('livewire.public.brief-wizard', [
             'services' => ServiceType::cases(),
             'currentServiceQuestions' => $this->getServiceQuestions(),
-        ])->layout('layouts.guest');
+        ])->layout('layouts.brief');
     }
 
     public function getProgress(): int
