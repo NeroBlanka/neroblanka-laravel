@@ -73,6 +73,16 @@ Route::middleware(['auth', 'admin', 'admin.mfa'])->prefix('admin')->name('admin.
     Route::put('/portfolio/{portfolio}', [Admin\PortfolioController::class, 'update'])->name('portfolio.update');
     Route::delete('/portfolio/{portfolio}', [Admin\PortfolioController::class, 'destroy'])->name('portfolio.destroy');
     Route::post('/portfolio/{portfolio}/toggle-published', [Admin\PortfolioController::class, 'togglePublished'])->name('portfolio.toggle-published');
+
+    Route::get('/funnel', [Admin\FunnelController::class, 'index'])->name('funnel');
+
+    Route::get('/services', [Admin\ServiceController::class, 'index'])->name('services.index');
+    Route::get('/services/create', [Admin\ServiceController::class, 'create'])->name('services.create');
+    Route::post('/services', [Admin\ServiceController::class, 'store'])->name('services.store');
+    Route::get('/services/{service}/edit', [Admin\ServiceController::class, 'edit'])->name('services.edit');
+    Route::put('/services/{service}', [Admin\ServiceController::class, 'update'])->name('services.update');
+    Route::delete('/services/{service}', [Admin\ServiceController::class, 'destroy'])->name('services.destroy');
+    Route::post('/services/{service}/toggle-active', [Admin\ServiceController::class, 'toggleActive'])->name('services.toggle-active');
 });
 
 Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(function () {
