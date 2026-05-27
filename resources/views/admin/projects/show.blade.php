@@ -49,33 +49,40 @@
                         <div class="px-6 py-10 text-sm text-center" style="color: var(--gris-mid)">Aucun livrable soumis.</div>
                     @else
                         @foreach($deliverables as $deliverable)
-                            <div class="px-6 py-4 flex items-center justify-between gap-4"
+                            <div class="px-6 py-4"
                                  style="{{ !$loop->last ? 'border-bottom: 1px solid rgba(255,255,255,0.03)' : '' }}">
-                                <div>
-                                    <p class="text-sm font-medium" style="color: var(--perle)">Version {{ $deliverable->version ?? $loop->iteration }}</p>
-                                    <p class="text-xs mt-0.5" style="color: var(--gris-mid)">
-                                        {{ $deliverable->created_at?->format('d/m/Y à H:i') ?? '—' }}
-                                        @if($deliverable->message)<span class="mx-1.5 opacity-40">·</span>{{ $deliverable->message }}@endif
-                                    </p>
+                                <div class="flex items-center justify-between gap-4">
+                                    <div>
+                                        <p class="text-sm font-medium" style="color: var(--perle)">Version {{ $deliverable->version ?? $loop->iteration }}</p>
+                                        <p class="text-xs mt-0.5" style="color: var(--gris-mid)">
+                                            {{ $deliverable->submitted_at?->format('d/m/Y à H:i') ?? '—' }}
+                                            @if($deliverable->message)<span class="mx-1.5 opacity-40">·</span>{{ $deliverable->message }}@endif
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center gap-2 shrink-0">
+                                        @if(isset($deliverableUrls[$deliverable->id]))
+                                            <a href="{{ $deliverableUrls[$deliverable->id] }}" target="_blank" class="btn-ghost text-xs px-3 py-1.5">↓ Télécharger</a>
+                                        @endif
+                                        @if($deliverable->status === 'submitted')
+                                            <form method="POST" action="{{ route('admin.deliverables.approve', $deliverable->id) }}">
+                                                @csrf
+                                                <button type="submit" class="btn-primary text-xs px-3 py-1.5">Approuver</button>
+                                            </form>
+                                        @else
+                                            <x-status-badge :status="$deliverable->status" />
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="flex items-center gap-2 shrink-0">
-                                    @if(isset($deliverableUrls[$deliverable->id]))
-                                        <a href="{{ $deliverableUrls[$deliverable->id] }}" target="_blank" class="btn-ghost text-xs px-3 py-1.5">↓ Télécharger</a>
-                                    @endif
-                                    @if($statusValue === 'submitted')
-                                        <form method="POST" action="{{ route('admin.deliverables.approve', $deliverable->id) }}">
-                                            @csrf
-                                            <button type="submit" class="btn-primary text-xs px-3 py-1.5">Approuver</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.deliverables.revision', $deliverable->id) }}">
-                                            @csrf
-                                            <input type="hidden" name="revision_notes" value="Révision demandée par l'admin">
-                                            <button type="submit" class="btn-secondary text-xs px-3 py-1.5">Révision</button>
-                                        </form>
-                                    @else
-                                        <x-status-badge :status="$deliverable->status instanceof \BackedEnum ? $deliverable->status->value : ($deliverable->status ?? $statusValue)" />
-                                    @endif
-                                </div>
+                                @if($deliverable->status === 'submitted')
+                                    <form method="POST" action="{{ route('admin.deliverables.revision', $deliverable->id) }}"
+                                          class="mt-3 flex gap-2">
+                                        @csrf
+                                        <textarea name="revision_notes" rows="2" required
+                                                  class="input-base text-xs resize-none flex-1"
+                                                  placeholder="Décrire les révisions attendues…"></textarea>
+                                        <button type="submit" class="btn-secondary text-xs px-3 py-2 self-end whitespace-nowrap">Demander révision</button>
+                                    </form>
+                                @endif
                             </div>
                         @endforeach
                     @endif

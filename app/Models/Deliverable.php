@@ -37,6 +37,17 @@ class Deliverable extends Model
         static::creating(fn($m) => $m->id = (string) Str::uuid());
     }
 
+    public function getStatusAttribute(): string
+    {
+        if ($this->approved_at !== null) {
+            return 'approved';
+        }
+        if ($this->revision_notes !== null) {
+            return 'revision';
+        }
+        return 'submitted';
+    }
+
     public function assignment(): BelongsTo
     {
         return $this->belongsTo(Assignment::class);

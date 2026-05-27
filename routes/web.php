@@ -61,6 +61,7 @@ Route::middleware(['auth', 'admin', 'admin.mfa'])->prefix('admin')->name('admin.
     Route::post('/leads/{lead}/no-fit', [Admin\LeadController::class, 'markNoFit'])->name('leads.no-fit');
     Route::get('/freelances', [Admin\FreelanceController::class, 'index'])->name('freelances');
     Route::post('/freelances/{user}/toggle-availability', [Admin\FreelanceController::class, 'toggleAvailability'])->name('freelances.toggle');
+    Route::get('/projets', [Admin\ProjectController::class, 'index'])->name('projects.index');
     Route::get('/projets/{project}', [Admin\ProjectController::class, 'show'])->name('projects.show');
     Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
     Route::post('/deliverables/{deliverable}/approve', [DeliverableController::class, 'approve'])->name('deliverables.approve');

@@ -16,23 +16,28 @@ class DeliverableService
 {
     public function submit(Assignment $assignment, UploadedFile $file, ?string $message = null): Deliverable
     {
-        $deliverable = DB::transaction(function () use ($assignment, $file, $message) {
-            $path = Storage::disk('s3')->put('deliverables', $file);
+        $path = Storage::disk('s3')->put('deliverables', $file);
 
-            $lastVersion = Deliverable::where('assignment_id', $assignment->id)->max('version') ?? 0;
+        try {
+            $deliverable = DB::transaction(function () use ($assignment, $file, $message, $path) {
+                $lastVersion = Deliverable::where('assignment_id', $assignment->id)->max('version') ?? 0;
 
-            $deliverable = Deliverable::create([
-                'assignment_id' => $assignment->id,
-                'file_url' => $path,
-                'file_name' => $file->getClientOriginalName(),
-                'message' => $message,
-                'version' => $lastVersion + 1,
-            ]);
+                $deliverable = Deliverable::create([
+                    'assignment_id' => $assignment->id,
+                    'file_url' => $path,
+                    'file_name' => $file->getClientOriginalName(),
+                    'message' => $message,
+                    'version' => $lastVersion + 1,
+                ]);
 
-            $assignment->project->update(['status' => 'submitted']);
+                $assignment->project->update(['status' => 'submitted']);
 
-            return $deliverable;
-        });
+                return $deliverable;
+            });
+        } catch (\Throwable $e) {
+            Storage::disk('s3')->delete($path);
+            throw $e;
+        }
 
         SendDeliverableSubmitted::dispatch($assignment->project->client, $deliverable)->onQueue('emails')->afterCommit();
 
@@ -43,6 +48,9 @@ class DeliverableService
     {
         $locked = DB::transaction(function () use ($deliverable) {
             $locked = Deliverable::lockForUpdate()->findOrFail($deliverable->id);
+
+            abort_if($locked->approved_at !== null, 422, 'Ce livrable est déjà approuvé.');
+
             $locked->update(['approved_at' => now()]);
 
             $locked->assignment->update(['status' => 'completed']);

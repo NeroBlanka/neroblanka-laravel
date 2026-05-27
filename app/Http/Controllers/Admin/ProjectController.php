@@ -4,12 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use App\Models\User;
+use App\Scopes\ClientOwnedScope;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
 {
+    public function index(): View
+    {
+        $projects = Project::withoutGlobalScope(ClientOwnedScope::class)
+            ->with(['client', 'assignments' => fn($q) => $q->where('status', 'active')->with('freelance')])
+            ->latest()
+            ->get();
+
+        return view('admin.projects.index', compact('projects'));
+    }
+
     public function show(Project $project): View
     {
         $project->load([
@@ -31,11 +41,6 @@ class ProjectController extends Controller
                 $d->id => Storage::disk('s3')->temporaryUrl($d->file_url, now()->addMinutes(30)),
             ]);
 
-        $availableFreelances = User::where('role', 'freelance')
-            ->where('is_available', true)
-            ->orderBy('full_name')
-            ->get();
-
-        return view('admin.projects.show', compact('project', 'deliverables', 'deliverableUrls', 'assignment', 'availableFreelances'));
+        return view('admin.projects.show', compact('project', 'deliverables', 'deliverableUrls', 'assignment'));
     }
 }

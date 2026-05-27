@@ -98,14 +98,14 @@
                             <div>
                                 <p class="text-sm font-medium" style="color: var(--perle)">Version {{ $deliverable->version ?? $loop->iteration }}</p>
                                 <p class="text-xs mt-0.5" style="color: var(--gris-mid)">
-                                    {{ $deliverable->created_at?->format('d/m/Y à H:i') ?? '—' }}
+                                    {{ $deliverable->submitted_at?->format('d/m/Y à H:i') ?? '—' }}
                                     @if($deliverable->message)
                                         <span class="mx-1.5 opacity-40">·</span>{{ $deliverable->message }}
                                     @endif
                                 </p>
                             </div>
                             <div class="flex items-center gap-2 shrink-0">
-                                <x-status-badge :status="$deliverable->status instanceof \BackedEnum ? $deliverable->status->value : ($deliverable->status ?? 'submitted')" />
+                                <x-status-badge :status="$deliverable->status" />
                                 @if(isset($deliverableUrls[$deliverable->id]))
                                     <a href="{{ $deliverableUrls[$deliverable->id] }}" target="_blank" class="btn-ghost text-xs px-3 py-1.5">↓</a>
                                 @endif
