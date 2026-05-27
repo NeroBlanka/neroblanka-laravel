@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\LeadStatus;
+use App\Enums\NoFitReason;
 use App\Enums\ServiceType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -30,6 +31,7 @@ class Lead extends Model
         'raw_payload',
         'social_links',
         'internal_notes',
+        'no_fit_reason',
         'ai_summary',
         'ai_score_adjustment',
         'ai_analyzed_at',
@@ -40,6 +42,7 @@ class Lead extends Model
         return [
             'status' => LeadStatus::class,
             'service_type' => ServiceType::class,
+            'no_fit_reason' => NoFitReason::class,
             'utm' => 'array',
             'raw_payload' => 'array',
             'social_links' => 'array',

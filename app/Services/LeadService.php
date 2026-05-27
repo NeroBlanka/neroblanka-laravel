@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\LeadStatus;
+use App\Enums\NoFitReason;
 use App\Enums\ProjectStatus;
 use App\Enums\ServiceType;
 use App\Enums\UserRole;
@@ -14,6 +15,7 @@ use App\Models\Lead;
 use App\Models\LeadEvent;
 use App\Models\Project;
 use App\Models\User;
+use App\Scopes\ClientOwnedScope;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
@@ -68,19 +70,24 @@ class LeadService
             return $lead;
         });
 
-        // Dispatched outside the transaction — workers must not run before commit
-        dispatch(new SendBriefConfirmationJob($lead))->onQueue('emails');
-        dispatch(new NotifyAdminNewLeadJob($lead))->onQueue('emails');
-        dispatch(new AnalyzeLeadWithAIJob($lead))->onQueue('ai')->delay(now()->addSeconds(5));
+        dispatch(new SendBriefConfirmationJob($lead))->onQueue('emails')->afterCommit();
+        dispatch(new NotifyAdminNewLeadJob($lead))->onQueue('emails')->afterCommit();
+        dispatch(new AnalyzeLeadWithAIJob($lead))->onQueue('ai')->delay(now()->addSeconds(5))->afterCommit();
 
         return $lead;
     }
 
-    public function changeStatus(Lead $lead, LeadStatus $newStatus, ?string $note = null, ?string $adminId = null): void
+    public function changeStatus(Lead $lead, LeadStatus $newStatus, ?string $note = null, ?string $adminId = null, ?NoFitReason $noFitReason = null): void
     {
         $oldStatus = $lead->status;
 
-        $lead->update(['status' => $newStatus]);
+        $updates = ['status' => $newStatus];
+
+        if ($newStatus === LeadStatus::NO_FIT && $noFitReason !== null) {
+            $updates['no_fit_reason'] = $noFitReason->value;
+        }
+
+        $lead->update($updates);
 
         LeadEvent::create([
             'lead_id' => $lead->id,
@@ -88,7 +95,7 @@ class LeadService
             'type' => 'status_changed',
             'from_status' => $oldStatus->value,
             'to_status' => $newStatus->value,
-            'note' => $note,
+            'note' => $noFitReason ? ($noFitReason->label() . ($note ? ' — ' . $note : '')) : $note,
         ]);
     }
 
@@ -160,19 +167,24 @@ class LeadService
     public function convertToProject(Lead $lead, string $adminId): Project
     {
         abort_unless($lead->status === LeadStatus::QUALIFIED, 422, 'Seul un lead qualifié peut être converti.');
-        abort_if(
-            Project::withoutGlobalScopes()->where('lead_id', $lead->id)->exists(),
-            422,
-            'Ce lead a déjà été converti en projet.'
-        );
 
         [$project, $isNew, $clientEmail] = DB::transaction(function () use ($lead, $adminId) {
+            // Lock the lead row to prevent double-conversion under concurrent requests
+            $lead = Lead::lockForUpdate()->findOrFail($lead->id);
+
+            abort_unless($lead->status === LeadStatus::QUALIFIED, 422, 'Seul un lead qualifié peut être converti.');
+            abort_if(
+                Project::withoutGlobalScope(ClientOwnedScope::class)->where('lead_id', $lead->id)->exists(),
+                422,
+                'Ce lead a déjà été converti en projet.'
+            );
+
             $isNew = false;
-            $client = User::withoutGlobalScopes()->where('email', $lead->email)->first();
+            $client = User::where('email', $lead->email)->first();
 
             if (! $client) {
                 $isNew = true;
-                $client = User::withoutGlobalScopes()->create([
+                $client = User::create([
                     'full_name' => $lead->full_name,
                     'email' => $lead->email,
                     'password' => bcrypt(Str::random(32)),
@@ -184,7 +196,7 @@ class LeadService
             $answers = $lead->brief?->answers ?? [];
             $description = $answers['project_description'] ?? $lead->service_type->label();
 
-            $project = Project::withoutGlobalScopes()->create([
+            $project = Project::withoutGlobalScope(ClientOwnedScope::class)->create([
                 'lead_id' => $lead->id,
                 'client_id' => $client->id,
                 'title' => $lead->full_name . ' — ' . $lead->service_type->label(),

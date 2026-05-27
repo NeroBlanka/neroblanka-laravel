@@ -3,9 +3,12 @@
 namespace App\Livewire\Public;
 
 use App\Enums\ServiceType;
+use App\Services\FunnelTrackingService;
 use App\Services\LeadService;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -15,6 +18,9 @@ class BriefWizard extends Component
 
     public int $step = 1;
     public int $totalSteps = 7;
+
+    #[Url(as: 'service')]
+    public string $urlService = '';
 
     // Step 1 — Service
     #[Rule('required|in:branding,event_stand_3d,product_rendering_3d,motion_design,social_campaign,website,ai_image_video,automation,mixed_project')]
@@ -65,6 +71,22 @@ class BriefWizard extends Component
 
     public bool $submitted = false;
 
+    public function mount(FunnelTrackingService $tracker): void
+    {
+        if ($this->urlService) {
+            $serviceEnum = ServiceType::fromSlug($this->urlService);
+            if ($serviceEnum) {
+                $this->service_type = $serviceEnum->value;
+                $this->step = 2;
+            }
+        }
+
+        $tracker->track('brief_started', null, [
+            'service' => $this->service_type ?: null,
+            'prefilled' => (bool) $this->service_type,
+        ]);
+    }
+
     public function rules(): array
     {
         $rules = [
@@ -79,10 +101,15 @@ class BriefWizard extends Component
         return $rules;
     }
 
-    public function nextStep(): void
+    public function advance(LeadService $leadService, FunnelTrackingService $tracker): void
     {
-        $this->validateCurrentStep();
-        $this->step = min($this->step + 1, $this->totalSteps);
+        if ($this->step === $this->totalSteps) {
+            $this->doSubmit($leadService, $tracker);
+        } else {
+            $this->validateCurrentStep();
+            $this->step = min($this->step + 1, $this->totalSteps);
+            $tracker->track('step_completed', null, ['step' => $this->step - 1, 'service' => $this->service_type]);
+        }
     }
 
     public function prevStep(): void
@@ -90,8 +117,13 @@ class BriefWizard extends Component
         $this->step = max($this->step - 1, 1);
     }
 
-    public function submit(LeadService $leadService): void
+    /** @internal kept for direct calls if ever needed */
+    private function doSubmit(LeadService $leadService, FunnelTrackingService $tracker): void
     {
+        $key = 'brief-submit:' . request()->ip();
+        abort_if(RateLimiter::tooManyAttempts($key, 3), 429, 'Trop de soumissions. Réessayez dans quelques minutes.');
+        RateLimiter::hit($key, 600);
+
         $this->validate(['terms_accepted' => 'accepted']);
 
         $answers = array_merge(
@@ -106,7 +138,7 @@ class BriefWizard extends Component
             ->values()
             ->toArray();
 
-        $leadService->submitBrief(
+        $lead = $leadService->submitBrief(
             data: [
                 'full_name' => $this->full_name,
                 'email' => $this->email,
@@ -122,6 +154,11 @@ class BriefWizard extends Component
             answers: $answers,
             files: $files,
         );
+
+        $tracker->track('brief_submitted', $lead->id, [
+            'service' => $this->service_type,
+            'score' => $lead->score,
+        ]);
 
         $this->submitted = true;
         $this->redirect(route('brief.merci'), navigate: true);

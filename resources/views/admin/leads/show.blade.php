@@ -1,27 +1,27 @@
 <x-app-layout>
     <x-slot:title>Lead — {{ $lead->full_name }}</x-slot:title>
 
-    <div class="max-w-4xl mx-auto px-6 py-8">
+    <div class="max-w-4xl mx-auto px-6 py-10">
 
         @if(session('success'))
-            <div class="mb-6 bg-green-50 border border-green-200 text-green-800 text-sm px-4 py-3 rounded">
+            <div class="mb-6 text-sm px-4 py-3 rounded-xl" style="color: #6ee7b7; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
                 {{ session('success') }}
             </div>
         @endif
 
-        <div class="flex items-start justify-between mb-8">
+        <div class="flex items-start justify-between mb-8 gap-4">
             <div>
-                <a href="{{ route('admin.leads') }}" class="text-sm text-gray-400 hover:text-gray-700 mb-3 inline-block">← Lead Inbox</a>
-                <h1 class="text-2xl font-semibold text-[#0a0a0a]">
-                    {{ $lead->full_name }}
-                </h1>
+                <a href="{{ route('admin.leads') }}" class="text-sm mb-3 inline-block transition-opacity hover:opacity-60" style="color: var(--gris)">← Lead Inbox</a>
+                <h1 class="text-3xl" style="color: var(--perle)">{{ $lead->full_name }}</h1>
                 @if($lead->company)
-                    <p class="text-gray-500 text-sm mt-1">{{ $lead->company }}</p>
+                    <p class="text-sm mt-1" style="color: var(--gris)">{{ $lead->company }}</p>
                 @endif
             </div>
-            <div class="flex items-center gap-3">
-                <span class="inline-block px-3 py-1.5 text-sm font-semibold rounded text-white
-                    {{ $lead->isHot() ? 'bg-green-600' : ($lead->isWarm() ? 'bg-yellow-500' : 'bg-red-500') }}">
+            <div class="flex items-center gap-3 shrink-0">
+                <span class="inline-block px-3 py-1.5 text-sm font-semibold rounded-xl"
+                      style="color: {{ $lead->isHot() ? '#6ee7b7' : ($lead->isWarm() ? '#fbbf24' : '#fca5a5') }};
+                             background: {{ $lead->isHot() ? 'rgba(52,211,153,0.1)' : ($lead->isWarm() ? 'rgba(251,191,36,0.1)' : 'rgba(248,113,113,0.1)') }};
+                             border: 1px solid {{ $lead->isHot() ? 'rgba(52,211,153,0.3)' : ($lead->isWarm() ? 'rgba(251,191,36,0.3)' : 'rgba(248,113,113,0.3)') }}">
                     Score {{ $lead->score }}/100
                 </span>
 
@@ -29,70 +29,63 @@
                     <form method="POST" action="{{ route('admin.leads.convert', $lead) }}"
                           onsubmit="return confirm('Convertir ce lead en projet client ?')">
                         @csrf
-                        <button type="submit"
-                                class="px-4 py-2 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors">
-                            → Convertir en projet
-                        </button>
+                        <button type="submit" class="btn-primary text-sm">→ Convertir en projet</button>
                     </form>
                 @elseif($lead->project)
-                    <a href="{{ route('admin.projects.show', $lead->project) }}"
-                       class="px-4 py-2 border border-black/20 text-[#0a0a0a] text-sm font-medium rounded-sm hover:border-black/50 transition-colors">
+                    <a href="{{ route('admin.projects.show', $lead->project) }}" class="btn-secondary text-sm">
                         Voir le projet →
                     </a>
                 @endif
             </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-6 mb-8">
-            <div class="col-span-2 space-y-6">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-2 space-y-4">
 
-                {{-- Analyse IA --}}
                 @if($lead->ai_summary)
-                    <div class="border border-black/10 rounded p-5 bg-[#fafaf9]">
+                    <div class="card p-5">
                         <div class="flex items-center justify-between mb-3">
-                            <h2 class="font-semibold text-sm uppercase tracking-wider text-gray-400">Analyse IA</h2>
-                            <span class="text-xs text-gray-300">{{ $lead->ai_analyzed_at?->format('d/m à H:i') }}</span>
+                            <p class="label-mono" style="color: var(--purple)">Analyse IA</p>
+                            <span class="text-xs" style="color: var(--gris-mid)">{{ $lead->ai_analyzed_at?->format('d/m à H:i') }}</span>
                         </div>
-                        <p class="text-sm text-gray-700 leading-relaxed">{{ $lead->ai_summary }}</p>
+                        <p class="text-sm leading-relaxed" style="color: var(--gris)">{{ $lead->ai_summary }}</p>
                         @if($lead->ai_score_adjustment !== 0)
-                            <p class="text-xs mt-2 {{ $lead->ai_score_adjustment > 0 ? 'text-green-600' : 'text-red-500' }}">
+                            <p class="text-xs mt-2" style="color: {{ $lead->ai_score_adjustment > 0 ? '#6ee7b7' : '#fca5a5' }}">
                                 Ajustement score IA : {{ $lead->ai_score_adjustment > 0 ? '+' : '' }}{{ $lead->ai_score_adjustment }} pts
                             </p>
                         @endif
                     </div>
                 @elseif(! $lead->ai_analyzed_at)
-                    <div class="border border-dashed border-black/10 rounded p-4 text-xs text-gray-400 text-center">
+                    <div class="card p-4 text-xs text-center" style="color: var(--gris-mid); border-style: dashed">
                         Analyse IA en attente de traitement (queue:ai)
                     </div>
                 @endif
 
-                {{-- Brief --}}
                 @if($lead->brief)
-                    <div class="border border-black/10 rounded p-5">
-                        <h2 class="font-semibold text-sm uppercase tracking-wider text-gray-400 mb-4">Brief</h2>
+                    <div class="card p-5">
+                        <p class="label-mono mb-4">Brief</p>
                         @foreach($lead->brief->answers as $key => $value)
                             @if($value)
                                 <div class="mb-3">
-                                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">{{ str_replace('_', ' ', $key) }}</p>
-                                    <p class="text-sm text-gray-800">{{ $value }}</p>
+                                    <p class="label-mono mb-1">{{ str_replace('_', ' ', $key) }}</p>
+                                    <p class="text-sm" style="color: var(--gris)">{{ $value }}</p>
                                 </div>
                             @endif
                         @endforeach
                     </div>
                 @endif
 
-                {{-- Fichiers --}}
                 @if($lead->files->count())
-                    <div class="border border-black/10 rounded p-5">
-                        <h2 class="font-semibold text-sm uppercase tracking-wider text-gray-400 mb-4">Fichiers ({{ $lead->files->count() }})</h2>
+                    <div class="card p-5">
+                        <p class="label-mono mb-4">Fichiers ({{ $lead->files->count() }})</p>
                         <ul class="space-y-2">
                             @foreach($lead->files as $file)
-                                <li>
+                                <li class="flex items-center gap-3">
                                     <a href="{{ $file->temporaryUrl(30) }}" target="_blank" rel="noopener"
-                                        class="text-sm text-blue-600 hover:text-blue-800 underline">
-                                        {{ $file->original_name }}
+                                        class="text-sm transition-opacity hover:opacity-70" style="color: var(--purple)">
+                                        ↓ {{ $file->original_name }}
                                     </a>
-                                    <span class="text-xs text-gray-400 ml-2">
+                                    <span class="text-xs" style="color: var(--gris-mid)">
                                         {{ number_format($file->size_bytes / 1024, 0) }} Ko
                                     </span>
                                 </li>
@@ -101,21 +94,20 @@
                     </div>
                 @endif
 
-                {{-- Audit trail --}}
                 @if($lead->events->count())
-                    <div class="border border-black/10 rounded p-5">
-                        <h2 class="font-semibold text-sm uppercase tracking-wider text-gray-400 mb-4">Historique</h2>
+                    <div class="card p-5">
+                        <p class="label-mono mb-4">Historique</p>
                         <ul class="space-y-3">
                             @foreach($lead->events as $event)
                                 <li class="flex items-start gap-3 text-sm">
-                                    <span class="text-gray-300 text-xs mt-0.5 whitespace-nowrap">{{ $event->created_at->format('d/m H:i') }}</span>
+                                    <span class="text-xs mt-0.5 whitespace-nowrap" style="color: var(--gris-mid)">{{ $event->created_at->format('d/m H:i') }}</span>
                                     <div>
-                                        <span class="text-gray-700">{{ $event->type }}</span>
+                                        <span style="color: var(--perle)">{{ $event->type }}</span>
                                         @if($event->note)
-                                            <p class="text-gray-500 mt-0.5">{{ $event->note }}</p>
+                                            <p class="mt-0.5 text-xs" style="color: var(--gris)">{{ $event->note }}</p>
                                         @endif
                                         @if($event->user)
-                                            <span class="text-xs text-gray-300">par {{ $event->user->full_name }}</span>
+                                            <span class="text-xs" style="color: var(--gris-mid)">par {{ $event->user->full_name }}</span>
                                         @endif
                                     </div>
                                 </li>
@@ -123,27 +115,54 @@
                         </ul>
                     </div>
                 @endif
-
             </div>
 
-            {{-- Sidebar infos --}}
             <div class="space-y-4">
-                <div class="border border-black/10 rounded p-4">
-                    <h2 class="font-semibold text-xs uppercase tracking-wider text-gray-400 mb-3">Informations</h2>
-                    <dl class="space-y-2 text-sm">
-                        <div><dt class="text-gray-400 text-xs">Email</dt><dd>{{ $lead->email }}</dd></div>
+                <div class="card p-5">
+                    <p class="label-mono mb-4">Informations</p>
+                    <dl class="space-y-3 text-sm">
+                        <div><dt class="label-mono mb-0.5">Email</dt><dd style="color: var(--perle)">{{ $lead->email }}</dd></div>
                         @if($lead->phone)
-                            <div><dt class="text-gray-400 text-xs">Téléphone</dt><dd>{{ $lead->phone }}</dd></div>
+                            <div><dt class="label-mono mb-0.5">Téléphone</dt><dd style="color: var(--perle)">{{ $lead->phone }}</dd></div>
                         @endif
-                        <div><dt class="text-gray-400 text-xs">Service</dt><dd>{{ $lead->service_type->label() }}</dd></div>
-                        <div><dt class="text-gray-400 text-xs">Budget</dt><dd>{{ $lead->budget_range }}</dd></div>
-                        <div><dt class="text-gray-400 text-xs">Délai</dt><dd>{{ $lead->deadline_range }}</dd></div>
-                        <div><dt class="text-gray-400 text-xs">Statut</dt><dd>{{ $lead->status->label() }}</dd></div>
-                        <div><dt class="text-gray-400 text-xs">Reçu</dt><dd>{{ $lead->created_at->format('d/m/Y à H:i') }}</dd></div>
+                        <div><dt class="label-mono mb-0.5">Service</dt><dd style="color: var(--perle)">{{ $lead->service_type->label() }}</dd></div>
+                        <div><dt class="label-mono mb-0.5">Budget</dt><dd style="color: var(--perle)">{{ $lead->budget_range }}</dd></div>
+                        <div><dt class="label-mono mb-0.5">Délai</dt><dd style="color: var(--perle)">{{ $lead->deadline_range }}</dd></div>
+                        <div>
+                            <dt class="label-mono mb-0.5">Statut</dt>
+                            <dd style="color: var(--perle)">{{ $lead->status->label() }}</dd>
+                        </div>
+                        @if($lead->no_fit_reason)
+                            <div>
+                                <dt class="label-mono mb-0.5">Raison no-fit</dt>
+                                <dd style="color: #fca5a5">{{ $lead->no_fit_reason->label() }}</dd>
+                            </div>
+                        @endif
+                        <div><dt class="label-mono mb-0.5">Reçu</dt><dd style="color: var(--gris)">{{ $lead->created_at->format('d/m/Y à H:i') }}</dd></div>
                     </dl>
                 </div>
+
+                @if($lead->status !== \App\Enums\LeadStatus::NO_FIT && $lead->status !== \App\Enums\LeadStatus::WON && $lead->status !== \App\Enums\LeadStatus::ARCHIVED)
+                    <div class="card p-5">
+                        <p class="label-mono mb-4">Marquer no-fit</p>
+                        <form method="POST" action="{{ route('admin.leads.no-fit', $lead) }}">
+                            @csrf
+                            <select name="no_fit_reason" required class="select-dark w-full mb-3">
+                                <option value="">Raison...</option>
+                                @foreach(\App\Enums\NoFitReason::cases() as $reason)
+                                    <option value="{{ $reason->value }}">{{ $reason->label() }}</option>
+                                @endforeach
+                            </select>
+                            <input type="text" name="note" placeholder="Note optionnelle"
+                                   class="input-base w-full mb-3" maxlength="500">
+                            <button type="submit" class="w-full text-sm py-2 rounded-xl transition-opacity hover:opacity-80 text-center"
+                                    style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #fca5a5">
+                                Confirmer no-fit
+                            </button>
+                        </form>
+                    </div>
+                @endif
             </div>
         </div>
-
     </div>
 </x-app-layout>

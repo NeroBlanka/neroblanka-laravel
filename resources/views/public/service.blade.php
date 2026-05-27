@@ -101,32 +101,35 @@ $service = $services[$slug] ?? null;
 @if(! $service)
     <x-slot:title>Service introuvable — Neroblanka</x-slot:title>
     <section class="pt-32 pb-24 text-center">
-        <h1 class="text-4xl font-semibold">404</h1>
-        <p class="text-[#888780] mt-4">Ce service n'existe pas.</p>
-        <a href="/services" class="mt-8 inline-block underline text-sm">Voir tous les services</a>
+        <h1 class="font-clash text-4xl font-semibold" style="color: var(--perle)">404</h1>
+        <p class="mt-4" style="color: var(--gris)">Ce service n'existe pas.</p>
+        <a href="/services" class="mt-8 inline-block text-sm transition-opacity hover:opacity-60" style="color: var(--purple)">← Voir tous les services</a>
     </section>
 @else
     <x-slot:title>{{ $service['title'] }} — Neroblanka</x-slot:title>
     <x-slot:description>{{ $service['description'] }}</x-slot:description>
 
     {{-- Hero --}}
-    <section class="pt-32 pb-20 border-b border-white/[0.06]">
+    <section class="pt-32 pb-20" style="border-bottom: 1px solid rgba(255,255,255,0.06)">
         <div class="max-w-4xl mx-auto px-6">
-            <p class="text-[#888780] text-sm uppercase tracking-widest mb-4">
-                {{ $service['enum']->icon() }} {{ $service['enum']->label() }}
-            </p>
-            <h1 class="text-5xl md:text-6xl font-semibold text-white leading-tight mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-base"
+                     style="background: rgba(124,92,252,0.1); border: 1px solid rgba(124,92,252,0.2)">
+                    {{ $service['enum']->icon() }}
+                </div>
+                <span class="label-mono" style="color: var(--purple)">{{ $service['enum']->label() }}</span>
+            </div>
+            <h1 class="font-clash text-5xl md:text-6xl font-semibold leading-tight mb-6" style="color: var(--perle)">
                 {{ $service['tagline'] }}
             </h1>
-            <p class="text-[#888780] text-lg max-w-2xl leading-relaxed">
+            <p class="text-lg max-w-2xl leading-relaxed" style="color: var(--gris)">
                 {{ $service['description'] }}
             </p>
             <div class="flex flex-wrap gap-4 mt-10">
-                <a href="/brief"
-                   class="px-6 py-3 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors">
+                <a href="/brief?service={{ $slug }}" class="btn-primary px-6 py-3">
                     Demander un diagnostic
                 </a>
-                <a href="/services" class="px-6 py-3 border border-white/20 text-[#888780] text-sm rounded-sm hover:border-white/40 hover:text-white transition-colors">
+                <a href="/services" class="btn-secondary px-6 py-3">
                     Tous les services
                 </a>
             </div>
@@ -137,23 +140,22 @@ $service = $services[$slug] ?? null;
     <section class="py-20">
         <div class="max-w-4xl mx-auto px-6 grid md:grid-cols-3 gap-12">
 
-            {{-- Livrables --}}
             <div class="md:col-span-2">
-                <h2 class="text-sm uppercase tracking-widest text-[#888780] mb-6">Ce que vous recevez</h2>
+                <h2 class="label-mono mb-6" style="color: var(--gris)">Ce que vous recevez</h2>
                 <ul class="space-y-3">
                     @foreach($service['deliverables'] as $item)
-                        <li class="flex items-start gap-3 text-[#e8e7e2]">
-                            <span class="text-white mt-1 text-xs">◆</span>
+                        <li class="flex items-start gap-3" style="color: var(--perle)">
+                            <span class="mt-1 text-xs shrink-0" style="color: var(--purple)">◆</span>
                             <span>{{ $item }}</span>
                         </li>
                     @endforeach
                 </ul>
 
-                <h2 class="text-sm uppercase tracking-widest text-[#888780] mt-12 mb-6">Fait pour vous si</h2>
+                <h2 class="label-mono mt-12 mb-6" style="color: var(--gris)">Fait pour vous si</h2>
                 <ul class="space-y-2">
                     @foreach($service['for'] as $who)
-                        <li class="text-[#888780] text-sm flex items-center gap-2">
-                            <span class="w-1 h-1 bg-[#888780] rounded-full inline-block shrink-0"></span>
+                        <li class="text-sm flex items-center gap-2" style="color: var(--gris)">
+                            <span class="w-1 h-1 rounded-full inline-block shrink-0" style="background: var(--gris-mid)"></span>
                             {{ $who }}
                         </li>
                     @endforeach
@@ -161,17 +163,18 @@ $service = $services[$slug] ?? null;
             </div>
 
             {{-- Sidebar --}}
-            <div class="space-y-6">
-                <div class="border border-white/[0.08] rounded p-6">
-                    <p class="text-xs uppercase tracking-widest text-[#888780] mb-1">Délai typique</p>
-                    <p class="text-white font-medium">{{ $service['timeline'] }}</p>
+            <div class="space-y-4">
+                <div class="card p-6">
+                    <p class="label-mono mb-1" style="color: var(--gris-mid)">Délai typique</p>
+                    <p class="font-medium" style="color: var(--perle)">{{ $service['timeline'] }}</p>
                 </div>
-                <div class="border border-white/[0.08] rounded p-6">
-                    <p class="text-xs uppercase tracking-widest text-[#888780] mb-1">À partir de</p>
-                    <p class="text-white font-medium text-xl">{{ $service['starting'] }}</p>
+                <div class="card p-6">
+                    <p class="label-mono mb-1" style="color: var(--gris-mid)">À partir de</p>
+                    <p class="font-semibold text-xl" style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent">
+                        {{ $service['starting'] }}
+                    </p>
                 </div>
-                <a href="/brief"
-                   class="block w-full text-center px-5 py-3 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors">
+                <a href="/brief?service={{ $slug }}" class="btn-primary block w-full text-center px-5 py-3">
                     Démarrer ce projet →
                 </a>
             </div>
@@ -179,20 +182,27 @@ $service = $services[$slug] ?? null;
         </div>
     </section>
 
-    {{-- CTA bas de page --}}
-    <section class="border-t border-white/[0.06] py-20">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <p class="text-[#888780] text-sm uppercase tracking-widest mb-4">Prochaine étape</p>
-            <h2 class="text-3xl md:text-4xl font-semibold text-white mb-6">
-                Du contraste naît la clarté.
-            </h2>
-            <p class="text-[#888780] max-w-lg mx-auto mb-8">
-                Partagez votre projet en 3 minutes. Nous revenons vers vous sous 48h avec une vision claire et un plan d'action.
-            </p>
-            <a href="/brief"
-               class="inline-block px-8 py-4 bg-white text-[#0a0a0a] font-medium text-sm rounded-sm hover:bg-[#e8e7e2] transition-colors">
-                Demander un diagnostic créatif
-            </a>
+    {{-- CTA --}}
+    <section class="py-20 px-6" style="border-top: 1px solid rgba(255,255,255,0.06)">
+        <div class="max-w-4xl mx-auto">
+            <div class="rounded-2xl p-12 md:p-16 text-center relative overflow-hidden"
+                 style="background: linear-gradient(135deg, rgba(124,92,252,0.12) 0%, rgba(240,89,218,0.06) 100%);
+                        border: 1px solid rgba(124,92,252,0.2)">
+                <div class="absolute inset-0 opacity-20 pointer-events-none"
+                     style="background: radial-gradient(circle at 80% 50%, rgba(240,89,218,0.3) 0%, transparent 60%)"></div>
+                <div class="relative">
+                    <p class="label-mono mb-4" style="color: var(--purple)">Prochaine étape</p>
+                    <h2 class="font-clash text-3xl md:text-4xl font-semibold mb-6" style="color: var(--perle)">
+                        Du contraste naît la clarté.
+                    </h2>
+                    <p class="max-w-lg mx-auto mb-8" style="color: var(--gris)">
+                        Partagez votre projet en 3 minutes. Nous revenons vers vous sous 48h avec une vision claire et un plan d'action.
+                    </p>
+                    <a href="/brief?service={{ $slug }}" class="btn-primary px-8 py-4">
+                        Demander un diagnostic créatif
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 @endif

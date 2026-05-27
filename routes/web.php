@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ServiceType;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\Client;
@@ -21,7 +22,11 @@ Route::get('/work/{slug}', function (string $slug) {
     return view('public.work-show', compact('item'));
 })->name('work.show');
 Route::get('/services', fn() => view('public.services'))->name('services');
-Route::get('/services/{slug}', fn(string $slug) => view('public.service', ['slug' => $slug]))->name('services.show');
+Route::get('/services/{slug}', function (string $slug) {
+    $service = ServiceType::fromSlug($slug);
+    abort_unless($service !== null, 404);
+    return view('public.service', ['slug' => $slug, 'serviceEnum' => $service]);
+})->name('services.show');
 Route::get('/brief', BriefWizard::class)
     ->middleware('throttle:10,1')
     ->name('brief');
@@ -53,6 +58,7 @@ Route::middleware(['auth', 'admin', 'admin.mfa'])->prefix('admin')->name('admin.
     Route::get('/leads', [Admin\LeadController::class, 'index'])->name('leads');
     Route::get('/leads/{lead}', [Admin\LeadController::class, 'show'])->name('leads.show');
     Route::post('/leads/{lead}/convert', [Admin\LeadController::class, 'convert'])->name('leads.convert');
+    Route::post('/leads/{lead}/no-fit', [Admin\LeadController::class, 'markNoFit'])->name('leads.no-fit');
     Route::get('/freelances', [Admin\FreelanceController::class, 'index'])->name('freelances');
     Route::post('/freelances/{user}/toggle-availability', [Admin\FreelanceController::class, 'toggleAvailability'])->name('freelances.toggle');
     Route::get('/projets/{project}', [Admin\ProjectController::class, 'show'])->name('projects.show');
@@ -74,14 +80,14 @@ Route::middleware(['auth', 'client'])->prefix('client')->name('client.')->group(
     Route::get('/brief', [Client\BriefController::class, 'create'])->name('brief.create');
     Route::post('/brief', [Client\BriefController::class, 'store'])->name('brief.store');
     Route::get('/projets/{project}', [Client\ProjectController::class, 'show'])->name('projects.show');
-    Route::post('/projets/{project}/approve', [Client\ProjectController::class, 'approve'])->name('projects.approve');
-    Route::post('/projets/{project}/revision', [Client\ProjectController::class, 'revision'])->name('projects.revision');
+    Route::post('/livrables/{deliverable}/approve', [Client\DeliverableController::class, 'approve'])->name('deliverables.approve');
+    Route::post('/livrables/{deliverable}/revision', [Client\DeliverableController::class, 'revision'])->name('deliverables.revision');
 });
 
 Route::middleware(['auth', 'freelance'])->prefix('freelance')->name('freelance.')->group(function () {
     Route::get('/', [Freelance\DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/livraison/{assignment}', [Freelance\DeliverableController::class, 'create'])->name('deliverables.create');
-    Route::post('/livraison/{assignment}', [Freelance\DeliverableController::class, 'store'])->name('deliverables.store');
+    Route::get('/assignments/{assignment}', [Freelance\DeliverableController::class, 'create'])->name('assignments.show');
+    Route::post('/assignments/{assignment}/deliverables', [Freelance\DeliverableController::class, 'store'])->name('deliverables.store');
 });
 
 require __DIR__.'/auth.php';
