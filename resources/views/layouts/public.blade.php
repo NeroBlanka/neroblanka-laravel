@@ -13,17 +13,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
     @livewireStyles
 </head>
-<body class="bg-[#0a0a0a] text-[#e8e7e2] font-['DM_Sans']">
+<body style="background: var(--bg); color: var(--perle); font-family: 'DM Sans', sans-serif;">
 
-    <header class="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06]" style="background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);">
+    <header class="fixed top-0 left-0 right-0 z-50"
+            style="background: rgba(7,8,15,0.75); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06)">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="/" class="font-clash text-[#ffffff] font-semibold text-lg tracking-tight">
+            <a href="/" class="font-clash font-semibold text-lg tracking-tight" style="color: var(--perle)">
                 Neroblanka
             </a>
-            <nav class="hidden md:flex items-center gap-6 text-sm text-[#888780]">
-                <a href="/work" class="hover:text-white transition-colors">Travaux</a>
-                <a href="/services" class="hover:text-white transition-colors">Services</a>
-                <a href="/brief" class="ml-4 px-4 py-2 bg-white text-[#0a0a0a] text-sm font-medium rounded-sm hover:bg-[#e8e7e2] transition-colors">
+            <nav class="hidden md:flex items-center gap-6 text-sm">
+                <a href="/work" class="transition-opacity hover:opacity-60" style="color: var(--gris)">Travaux</a>
+                <a href="/services" class="transition-opacity hover:opacity-60" style="color: var(--gris)">Services</a>
+                <a href="/brief" class="btn-primary text-sm px-5 py-2">
                     Diagnostic créatif
                 </a>
             </nav>
@@ -34,14 +35,14 @@
         {{ $slot }}
     </main>
 
-    <footer class="border-t border-white/[0.08] mt-32 py-12">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm text-[#888780]">
-            <span class="font-clash text-white font-semibold">Neroblanka</span>
-            <span>Du contraste naît la clarté.</span>
-            <div class="flex items-center gap-6">
-                <a href="/services" class="hover:text-white transition-colors">Services</a>
-                <a href="/work" class="hover:text-white transition-colors">Travaux</a>
-                <a href="/brief" class="hover:text-white transition-colors">Contact</a>
+    <footer style="border-top: 1px solid rgba(255,255,255,0.06); margin-top: 128px; padding: 48px 0">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm">
+            <span class="font-clash font-semibold" style="color: var(--perle)">Neroblanka</span>
+            <span style="color: var(--gris-mid)">Du contraste naît la clarté.</span>
+            <div class="flex items-center gap-6" style="color: var(--gris)">
+                <a href="/services" class="transition-opacity hover:opacity-60">Services</a>
+                <a href="/work" class="transition-opacity hover:opacity-60">Travaux</a>
+                <a href="/brief" class="transition-opacity hover:opacity-60">Contact</a>
             </div>
         </div>
     </footer>

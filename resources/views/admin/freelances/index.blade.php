@@ -6,50 +6,53 @@
         <div class="flex items-center justify-between mb-8">
             <div>
                 <p class="label-mono mb-2">Administration</p>
-                <h1 class="text-3xl">Freelances</h1>
+                <h1 class="text-3xl" style="color: var(--perle)">Freelances</h1>
             </div>
-            <a href="{{ route('admin.dashboard') }}" class="btn-ghost text-sm">&larr; Dashboard</a>
+            <a href="{{ route('admin.dashboard') }}" class="btn-ghost text-sm">← Dashboard</a>
         </div>
 
         @if($freelances->isEmpty())
-            <div class="card px-6 py-12 text-center text-[#888780]">
+            <div class="card px-6 py-14 text-center text-sm" style="color: var(--gris-mid)">
                 Aucun freelance enregistré.
             </div>
         @else
             <div class="card overflow-hidden">
-                <div class="divide-y divide-black/[0.06]">
-                    @foreach($freelances as $freelance)
-                        <div class="px-6 py-5 flex items-center justify-between gap-4">
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-3 mb-1">
-                                    <p class="font-medium">{{ $freelance->full_name }}</p>
-                                    <span class="inline-flex items-center text-xs px-2 py-0.5 rounded
-                                        {{ $freelance->is_available ? 'bg-green-50 text-green-700' : 'bg-[#e8e7e2] text-[#888780]' }}">
-                                        {{ $freelance->is_available ? 'Disponible' : 'Indisponible' }}
-                                    </span>
-                                </div>
-                                <p class="text-sm text-[#888780]">{{ $freelance->email }}</p>
-
-                                @if(!empty($freelance->specialties))
-                                    <div class="flex flex-wrap gap-1.5 mt-2">
-                                        @foreach((array) $freelance->specialties as $spec)
-                                            <span class="label-mono bg-[#e8e7e2] px-2 py-0.5 rounded text-[10px]">{{ $spec }}</span>
-                                        @endforeach
-                                    </div>
-                                @endif
+                @foreach($freelances as $freelance)
+                    <div class="px-6 py-5 flex items-center justify-between gap-4"
+                         style="{{ !$loop->last ? 'border-bottom: 1px solid rgba(255,255,255,0.05)' : '' }}">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-1">
+                                <p class="font-medium" style="color: var(--perle)">{{ $freelance->full_name }}</p>
+                                <span class="inline-flex items-center text-xs px-2.5 py-1 rounded-lg font-mono uppercase tracking-wider"
+                                      style="{{ $freelance->is_available
+                                        ? 'color:#6ee7b7; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.3)'
+                                        : 'color:var(--gris-mid); background:rgba(122,120,117,0.06); border:1px solid rgba(122,120,117,0.2)' }}">
+                                    {{ $freelance->is_available ? 'Disponible' : 'Indisponible' }}
+                                </span>
                             </div>
+                            <p class="text-sm" style="color: var(--gris)">{{ $freelance->email }}</p>
 
-                            <form method="POST" action="{{ route('admin.freelances.toggle-availability', $freelance->id) }}" class="shrink-0">
-                                @csrf
-                                <button type="submit" class="{{ $freelance->is_available ? 'btn-secondary' : 'btn-primary' }} text-xs px-3 py-1.5">
-                                    {{ $freelance->is_available ? 'Marquer indisponible' : 'Marquer disponible' }}
-                                </button>
-                            </form>
+                            @if(!empty($freelance->specialties))
+                                <div class="flex flex-wrap gap-1.5 mt-2">
+                                    @foreach((array) $freelance->specialties as $spec)
+                                        <span class="label-mono px-2 py-0.5 rounded-md"
+                                              style="background: rgba(124,92,252,0.08); border: 1px solid rgba(124,92,252,0.2); color: var(--gris)">
+                                            {{ $spec }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
-                    @endforeach
-                </div>
+
+                        <form method="POST" action="{{ route('admin.freelances.toggle-availability', $freelance->id) }}" class="shrink-0">
+                            @csrf
+                            <button type="submit" class="{{ $freelance->is_available ? 'btn-secondary' : 'btn-primary' }} text-xs px-3 py-1.5">
+                                {{ $freelance->is_available ? 'Marquer indisponible' : 'Marquer disponible' }}
+                            </button>
+                        </form>
+                    </div>
+                @endforeach
             </div>
         @endif
-
     </div>
 </x-app-layout>

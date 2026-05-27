@@ -3,67 +3,75 @@
 
     <div class="max-w-lg mx-auto px-6 py-16">
 
-        <h1 class="text-2xl font-semibold text-[#0a0a0a] mb-2">
-            Configurer l'authentification 2FA
-        </h1>
-        <p class="text-sm text-[#888780] mb-8">
-            Scannez le QR code avec Google Authenticator, Authy ou toute autre app TOTP. Confirmez avec un code pour activer.
-        </p>
+        <div class="mb-8">
+            <a href="{{ route('admin.dashboard') }}" class="label-mono inline-flex items-center gap-2 mb-6 hover:opacity-70 transition-opacity">
+                ← Dashboard
+            </a>
+            <h1 class="text-2xl font-semibold mb-2" style="color: var(--perle)">
+                Authentification 2FA
+            </h1>
+            <p class="text-sm" style="color: var(--gris)">
+                Scannez le QR code avec Google Authenticator, Authy ou toute autre app TOTP. Confirmez avec un code pour activer.
+            </p>
+        </div>
 
         @if(session('success'))
-            <div class="mb-6 bg-green-50 border border-green-200 text-green-800 text-sm px-4 py-3 rounded">
+            <div class="mb-6 text-sm px-4 py-3 rounded-xl" style="color: #6ee7b7; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
                 {{ session('success') }}
             </div>
         @endif
 
-        <div class="border border-black/10 rounded p-6 mb-6">
-            <h2 class="font-semibold text-sm mb-4">1. Scannez ce QR code</h2>
+        {{-- QR Code --}}
+        <div class="card p-6 mb-4">
+            <p class="label-mono mb-4">1. Scannez ce QR code</p>
 
-            {{-- QR code via Google Charts API (pas de dépendance serveur) --}}
-            <div class="flex justify-center mb-4">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ urlencode($qrUrl) }}&size=200x200&bgcolor=ffffff"
-                     alt="QR Code MFA"
-                     class="border border-black/10 rounded p-2"
-                     width="200" height="200">
+            <div class="flex justify-center mb-5">
+                <div class="p-3 rounded-xl" style="background: #fff; display: inline-block;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ urlencode($qrUrl) }}&size=180x180&bgcolor=ffffff"
+                         alt="QR Code MFA"
+                         width="180" height="180">
+                </div>
             </div>
 
-            <p class="text-xs text-[#888780] text-center mb-1">Ou entrez manuellement ce code secret :</p>
-            <p class="text-center font-mono text-sm bg-[#f8f7f4] border border-black/10 rounded px-4 py-2 tracking-widest select-all">
+            <p class="text-xs text-center mb-2" style="color: var(--gris-mid)">Ou entrez manuellement ce code secret :</p>
+            <p class="text-center font-mono text-sm px-4 py-2.5 rounded-xl tracking-widest select-all"
+               style="background: rgba(0,0,0,0.3); color: var(--perle); border: 1px solid rgba(255,255,255,0.08); letter-spacing: 0.25em">
                 {{ $secret }}
             </p>
         </div>
 
-        <div class="border border-black/10 rounded p-6 mb-6">
-            <h2 class="font-semibold text-sm mb-4">2. Confirmez avec un code</h2>
+        {{-- Confirmation --}}
+        <div class="card p-6 mb-4">
+            <p class="label-mono mb-4">2. Confirmez avec un code</p>
             <form method="POST" action="{{ route('admin.mfa.enable') }}">
                 @csrf
                 <div class="flex gap-3">
                     <input type="text" name="code" inputmode="numeric" pattern="[0-9]{6}"
                            maxlength="6" autocomplete="one-time-code"
-                           class="flex-1 text-center text-xl tracking-[0.4em] border border-black/20 rounded px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-black/30 font-mono"
+                           class="input-base flex-1 text-center text-xl tracking-[0.4em] font-mono"
                            placeholder="000000">
-                    <button type="submit"
-                            class="px-5 py-2.5 bg-[#0a0a0a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors whitespace-nowrap">
-                        Activer le MFA
+                    <button type="submit" class="btn-primary whitespace-nowrap">
+                        Activer
                     </button>
                 </div>
                 @error('code')
-                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    <p class="text-xs mt-2" style="color: #f87171">{{ $message }}</p>
                 @enderror
             </form>
         </div>
 
         @if(auth()->user()->totp_enabled)
-            <div class="border border-red-200 rounded p-6">
-                <h2 class="font-semibold text-sm text-red-600 mb-3">Désactiver le MFA</h2>
+            <div class="card p-6" style="border-color: rgba(248,113,113,0.2)">
+                <p class="label-mono mb-4" style="color: #fca5a5">Désactiver le MFA</p>
                 <form method="POST" action="{{ route('admin.mfa.disable') }}">
                     @csrf
                     <div class="flex gap-3">
                         <input type="text" name="code" inputmode="numeric" maxlength="6"
-                               class="flex-1 text-center text-xl tracking-[0.4em] border border-red-200 rounded px-4 py-2.5 focus:outline-none font-mono"
+                               class="input-base flex-1 text-center text-xl tracking-[0.4em] font-mono"
                                placeholder="000000">
                         <button type="submit"
-                                class="px-5 py-2.5 border border-red-300 text-red-600 text-sm rounded-sm hover:bg-red-50 transition-colors whitespace-nowrap">
+                                class="btn-secondary whitespace-nowrap text-sm"
+                                style="color: #fca5a5; border-color: rgba(248,113,113,0.3)">
                             Désactiver
                         </button>
                     </div>
@@ -71,8 +79,5 @@
             </div>
         @endif
 
-        <a href="{{ route('admin.dashboard') }}" class="mt-6 inline-block text-sm text-[#888780] hover:text-[#0a0a0a] transition-colors">
-            ← Dashboard
-        </a>
     </div>
 </x-app-layout>

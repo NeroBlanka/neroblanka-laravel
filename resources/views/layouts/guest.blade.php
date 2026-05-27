@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap">
     @livewireStyles
 </head>
-<body class="min-h-screen bg-[#e8e7e2] flex flex-col items-center justify-center px-4">
+<body class="min-h-screen flex flex-col items-center justify-center px-4">
 
     <div class="mb-8">
-        <a href="/" class="font-clash font-semibold text-2xl tracking-tight text-[#0a0a0a]">
+        <a href="/" class="font-semibold text-2xl tracking-tight transition-opacity hover:opacity-60"
+           style="font-family:'Clash Grotesk',sans-serif; color: var(--perle)">
             Neroblanka
         </a>
     </div>
