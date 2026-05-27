@@ -38,7 +38,7 @@ class Assignment extends Model
 
     public function resolveRouteBinding($value, $field = null): ?self
     {
-        return static::withoutGlobalScopes()->where($field ?? $this->getRouteKeyName(), $value)->first();
+        return static::withoutGlobalScope(FreelanceOwnedScope::class)->where($field ?? $this->getRouteKeyName(), $value)->first();
     }
 
     public function project(): BelongsTo

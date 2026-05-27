@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Enums\LeadStatus;
+use App\Enums\NoFitReason;
 use App\Enums\ServiceType;
 use App\Models\Lead;
 use App\Services\LeadService;
@@ -29,6 +30,7 @@ class LeadInbox extends Component
     public ?string $selectedLeadId = null;
     public string $statusNote = '';
     public string $newNote = '';
+    public string $noFitReason = '';
 
     public function updatingFilterStatus(): void { $this->resetPage(); }
     public function updatingFilterService(): void { $this->resetPage(); }
@@ -36,22 +38,33 @@ class LeadInbox extends Component
 
     public function changeStatus(string $leadId, string $status, LeadService $leadService): void
     {
-        $lead = Lead::withoutGlobalScopes()->findOrFail($leadId);
-        $leadService->changeStatus($lead, LeadStatus::from($status), $this->statusNote ?: null, auth()->id());
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        $lead = Lead::findOrFail($leadId);
+        $newStatus = LeadStatus::from($status);
+
+        $noFitReason = ($newStatus === LeadStatus::NO_FIT && $this->noFitReason)
+            ? NoFitReason::from($this->noFitReason)
+            : null;
+
+        $leadService->changeStatus($lead, $newStatus, $this->statusNote ?: null, auth()->id(), $noFitReason);
         $this->statusNote = '';
+        $this->noFitReason = '';
     }
 
     public function addNote(string $leadId, LeadService $leadService): void
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $this->validate(['newNote' => 'required|string|min:2|max:2000']);
-        $lead = Lead::withoutGlobalScopes()->findOrFail($leadId);
+        $lead = Lead::findOrFail($leadId);
         $leadService->addNote($lead, $this->newNote, auth()->id());
         $this->newNote = '';
     }
 
     public function render()
     {
-        $query = Lead::withoutGlobalScopes()
+        $query = Lead::query()
             ->with(['brief', 'events'])
             ->latest();
 
@@ -75,6 +88,7 @@ class LeadInbox extends Component
             'leads' => $query->paginate(25),
             'statuses' => LeadStatus::cases(),
             'services' => ServiceType::cases(),
+            'noFitReasons' => NoFitReason::cases(),
         ]);
     }
 }

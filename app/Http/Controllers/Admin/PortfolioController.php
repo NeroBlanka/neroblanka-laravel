@@ -63,11 +63,11 @@ class PortfolioController extends Controller
     public function destroy(PortfolioItem $portfolio): RedirectResponse
     {
         if ($portfolio->cover_image) {
-            Storage::delete($portfolio->cover_image);
+            Storage::disk('s3_public')->delete($portfolio->cover_image);
         }
 
         foreach ($portfolio->gallery ?? [] as $path) {
-            Storage::delete($path);
+            Storage::disk('s3_public')->delete($path);
         }
 
         $portfolio->delete();
@@ -118,10 +118,10 @@ class PortfolioController extends Controller
             $request->validate(['cover_image' => 'image|max:5120']);
 
             if ($item->cover_image) {
-                Storage::delete($item->cover_image);
+                Storage::disk('s3_public')->delete($item->cover_image);
             }
 
-            $path = $request->file('cover_image')->store("portfolio/{$item->id}/cover", 's3');
+            $path = $request->file('cover_image')->store("portfolio/{$item->id}/cover", 's3_public');
             $item->update(['cover_image' => $path]);
         }
 
@@ -131,7 +131,7 @@ class PortfolioController extends Controller
             $existing = $item->gallery ?? [];
 
             foreach ($request->file('gallery') as $file) {
-                $existing[] = $file->store("portfolio/{$item->id}/gallery", 's3');
+                $existing[] = $file->store("portfolio/{$item->id}/gallery", 's3_public');
             }
 
             $item->update(['gallery' => $existing]);
@@ -146,7 +146,7 @@ class PortfolioController extends Controller
             ));
 
             foreach ($toRemove as $path) {
-                Storage::delete($path);
+                Storage::disk('s3_public')->delete($path);
             }
 
             $item->update(['gallery' => $gallery ?: null]);

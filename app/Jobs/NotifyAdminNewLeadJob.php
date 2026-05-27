@@ -18,7 +18,7 @@ class NotifyAdminNewLeadJob implements ShouldQueue
 
     public function handle(): void
     {
-        $admin = User::withoutGlobalScopes()->where('role', 'admin')->first();
+        $admin = User::where('role', 'admin')->first();
         if (!$admin) {
             return;
         }

@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Project;
+use App\Models\User;
+use App\Scopes\ClientOwnedScope;
 use App\Services\AssignmentService;
 use App\Services\FreelanceMatchingService;
 use Livewire\Attributes\On;
@@ -16,13 +18,16 @@ class FreelanceMatcher extends Component
 
     public function mount(string $projectId): void
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
         $this->projectId = $projectId;
     }
 
     public function assign(string $freelanceId, FreelanceMatchingService $matcher, AssignmentService $assignmentService): void
     {
-        $project = Project::withoutGlobalScopes()->findOrFail($this->projectId);
-        $freelance = \App\Models\User::withoutGlobalScopes()->findOrFail($freelanceId);
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        $project = Project::withoutGlobalScope(ClientOwnedScope::class)->findOrFail($this->projectId);
+        $freelance = User::findOrFail($freelanceId);
 
         abort_unless($freelance->role === 'freelance', 422);
 
@@ -34,7 +39,7 @@ class FreelanceMatcher extends Component
 
     public function render(FreelanceMatchingService $matcher): \Illuminate\View\View
     {
-        $project = Project::withoutGlobalScopes()->findOrFail($this->projectId);
+        $project = Project::withoutGlobalScope(ClientOwnedScope::class)->findOrFail($this->projectId);
         $ranked = $matcher->rankForProject($project);
 
         return view('livewire.admin.freelance-matcher', compact('ranked', 'project'));

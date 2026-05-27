@@ -34,7 +34,7 @@ class DeliverableService
             return $deliverable;
         });
 
-        SendDeliverableSubmitted::dispatch($assignment->project->client, $deliverable)->onQueue('emails');
+        SendDeliverableSubmitted::dispatch($assignment->project->client, $deliverable)->onQueue('emails')->afterCommit();
 
         return $deliverable;
     }
@@ -51,7 +51,7 @@ class DeliverableService
             return $locked;
         });
 
-        SendDeliverableApproved::dispatch($locked->assignment->freelance, $locked)->onQueue('emails');
+        SendDeliverableApproved::dispatch($locked->assignment->freelance, $locked)->onQueue('emails')->afterCommit();
 
         return $locked;
     }
@@ -67,7 +67,7 @@ class DeliverableService
             return $locked;
         });
 
-        SendDeliverableRevision::dispatch($locked->assignment->freelance, $locked)->onQueue('emails');
+        SendDeliverableRevision::dispatch($locked->assignment->freelance, $locked)->onQueue('emails')->afterCommit();
 
         return $locked;
     }

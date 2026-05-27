@@ -6,6 +6,7 @@ use App\Jobs\SendProjectBriefReceived;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectService
@@ -16,11 +17,13 @@ class ProjectService
             $data['brief_file_url'] = Storage::disk('s3')->put('briefs', $briefFile);
         }
 
-        $project = Project::create(array_merge($data, ['client_id' => $client->id]));
+        $project = DB::transaction(function () use ($client, $data) {
+            return Project::create(array_merge($data, ['client_id' => $client->id]));
+        });
 
-        $admin = User::withoutGlobalScopes()->where('role', 'admin')->first();
+        $admin = User::where('role', 'admin')->first();
         if ($admin) {
-            SendProjectBriefReceived::dispatch($admin, $project)->onQueue('emails');
+            SendProjectBriefReceived::dispatch($admin, $project)->onQueue('emails')->afterCommit();
         }
 
         return $project;

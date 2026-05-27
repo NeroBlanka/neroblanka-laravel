@@ -18,8 +18,7 @@ class FreelanceMatchingService
             ? $project->service_type
             : $project->service_type?->value;
 
-        $freelances = User::withoutGlobalScopes()
-            ->where('role', 'freelance')
+        $freelances = User::where('role', 'freelance')
             ->with(['freelanceProfile', 'skills', 'assignments' => fn($q) => $q->where('status', 'active')])
             ->get();
 

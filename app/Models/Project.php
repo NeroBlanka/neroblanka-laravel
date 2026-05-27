@@ -45,7 +45,7 @@ class Project extends Model
 
     public function resolveRouteBinding($value, $field = null): ?self
     {
-        return static::withoutGlobalScopes()->where($field ?? $this->getRouteKeyName(), $value)->first();
+        return static::withoutGlobalScope(ClientOwnedScope::class)->where($field ?? $this->getRouteKeyName(), $value)->first();
     }
 
     public function client(): BelongsTo

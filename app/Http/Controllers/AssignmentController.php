@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\User;
+use App\Scopes\ClientOwnedScope;
 use App\Services\AssignmentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class AssignmentController extends Controller
             'internal_notes' => ['nullable', 'string', 'max:2000'],
         ]);
 
-        $project = Project::withoutGlobalScopes()->findOrFail($validated['project_id']);
+        $project = Project::withoutGlobalScope(ClientOwnedScope::class)->findOrFail($validated['project_id']);
         $freelance = User::findOrFail($validated['freelance_id']);
 
         abort_unless($freelance->role === 'freelance', 422, 'L\'utilisateur sélectionné n\'est pas un freelance.');

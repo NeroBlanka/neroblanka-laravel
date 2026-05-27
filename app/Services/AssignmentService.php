@@ -6,6 +6,7 @@ use App\Jobs\SendAssignmentCreated;
 use App\Models\Assignment;
 use App\Models\Project;
 use App\Models\User;
+use App\Scopes\FreelanceOwnedScope;
 use Illuminate\Support\Facades\DB;
 
 class AssignmentService
@@ -13,7 +14,7 @@ class AssignmentService
     public function create(Project $project, User $freelance, ?string $internalNotes = null): Assignment
     {
         $assignment = DB::transaction(function () use ($project, $freelance, $internalNotes) {
-            $assignment = Assignment::withoutGlobalScopes()->create([
+            $assignment = Assignment::withoutGlobalScope(FreelanceOwnedScope::class)->create([
                 'project_id' => $project->id,
                 'freelance_id' => $freelance->id,
                 'status' => 'active',
@@ -25,7 +26,7 @@ class AssignmentService
             return $assignment;
         });
 
-        SendAssignmentCreated::dispatch($freelance, $assignment)->onQueue('emails');
+        SendAssignmentCreated::dispatch($freelance, $assignment)->onQueue('emails')->afterCommit();
 
         return $assignment;
     }

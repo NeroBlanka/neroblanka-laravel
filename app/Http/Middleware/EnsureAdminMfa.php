@@ -17,8 +17,8 @@ class EnsureAdminMfa
         }
 
         if (! session('admin_mfa_passed')) {
-            return redirect()->route('admin.mfa.verify')
-                ->with('intended', $request->url());
+            session()->put('url.intended', $request->url());
+            return redirect()->route('admin.mfa.verify');
         }
 
         return $next($request);

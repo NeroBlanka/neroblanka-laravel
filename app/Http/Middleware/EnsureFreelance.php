@@ -10,8 +10,12 @@ class EnsureFreelance
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->role !== 'freelance') {
-            abort(403);
+        if (! auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        if (auth()->user()->role !== 'freelance') {
+            return redirect()->route(auth()->user()->role . '.dashboard');
         }
 
         return $next($request);

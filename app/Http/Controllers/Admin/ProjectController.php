@@ -31,8 +31,7 @@ class ProjectController extends Controller
                 $d->id => Storage::disk('s3')->temporaryUrl($d->file_url, now()->addMinutes(30)),
             ]);
 
-        $availableFreelances = User::withoutGlobalScopes()
-            ->where('role', 'freelance')
+        $availableFreelances = User::where('role', 'freelance')
             ->where('is_available', true)
             ->orderBy('full_name')
             ->get();
