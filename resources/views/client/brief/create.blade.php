@@ -4,129 +4,128 @@
     <div class="max-w-2xl mx-auto px-6 py-10">
 
         <div class="mb-10">
-            <a href="{{ route('client.dashboard') }}" class="inline-flex items-center gap-1 text-sm text-[#888780] hover:text-[#0a0a0a] transition mb-6">
-                &larr; Mes projets
+            <a href="{{ route('client.dashboard') }}" class="label-mono inline-flex items-center gap-2 mb-6 hover:opacity-70 transition-opacity">
+                ← Mes projets
             </a>
             <p class="label-mono mb-2">Brief projet</p>
-            <h1 class="text-3xl">Décrivez votre projet</h1>
+            <h1 class="text-3xl" style="color: var(--perle)">Décrivez votre projet</h1>
         </div>
 
-        <form method="POST" action="{{ route('client.brief.store') }}" enctype="multipart/form-data" class="space-y-8">
+        <form method="POST" action="{{ route('client.brief.store') }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
 
-            {{-- Step 1: Service type --}}
+            {{-- Service type --}}
             <div class="card p-6">
-                <h2 class="text-base font-semibold mb-5">Type de service</h2>
+                <p class="label-mono mb-5" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">Type de service</p>
 
                 <div class="grid grid-cols-1 gap-3">
-                    @php
-                    $services = [
-                        ['value' => 'identite_visuelle', 'label' => 'Identité Visuelle Premium',      'description' => 'Logo, charte graphique, système visuel complet', 'price' => '80 000 DA'],
-                        ['value' => 'direction_3d_ia',   'label' => 'Direction Artistique 3D + IA',   'description' => 'Visuels produit photoréalistes, rendus 3D, assets IA', 'price' => '150 000 DA'],
-                        ['value' => 'contenu_mensuel',   'label' => 'Contenu Visuel Mensuel',         'description' => 'Direction artistique fixée une fois, production IA chaque mois', 'price' => '35 000 DA/mois'],
-                        ['value' => 'marketing_digital', 'label' => 'Marketing Digital',              'description' => 'Stratégie visuelle, campagnes, contenus multi-canaux', 'price' => 'Sur devis'],
-                        ['value' => 'autre',             'label' => 'Autre / Je ne sais pas encore',  'description' => 'Décrivez votre besoin, on définit ensemble', 'price' => ''],
-                    ];
-                    @endphp
-
                     @foreach($services as $service)
-                        <label class="flex items-center justify-between border border-black/[0.08] rounded-lg px-5 py-4 cursor-pointer hover:border-[#0a0a0a] transition has-[:checked]:border-[#0a0a0a] has-[:checked]:bg-[#0a0a0a]/[0.02]">
+                        @if($service['value'] !== \App\Enums\ServiceType::MIXED_PROJECT->value)
+                        <label class="flex items-center justify-between rounded-xl px-5 py-4 cursor-pointer transition-all"
+                               style="border: 1px solid rgba(255,255,255,0.08); background: var(--glass)"
+                               x-data
+                               :style="$el.querySelector('input').checked
+                                   ? 'border-color: rgba(124,92,252,0.4); background: rgba(124,92,252,0.08)'
+                                   : 'border-color: rgba(255,255,255,0.08); background: var(--glass)'">
                             <div class="flex items-center gap-4">
                                 <input type="radio" name="service_type" value="{{ $service['value'] }}"
-                                       class="accent-[#0a0a0a]"
-                                       {{ old('service_type') === $service['value'] ? 'checked' : '' }} />
+                                       style="accent-color: var(--purple)"
+                                       {{ old('service_type') === $service['value'] ? 'checked' : '' }}
+                                       @change="$el.closest('label').style.borderColor = 'rgba(124,92,252,0.4)'; $el.closest('label').style.background = 'rgba(124,92,252,0.08)'" />
                                 <div>
-                                    <p class="font-medium text-sm">{{ $service['label'] }}</p>
-                                    <p class="text-xs text-[#888780] mt-0.5">{{ $service['description'] }}</p>
+                                    <p class="font-medium text-sm" style="color: var(--perle)">{{ $service['label'] }}</p>
                                 </div>
                             </div>
-                            <span class="label-mono text-[10px] shrink-0">{{ $service['price'] }}</span>
                         </label>
+                        @endif
                     @endforeach
                 </div>
                 @error('service_type')
-                    <p class="text-red-500 text-sm mt-3">{{ $message }}</p>
+                    <p class="text-xs mt-3" style="color: #f87171">{{ $message }}</p>
                 @enderror
             </div>
 
-            {{-- Step 2: Project details --}}
+            {{-- Détails projet --}}
             <div class="card p-6 space-y-5">
-                <h2 class="text-base font-semibold">Détails du projet</h2>
+                <p class="label-mono" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">Détails du projet</p>
 
                 <div>
-                    <label for="title" class="block text-sm font-medium text-[#0a0a0a] mb-1.5">Titre du projet</label>
+                    <label for="title" class="block label-mono mb-2">Titre du projet</label>
                     <input id="title" type="text" name="title" value="{{ old('title') }}"
-                           class="input-base" placeholder="Ex : Refonte identité visuelle" required />
+                           class="input-base w-full" placeholder="Ex : Refonte identité visuelle" required />
                     @error('title')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="description" class="block text-sm font-medium text-[#0a0a0a] mb-1.5">Description</label>
+                    <label for="description" class="block label-mono mb-2">Description</label>
                     <textarea id="description" name="description" rows="5"
-                              class="input-base resize-none"
+                              class="input-base w-full resize-none"
                               placeholder="Décrivez votre projet, vos objectifs, votre cible…" required>{{ old('description') }}</textarea>
                     @error('description')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="deadline" class="block text-sm font-medium text-[#0a0a0a] mb-1.5">Deadline souhaitée</label>
+                    <label for="deadline" class="block label-mono mb-2">Deadline souhaitée</label>
                     <input id="deadline" type="date" name="deadline" value="{{ old('deadline') }}"
-                           class="input-base" />
+                           class="input-base w-full" />
                     @error('deadline')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
-            {{-- Step 3: References & notes --}}
+            {{-- Références & notes --}}
             <div class="card p-6 space-y-5">
-                <h2 class="text-base font-semibold">Références & notes</h2>
+                <p class="label-mono" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">Références & notes</p>
 
                 <div>
-                    <label for="reference_urls" class="block text-sm font-medium text-[#0a0a0a] mb-1.5">
+                    <label for="reference_urls" class="block label-mono mb-2">
                         URLs de référence
-                        <span class="text-[#888780] font-normal">(une par ligne)</span>
+                        <span class="font-normal" style="color: var(--gris-mid)">(une par ligne)</span>
                     </label>
                     <textarea id="reference_urls" name="reference_urls" rows="3"
-                              class="input-base resize-none font-mono text-xs"
+                              class="input-base w-full resize-none font-mono text-xs"
                               placeholder="https://example.com&#10;https://dribbble.com/...">{{ old('reference_urls') }}</textarea>
                     @error('reference_urls')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="notes" class="block text-sm font-medium text-[#0a0a0a] mb-1.5">
+                    <label for="notes" class="block label-mono mb-2">
                         Notes complémentaires
-                        <span class="text-[#888780] font-normal">(optionnel)</span>
+                        <span class="font-normal" style="color: var(--gris-mid)">(optionnel)</span>
                     </label>
                     <textarea id="notes" name="notes" rows="3"
-                              class="input-base resize-none"
+                              class="input-base w-full resize-none"
                               placeholder="Contraintes techniques, budget, précisions…">{{ old('notes') }}</textarea>
                     @error('notes')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="brief_file" class="block text-sm font-medium text-[#0a0a0a] mb-1.5">
+                    <label for="brief_file" class="block label-mono mb-2">
                         Fichier brief
-                        <span class="text-[#888780] font-normal">(PDF, DOC, ZIP — optionnel)</span>
+                        <span class="font-normal" style="color: var(--gris-mid)">(PDF, DOC, ZIP — optionnel)</span>
                     </label>
-                    <input id="brief_file" type="file" name="brief_file"
-                           class="text-sm text-[#555350] file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-[#e8e7e2] file:text-[#0a0a0a] hover:file:bg-[#d8d7d2] cursor-pointer" />
+                    <div class="neo-sunken rounded-xl px-4 py-3">
+                        <input id="brief_file" type="file" name="brief_file"
+                               class="w-full text-sm cursor-pointer file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-medium file:cursor-pointer"
+                               style="color: var(--gris)" />
+                    </div>
                     @error('brief_file')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
             <button type="submit" class="btn-primary w-full text-base py-4">
-                Envoyer mon brief &rarr;
+                Envoyer mon brief →
             </button>
         </form>
 

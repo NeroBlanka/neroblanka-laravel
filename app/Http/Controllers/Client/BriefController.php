@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Enums\ServiceType;
 use App\Http\Controllers\Controller;
-use App\Models\Service;
 use App\Services\ProjectService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\View\View;
 
 class BriefController extends Controller
@@ -15,7 +16,7 @@ class BriefController extends Controller
 
     public function create(): View
     {
-        $services = Service::where('is_active', true)->get();
+        $services = ServiceType::options();
 
         return view('client.brief.create', compact('services'));
     }
@@ -23,14 +24,14 @@ class BriefController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'service_type' => ['nullable', 'in:identite_visuelle,direction_3d_ia,contenu_mensuel,marketing_digital,autre'],
-            'budget_da' => ['nullable', 'integer', 'min:0'],
-            'deadline' => ['nullable', 'date', 'after:today'],
-            'brief_file' => ['nullable', 'file', 'mimes:pdf,png,jpg,jpeg,zip', 'max:10240'],
+            'title'          => ['required', 'string', 'max:255'],
+            'description'    => ['required', 'string'],
+            'service_type'   => ['nullable', new Enum(ServiceType::class)],
+            'budget_da'      => ['nullable', 'integer', 'min:0'],
+            'deadline'       => ['nullable', 'date', 'after:today'],
+            'brief_file'     => ['nullable', 'file', 'mimes:pdf,png,jpg,jpeg,zip', 'max:10240'],
             'reference_urls' => ['nullable', 'string'],
-            'notes' => ['nullable', 'string'],
+            'notes'          => ['nullable', 'string'],
         ]);
 
         $project = $this->projectService->create(

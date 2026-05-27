@@ -43,4 +43,44 @@ enum ServiceType: string
             self::MIXED_PROJECT => '⊕',
         };
     }
+
+    public function slug(): string
+    {
+        return match($this) {
+            self::BRANDING => 'branding',
+            self::EVENT_STAND_3D => '3d-stand-event',
+            self::PRODUCT_RENDERING_3D => '3d-product-rendering',
+            self::MOTION_DESIGN => 'motion-design',
+            self::SOCIAL_CAMPAIGN => 'social-campaign',
+            self::WEBSITE => 'website',
+            self::AI_IMAGE_VIDEO => 'ai-image-video',
+            self::AUTOMATION => 'automation',
+            self::MIXED_PROJECT => 'mixed-project',
+        };
+    }
+
+    /** @return string[] */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    /** @return array<int, array{value: string, label: string}> */
+    public static function options(): array
+    {
+        return array_map(
+            fn(self $case) => ['value' => $case->value, 'label' => $case->label()],
+            self::cases()
+        );
+    }
+
+    public static function fromSlug(string $slug): ?self
+    {
+        foreach (self::cases() as $case) {
+            if ($case->slug() === $slug) {
+                return $case;
+            }
+        }
+        return null;
+    }
 }

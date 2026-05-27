@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Scopes\FreelanceOwnedScope;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -12,11 +13,11 @@ class FreelanceController extends Controller
     public function index(): View
     {
         $freelances = User::where('role', 'freelance')
-            ->withCount(['assignments as active_assignments_count' => fn($q) => $q->where('status', 'active')])
+            ->withCount(['assignments as active_assignments_count' => fn($q) => $q->withoutGlobalScope(FreelanceOwnedScope::class)->where('status', 'active')])
             ->orderBy('full_name')
             ->get();
 
-        return view('admin.freelances', compact('freelances'));
+        return view('admin.freelances.index', compact('freelances'));
     }
 
     public function toggleAvailability(User $user): RedirectResponse
