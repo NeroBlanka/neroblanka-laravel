@@ -1,10 +1,10 @@
-<div class="min-h-screen pt-24 pb-16 px-4" style="background: var(--bg)">
+<div class="min-h-screen pt-24 pb-16 px-4">
 
     {{-- Barre de progression --}}
-    <div class="fixed top-16 left-0 right-0 z-40 h-px" style="background: rgba(255,255,255,0.08)"
+    <div class="fixed top-16 left-0 right-0 z-40 h-0.5" style="background: var(--gris-bord-soft)"
          role="progressbar" aria-valuenow="{{ $this->getProgress() }}" aria-valuemin="0" aria-valuemax="100">
         <div class="h-full transition-all duration-500"
-             style="width: {{ $this->getProgress() }}%; background: linear-gradient(90deg, var(--purple), var(--pink))"></div>
+             style="width: {{ $this->getProgress() }}%; background: var(--carbone)"></div>
     </div>
 
     <div class="max-w-xl mx-auto">
@@ -12,7 +12,7 @@
         {{-- Header étape --}}
         <div class="mb-10">
             <p class="label-mono mb-3">Étape {{ $step }} / {{ $totalSteps }}</p>
-            <h1 class="text-2xl font-semibold" style="color: var(--perle)">
+            <h1 class="display text-3xl md:text-4xl text-carbone">
                 @switch($step)
                     @case(1) Quel est votre besoin ? @break
                     @case(2) Qui êtes-vous ? @break
@@ -31,19 +31,18 @@
             @if($step === 1)
                 <div class="grid grid-cols-1 gap-3">
                     @foreach($services as $service)
-                        <label class="flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all"
+                        <label class="flex items-center gap-4 p-4 rounded-2xl cursor-pointer transition-all duration-200"
                                style="{{ $service_type === $service->value
-                                   ? 'background: rgba(124,92,252,0.1); border: 1px solid rgba(124,92,252,0.4)'
-                                   : 'background: var(--glass); border: 1px solid rgba(255,255,255,0.08)' }}
-                               backdrop-filter: blur(16px);">
-                            <input type="radio" wire:model="service_type" value="{{ $service->value }}" class="sr-only">
+                                   ? 'background: var(--carbone); border: 1px solid var(--carbone); color: var(--perle)'
+                                   : 'background: var(--papier); border: 1px solid var(--gris-bord); color: var(--carbone)' }}">
+                            <input type="radio" wire:model.live="service_type" value="{{ $service->value }}" class="sr-only">
                             <span class="text-xl w-8 text-center" aria-hidden="true">{{ $service->icon() }}</span>
-                            <span class="text-sm" style="color: var(--perle)">{{ $service->label() }}</span>
+                            <span class="text-sm font-medium">{{ $service->label() }}</span>
                         </label>
                     @endforeach
                 </div>
                 @error('service_type')
-                    <p class="mt-3 text-sm" style="color: #f87171">{{ $message }}</p>
+                    <p class="mt-3 text-sm" style="color: var(--status-danger)">{{ $message }}</p>
                 @enderror
 
             {{-- STEP 2 — Contact --}}
@@ -53,13 +52,13 @@
                         <label class="block label-mono mb-2">Nom complet *</label>
                         <input wire:model="full_name" type="text" autocomplete="name"
                             class="input-base w-full" placeholder="Sarah Amrani">
-                        @error('full_name') <p class="mt-1.5 text-xs" style="color: #f87171">{{ $message }}</p> @enderror
+                        @error('full_name') <p class="mt-1.5 text-xs" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="block label-mono mb-2">Email *</label>
                         <input wire:model="email" type="email" autocomplete="email"
                             class="input-base w-full" placeholder="sarah@startup.dz">
-                        @error('email') <p class="mt-1.5 text-xs" style="color: #f87171">{{ $message }}</p> @enderror
+                        @error('email') <p class="mt-1.5 text-xs" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -75,7 +74,7 @@
                     </div>
                     <div>
                         <label class="block label-mono mb-2">Type de structure</label>
-                        <select wire:model="client_type" class="select-dark w-full">
+                        <select wire:model="client_type" class="select-base w-full">
                             <option value="">Choisir...</option>
                             <option value="startup">Startup / Scaleup</option>
                             <option value="pme">PME / ETI</option>
@@ -94,31 +93,31 @@
                         <label class="block label-mono mb-4">Budget estimé *</label>
                         <div class="grid grid-cols-1 gap-2">
                             @foreach(['< 500$', '500$ – 2 000$', '2 000$ – 10 000$', '10 000$ – 30 000$', '> 30 000$'] as $range)
-                                <label class="flex items-center gap-4 p-3.5 rounded-xl cursor-pointer transition-all"
+                                <label class="flex items-center gap-4 p-3.5 rounded-xl cursor-pointer transition-all duration-200"
                                        style="{{ $budget_range === $range
-                                           ? 'background: rgba(124,92,252,0.1); border: 1px solid rgba(124,92,252,0.4)'
-                                           : 'background: var(--glass); border: 1px solid rgba(255,255,255,0.08)' }}">
-                                    <input type="radio" wire:model="budget_range" value="{{ $range }}" class="sr-only">
-                                    <span class="text-sm" style="color: var(--perle)">{{ $range }}</span>
+                                           ? 'background: var(--carbone); border: 1px solid var(--carbone); color: var(--perle)'
+                                           : 'background: var(--papier); border: 1px solid var(--gris-bord); color: var(--carbone)' }}">
+                                    <input type="radio" wire:model.live="budget_range" value="{{ $range }}" class="sr-only">
+                                    <span class="text-sm font-medium">{{ $range }}</span>
                                 </label>
                             @endforeach
                         </div>
-                        @error('budget_range') <p class="mt-2 text-xs" style="color: #f87171">{{ $message }}</p> @enderror
+                        @error('budget_range') <p class="mt-2 text-xs" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="block label-mono mb-4">Délai idéal *</label>
                         <div class="grid grid-cols-2 gap-2">
                             @foreach(['< 2 semaines', '2 – 4 semaines', '1 – 3 mois', '> 3 mois'] as $range)
-                                <label class="flex items-center gap-3 p-3.5 rounded-xl cursor-pointer transition-all"
+                                <label class="flex items-center gap-3 p-3.5 rounded-xl cursor-pointer transition-all duration-200"
                                        style="{{ $deadline_range === $range
-                                           ? 'background: rgba(124,92,252,0.1); border: 1px solid rgba(124,92,252,0.4)'
-                                           : 'background: var(--glass); border: 1px solid rgba(255,255,255,0.08)' }}">
-                                    <input type="radio" wire:model="deadline_range" value="{{ $range }}" class="sr-only">
-                                    <span class="text-sm" style="color: var(--perle)">{{ $range }}</span>
+                                           ? 'background: var(--carbone); border: 1px solid var(--carbone); color: var(--perle)'
+                                           : 'background: var(--papier); border: 1px solid var(--gris-bord); color: var(--carbone)' }}">
+                                    <input type="radio" wire:model.live="deadline_range" value="{{ $range }}" class="sr-only">
+                                    <span class="text-sm font-medium">{{ $range }}</span>
                                 </label>
                             @endforeach
                         </div>
-                        @error('deadline_range') <p class="mt-2 text-xs" style="color: #f87171">{{ $message }}</p> @enderror
+                        @error('deadline_range') <p class="mt-2 text-xs" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
@@ -130,7 +129,7 @@
                         <textarea wire:model="project_description" rows="5"
                             class="input-base w-full resize-none"
                             placeholder="Décrivez votre projet, vos objectifs, le contexte..."></textarea>
-                        @error('project_description') <p class="mt-1.5 text-xs" style="color: #f87171">{{ $message }}</p> @enderror
+                        @error('project_description') <p class="mt-1.5 text-xs" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="block label-mono mb-2">Inspirations / références</label>
@@ -166,28 +165,28 @@
             {{-- STEP 6 — Fichiers --}}
             @elseif($step === 6)
                 <div>
-                    <p class="text-sm mb-6" style="color: var(--gris)">Formats acceptés: PDF, PNG, JPEG — 10 Mo max par fichier, 5 fichiers max.</p>
-                    <label class="flex flex-col items-center justify-center w-full h-40 rounded-xl cursor-pointer transition-all"
-                        style="border: 1px dashed rgba(255,255,255,0.15); background: var(--glass)"
+                    <p class="text-sm mb-6 text-gris">Formats acceptés: PDF, PNG, JPEG — 10 Mo max par fichier, 5 fichiers max.</p>
+                    <label class="flex flex-col items-center justify-center w-full h-40 rounded-2xl cursor-pointer transition-all"
+                        style="border: 1px dashed var(--gris-bord); background: var(--perle)"
                         x-data="{ dragging: false }"
                         @dragover.prevent="dragging = true"
                         @dragleave.prevent="dragging = false"
                         @drop.prevent="dragging = false"
-                        :style="dragging ? 'border-color: rgba(124,92,252,0.5); background: rgba(124,92,252,0.05)' : ''">
+                        :style="dragging ? 'border-color: var(--carbone); background: var(--gris-section)' : ''">
                         <input type="file" wire:model="uploaded_files" multiple accept=".pdf,.png,.jpg,.jpeg" class="sr-only">
-                        <span class="text-2xl mb-2" style="color: var(--gris)">↑</span>
-                        <span class="text-sm" style="color: var(--gris)">
-                            Glissez vos fichiers ici ou <span style="color: var(--perle); text-decoration: underline">parcourez</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mb-2" style="color: var(--gris-texte)"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span class="text-sm text-gris">
+                            Glissez vos fichiers ici ou <span class="text-carbone underline">parcourez</span>
                         </span>
                     </label>
                     @error('uploaded_files.*')
-                        <p class="mt-3 text-sm" style="color: #f87171">{{ $message }}</p>
+                        <p class="mt-3 text-sm" style="color: var(--status-danger)">{{ $message }}</p>
                     @enderror
                     @if(count($uploaded_files) > 0)
                         <ul class="mt-4 space-y-2">
                             @foreach($uploaded_files as $file)
-                                <li class="flex items-center gap-3 text-sm" style="color: var(--gris)">
-                                    <span style="color: #6ee7b7">✓</span>
+                                <li class="flex items-center gap-3 text-sm text-gris">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                     {{ is_object($file) ? $file->getClientOriginalName() : $file }}
                                 </li>
                             @endforeach
@@ -198,33 +197,33 @@
             {{-- STEP 7 — Confirmation --}}
             @elseif($step === 7)
                 <div class="space-y-8">
-                    <div class="card p-5 space-y-3 text-sm">
+                    <div class="card-on-perle rounded-2xl p-5 space-y-3 text-sm">
                         <div class="flex justify-between">
-                            <span style="color: var(--gris)">Service</span>
-                            <span style="color: var(--perle)">{{ collect(\App\Enums\ServiceType::cases())->firstWhere('value', $service_type)?->label() }}</span>
+                            <span class="text-gris">Service</span>
+                            <span class="text-carbone font-medium">{{ collect(\App\Enums\ServiceType::cases())->firstWhere('value', $service_type)?->label() }}</span>
                         </div>
-                        <div class="flex justify-between" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px">
-                            <span style="color: var(--gris)">Contact</span>
-                            <span style="color: var(--perle)">{{ $full_name }} · {{ $email }}</span>
+                        <div class="flex justify-between pt-3" style="border-top: 1px solid var(--gris-bord-soft)">
+                            <span class="text-gris">Contact</span>
+                            <span class="text-carbone font-medium">{{ $full_name }} · {{ $email }}</span>
                         </div>
-                        <div class="flex justify-between" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px">
-                            <span style="color: var(--gris)">Budget</span>
-                            <span style="color: var(--perle)">{{ $budget_range }}</span>
+                        <div class="flex justify-between pt-3" style="border-top: 1px solid var(--gris-bord-soft)">
+                            <span class="text-gris">Budget</span>
+                            <span class="text-carbone font-medium">{{ $budget_range }}</span>
                         </div>
-                        <div class="flex justify-between" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px">
-                            <span style="color: var(--gris)">Délai</span>
-                            <span style="color: var(--perle)">{{ $deadline_range }}</span>
+                        <div class="flex justify-between pt-3" style="border-top: 1px solid var(--gris-bord-soft)">
+                            <span class="text-gris">Délai</span>
+                            <span class="text-carbone font-medium">{{ $deadline_range }}</span>
                         </div>
                     </div>
 
                     <label class="flex items-start gap-3 cursor-pointer">
                         <input wire:model="terms_accepted" type="checkbox"
-                               class="mt-0.5 w-4 h-4" style="accent-color: var(--purple)">
-                        <span class="text-sm" style="color: var(--gris)">
+                               class="mt-0.5 w-4 h-4" style="accent-color: var(--carbone)">
+                        <span class="text-sm text-gris">
                             Je confirme que les informations fournies sont exactes et j'accepte que Neroblanka me contacte pour étudier mon projet.
                         </span>
                     </label>
-                    @error('terms_accepted') <p class="text-xs" style="color: #f87171">{{ $message }}</p> @enderror
+                    @error('terms_accepted') <p class="text-xs" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                 </div>
             @endif
 
@@ -232,17 +231,17 @@
             <div class="flex items-center justify-between mt-10">
                 @if($step > 1)
                     <button type="button" wire:click="prevStep"
-                        class="text-sm transition-opacity hover:opacity-60" style="color: var(--gris)">
+                        class="btn-ghost text-sm">
                         ← Retour
                     </button>
                 @else
                     <div></div>
                 @endif
 
-                <button type="submit" class="btn-primary disabled:opacity-40"
+                <button type="submit" class="btn-primary px-6 py-3 disabled:opacity-40"
                         wire:loading.attr="disabled" wire:target="advance,prevStep">
                     <span wire:loading.remove wire:target="advance">
-                        {{ $step === $totalSteps ? 'Envoyer mon diagnostic' : 'Continuer →' }}
+                        {{ $step === $totalSteps ? 'Envoyer mon diagnostic' : 'Continuer' }}
                     </span>
                     <span wire:loading wire:target="advance">Envoi en cours...</span>
                 </button>

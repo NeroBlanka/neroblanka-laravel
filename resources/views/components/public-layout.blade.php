@@ -89,7 +89,7 @@
         </div>
     </header>
 
-    <main class="pt-16">{{ $slot }}</main>
+    <main class="pt-16" data-scroll-experience>{{ $slot }}</main>
 
     {{-- ─── Footer ─── --}}
     <footer class="border-t" style="border-color: var(--gris-bord-soft); background: var(--perle);">

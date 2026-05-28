@@ -1,13 +1,12 @@
-<x-public-layout title="Services — Neroblanka" description="Branding, 3D, motion design, web, IA — 7 pôles d'expertise créative à Alger.">
-    <div class="pt-32 pb-24 px-6">
+<x-public-layout title="Services — Neroblanka" description="Branding, 3D, motion design, web, IA — 8 pôles d'expertise créative à Blida.">
+    <div class="pt-24 md:pt-32 pb-24 px-6">
         <div class="max-w-6xl mx-auto">
 
-            <div class="inline-block mb-4 px-3 py-1 rounded-full text-xs font-mono tracking-wider fade-in"
-                 style="border: 1px solid rgba(255,255,255,0.12); color: var(--gris)">Expertise</div>
-            <h1 class="font-clash text-4xl md:text-5xl font-semibold mb-4 fade-up" style="color: var(--perle)">
-                7 pôles de création
+            <p class="label-mono mb-5" data-reveal>Expertise</p>
+            <h1 class="display text-4xl md:text-6xl mb-6" data-reveal>
+                8 pôles de création.
             </h1>
-            <p class="text-base mb-16 max-w-xl fade-up" style="color: var(--gris); transition-delay: 60ms;">
+            <p class="text-lg max-w-xl text-gris mb-16" data-reveal>
                 Du concept à la production, un accompagnement complet pour les marques qui ont des ambitions.
             </p>
 
@@ -48,37 +47,31 @@
             ];
             @endphp
 
-            <div class="fade-up stagger" x-data="{ open: null }" style="border-top: 1px solid rgba(255,255,255,0.06)">
+            <div data-reveal x-data="{ open: 0 }" style="border-top: 1px solid var(--gris-bord-soft)">
                 @foreach(\App\Enums\ServiceType::cases() as $i => $service)
                     @if($service !== \App\Enums\ServiceType::MIXED_PROJECT)
                         @php $desc = $descriptions[$service->value] ?? ['short' => '', 'long' => '']; @endphp
 
-                        <div style="border-bottom: 1px solid rgba(255,255,255,0.06)">
+                        <div style="border-bottom: 1px solid var(--gris-bord-soft)">
                             <button
                                 @click="open = open === {{ $i }} ? null : {{ $i }}"
                                 class="w-full flex items-center gap-6 py-7 text-left group cursor-pointer"
                                 :aria-expanded="open === {{ $i }}">
 
-                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-base shrink-0 transition-all duration-300"
-                                     :style="open === {{ $i }}
-                                         ? 'background: rgba(124,92,252,0.15); border: 1px solid rgba(124,92,252,0.3)'
-                                         : 'background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08)'">
-                                    {{ $service->icon() }}
-                                </div>
+                                <span class="font-clash text-lg font-semibold w-8 shrink-0 transition-colors"
+                                      :style="open === {{ $i }} ? 'color: var(--carbone)' : 'color: var(--gris-texte-soft)'">
+                                    0{{ $i + 1 }}
+                                </span>
 
                                 <div class="flex-1 min-w-0">
-                                    <h2 class="text-base md:text-lg font-semibold transition-colors" style="color: var(--perle)">
+                                    <h2 class="font-clash text-lg md:text-2xl font-semibold text-carbone">
                                         {{ $service->label() }}
                                     </h2>
-                                    <p class="text-sm mt-0.5 transition-colors" style="color: var(--gris-mid)">
-                                        {{ $desc['short'] }}
-                                    </p>
+                                    <p class="text-sm mt-1 text-gris">{{ $desc['short'] }}</p>
                                 </div>
 
-                                <span class="shrink-0 text-lg font-light transition-all duration-300"
-                                      style="color: var(--gris)"
-                                      :class="open === {{ $i }} ? 'rotate-45' : ''"
-                                      :style="open === {{ $i }} ? 'color: var(--purple)' : 'color: var(--gris)'">+</span>
+                                <span class="shrink-0 text-2xl font-light text-carbone transition-transform duration-300"
+                                      :class="open === {{ $i }} ? 'rotate-45' : ''">+</span>
                             </button>
 
                             <div
@@ -89,14 +82,15 @@
                                 x-transition:leave="transition duration-200 ease-in"
                                 x-transition:leave-start="opacity-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 -translate-y-2"
-                                class="pb-8 pl-16">
+                                class="pb-8 pl-14 md:pl-14">
 
-                                <p class="text-sm leading-relaxed max-w-2xl mb-6" style="color: var(--gris)">
+                                <p class="text-base leading-relaxed max-w-2xl mb-6 text-gris">
                                     {{ $desc['long'] }}
                                 </p>
 
-                                <a href="{{ route('brief') }}?service={{ $service->slug() }}" class="btn-primary text-sm px-5 py-3 inline-flex items-center gap-2">
-                                    Démarrer un projet →
+                                <a href="{{ route('brief') }}?service={{ $service->slug() }}" class="btn-primary text-sm px-5 py-3" data-magnetic="0.2">
+                                    Démarrer un projet
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </a>
                             </div>
                         </div>
@@ -105,18 +99,17 @@
             </div>
 
             {{-- Bottom CTA --}}
-            <div class="mt-20 rounded-2xl p-10 md:p-14 text-center fade-up relative overflow-hidden"
-                 style="background: linear-gradient(135deg, rgba(124,92,252,0.12) 0%, rgba(240,89,218,0.06) 100%);
-                        border: 1px solid rgba(124,92,252,0.2)">
-                <div class="absolute inset-0 opacity-20 pointer-events-none"
-                     style="background: radial-gradient(circle at 70% 50%, rgba(240,89,218,0.3) 0%, transparent 60%)"></div>
+            <div class="mt-20 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden bg-carbone" data-reveal>
+                <div class="absolute inset-0 opacity-10 pointer-events-none"
+                     style="background-image: linear-gradient(rgba(245,242,236,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(245,242,236,0.5) 1px, transparent 1px); background-size: 40px 40px;"></div>
                 <div class="relative">
-                    <p class="label-mono mb-4" style="color: var(--purple)">Votre besoin ne rentre pas dans une case ?</p>
-                    <h2 class="font-clash text-2xl md:text-3xl font-semibold mb-6" style="color: var(--perle)">
+                    <p class="label-mono mb-4" style="color: rgba(245,242,236,0.5)">Votre besoin ne rentre pas dans une case ?</p>
+                    <h2 class="display text-3xl md:text-4xl text-perle mb-8">
                         Parlez-nous de votre projet.
                     </h2>
-                    <a href="/brief" class="btn-primary px-7 py-4">
-                        Démarrer le diagnostic créatif
+                    <a href="/brief" class="btn-primary px-7 py-4" style="background: var(--perle); color: var(--carbone); border-color: var(--perle);" data-magnetic="0.3">
+                        Demander un diagnostic créatif
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>
             </div>
