@@ -5,12 +5,12 @@
         <div class="w-full max-w-sm">
 
             <div class="text-center mb-8">
-                <p class="font-clash font-semibold text-xl mb-1" style="color: var(--perle)">Neroblanka</p>
+                <p class="font-clash font-semibold text-xl mb-1" style="color: var(--carbone)">Neroblanka</p>
                 <p class="text-sm" style="color: var(--gris)">Authentification à deux facteurs</p>
             </div>
 
             <div class="card p-8">
-                <h1 class="font-semibold mb-1" style="color: var(--perle)">Code d'authentification</h1>
+                <h1 class="font-semibold mb-1" style="color: var(--carbone)">Code d'authentification</h1>
                 <p class="text-sm mb-6" style="color: var(--gris)">Saisissez le code à 6 chiffres généré par votre application d'authentification.</p>
 
                 <form method="POST" action="{{ route('admin.mfa.check') }}">
@@ -21,7 +21,7 @@
                                class="input-base w-full text-center text-2xl tracking-[0.5em] font-mono"
                                placeholder="000000">
                         @error('code')
-                            <p class="text-xs mt-2" style="color: #f87171">{{ $message }}</p>
+                            <p class="text-xs mt-2" style="color: var(--status-danger)">{{ $message }}</p>
                         @enderror
                     </div>
                     <button type="submit" class="btn-primary w-full">

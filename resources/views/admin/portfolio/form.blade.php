@@ -6,7 +6,7 @@
         <div class="flex items-center gap-3 mb-8">
             <a href="{{ route('admin.portfolio.index') }}" class="text-sm transition-opacity hover:opacity-60" style="color: var(--gris)">← Portfolio</a>
             <span style="color: var(--gris-mid)">/</span>
-            <h1 class="text-xl" style="color: var(--perle)">{{ $item ? 'Éditer le projet' : 'Nouveau projet' }}</h1>
+            <h1 class="text-xl" style="color: var(--carbone)">{{ $item ? 'Éditer le projet' : 'Nouveau projet' }}</h1>
         </div>
 
         <form method="POST"
@@ -17,7 +17,7 @@
             @if($item) @method('PUT') @endif
 
             <div class="card p-6 space-y-5">
-                <p class="label-mono" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">Informations</p>
+                <p class="label-mono" style="border-bottom: 1px solid rgba(5,5,5,0.07); padding-bottom: 12px">Informations</p>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="col-span-2">
@@ -26,21 +26,21 @@
                                class="input-base" placeholder="Refonte identité Startup Alger"
                                x-data
                                @input="$el.form.querySelector('[name=slug]').value = $el.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')">
-                        @error('title') <p class="mt-1 text-xs" style="color:#f87171">{{ $message }}</p> @enderror
+                        @error('title') <p class="mt-1 text-xs" style="color:var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="col-span-2">
                         <label class="block label-mono mb-2">Slug *</label>
                         <input type="text" name="slug" value="{{ old('slug', $item?->slug) }}"
                                class="input-base font-mono" placeholder="refonte-identite-startup-alger">
-                        @error('slug') <p class="mt-1 text-xs" style="color:#f87171">{{ $message }}</p> @enderror
+                        @error('slug') <p class="mt-1 text-xs" style="color:var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block label-mono mb-2">Client *</label>
                         <input type="text" name="client_name" value="{{ old('client_name', $item?->client_name) }}"
                                class="input-base" placeholder="Startup SAS">
-                        @error('client_name') <p class="mt-1 text-xs" style="color:#f87171">{{ $message }}</p> @enderror
+                        @error('client_name') <p class="mt-1 text-xs" style="color:var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
@@ -54,7 +54,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        @error('service_type') <p class="mt-1 text-xs" style="color:#f87171">{{ $message }}</p> @enderror
+                        @error('service_type') <p class="mt-1 text-xs" style="color:var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
                     <label class="block label-mono mb-2">Extrait * <span class="font-normal" style="color:var(--gris-mid)">(max 500 car.)</span></label>
                     <textarea name="excerpt" rows="2" class="input-base resize-none"
                               placeholder="Une phrase percutante qui décrit le projet.">{{ old('excerpt', $item?->excerpt) }}</textarea>
-                    @error('excerpt') <p class="mt-1 text-xs" style="color:#f87171">{{ $message }}</p> @enderror
+                    @error('excerpt') <p class="mt-1 text-xs" style="color:var(--status-danger)">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
@@ -80,7 +80,7 @@
             </div>
 
             <div class="card p-6 space-y-5">
-                <p class="label-mono" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">Publication</p>
+                <p class="label-mono" style="border-bottom: 1px solid rgba(5,5,5,0.07); padding-bottom: 12px">Publication</p>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -97,7 +97,7 @@
                                    @checked(old('featured', $item?->featured))
                                    class="w-4 h-4" style="accent-color: var(--purple)">
                             <div>
-                                <span class="text-sm font-medium" style="color:var(--perle)">Mise en avant</span>
+                                <span class="text-sm font-medium" style="color:var(--carbone)">Mise en avant</span>
                                 <p class="text-xs" style="color:var(--gris-mid)">Affiché en priorité sur la homepage</p>
                             </div>
                         </label>
@@ -106,14 +106,14 @@
             </div>
 
             <div class="card p-6 space-y-5">
-                <p class="label-mono" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">Médias</p>
+                <p class="label-mono" style="border-bottom: 1px solid rgba(5,5,5,0.07); padding-bottom: 12px">Médias</p>
 
                 <div>
                     <label class="block label-mono mb-2">Image de couverture <span class="font-normal" style="color:var(--gris-mid)">(JPEG/PNG/WebP, max 5 Mo)</span></label>
                     @if($item?->cover_image)
                         <div class="mb-3 flex items-start gap-4">
                             <img src="{{ Storage::temporaryUrl($item->cover_image, now()->addMinutes(10)) }}"
-                                 alt="Couverture actuelle" class="w-40 h-24 object-cover rounded-xl" style="border:1px solid rgba(255,255,255,0.08)">
+                                 alt="Couverture actuelle" class="w-40 h-24 object-cover rounded-xl" style="border:1px solid rgba(5,5,5,0.10)">
                             <div>
                                 <p class="text-xs mb-1" style="color:var(--gris-mid)">Image actuelle</p>
                                 <p class="text-xs font-mono break-all" style="color:var(--gris)">{{ basename($item->cover_image) }}</p>
@@ -126,7 +126,7 @@
                                class="w-full text-sm cursor-pointer file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-medium file:cursor-pointer"
                                style="color:var(--gris)">
                     </div>
-                    @error('cover_image') <p class="mt-1 text-xs" style="color:#f87171">{{ $message }}</p> @enderror
+                    @error('cover_image') <p class="mt-1 text-xs" style="color:var(--status-danger)">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
@@ -136,7 +136,7 @@
                             @foreach($item->gallery as $img)
                                 <div class="relative group" x-data="{ checked: false }">
                                     <img src="{{ Storage::temporaryUrl($img, now()->addMinutes(10)) }}"
-                                         alt="" class="w-full aspect-video object-cover rounded-lg" style="border:1px solid rgba(255,255,255,0.08)">
+                                         alt="" class="w-full aspect-video object-cover rounded-lg" style="border:1px solid rgba(5,5,5,0.10)">
                                     <label class="absolute inset-0 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                                            style="background:rgba(0,0,0,0.6)">
                                         <input type="checkbox" name="remove_gallery[]" value="{{ $img }}"
@@ -155,7 +155,7 @@
                                class="w-full text-sm cursor-pointer file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-medium file:cursor-pointer"
                                style="color:var(--gris)">
                     </div>
-                    @error('gallery.*') <p class="mt-1 text-xs" style="color:#f87171">{{ $message }}</p> @enderror
+                    @error('gallery.*') <p class="mt-1 text-xs" style="color:var(--status-danger)">{{ $message }}</p> @enderror
                 </div>
             </div>
 

@@ -6,7 +6,7 @@
         <div class="flex items-end justify-between mb-12">
             <div>
                 <p class="label-mono mb-3">Admin · Catalogue</p>
-                <h1 class="text-4xl" style="color: var(--perle)">Services</h1>
+                <h1 class="text-4xl" style="color: var(--carbone)">Services</h1>
             </div>
             <a href="{{ route('admin.services.create') }}" class="btn-primary px-5 py-3">
                 + Nouveau service
@@ -29,9 +29,9 @@
                 @foreach($services as $service)
                     <div class="card px-6 py-5 flex items-center justify-between gap-6">
                         <div class="flex items-center gap-5 min-w-0">
-                            <div class="w-2 h-2 rounded-full shrink-0" style="background: {{ $service->is_active ? '#34d399' : 'rgba(255,255,255,0.15)' }}"></div>
+                            <div class="w-2 h-2 rounded-full shrink-0" style="background: {{ $service->is_active ? '#34d399' : 'rgba(5,5,5,0.15)' }}"></div>
                             <div class="min-w-0">
-                                <p class="font-medium truncate" style="color: var(--perle)">{{ $service->name }}</p>
+                                <p class="font-medium truncate" style="color: var(--carbone)">{{ $service->name }}</p>
                                 @if($service->type)
                                     <p class="text-xs mt-0.5" style="color: var(--gris-mid)">
                                         {{ \App\Enums\ServiceType::tryFrom($service->type)?->label() ?? $service->type }}
@@ -41,7 +41,7 @@
                         </div>
                         <div class="flex items-center gap-6 shrink-0">
                             <div class="text-right">
-                                <p class="text-sm font-medium" style="color: var(--perle)">{{ number_format($service->price_da) }} DA</p>
+                                <p class="text-sm font-medium" style="color: var(--carbone)">{{ number_format($service->price_da) }} DA</p>
                                 <p class="text-xs" style="color: var(--gris-mid)">{{ $service->delivery_days }}j</p>
                             </div>
                             <div class="flex items-center gap-2">
@@ -57,7 +57,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-xs px-3 py-1.5 rounded-lg transition-colors"
-                                            style="color: #f87171; background: rgba(248,113,113,0.08)">Supprimer</button>
+                                            style="color: var(--status-danger); background: rgba(248,113,113,0.08)">Supprimer</button>
                                 </form>
                             </div>
                         </div>

@@ -5,9 +5,9 @@
 
         @if(request('submitted'))
             <div class="mb-8 rounded-xl px-5 py-4 text-sm flex items-start gap-3"
-                 style="background:#161719; color:#34d399; box-shadow: 6px 6px 16px #060607, -3px -3px 8px #1a1c1f; border:1px solid rgba(52,211,153,0.12)">
+                 style="background: rgba(31,157,85,0.08); color:#15803d; border:1px solid rgba(31,157,85,0.25)">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                <span style="color: var(--perle)">Votre brief a bien été envoyé. Nous vous contacterons rapidement.</span>
+                <span style="color: var(--carbone)">Votre brief a bien été envoyé. Nous vous contacterons rapidement.</span>
             </div>
         @endif
 
@@ -15,7 +15,7 @@
         <div class="flex items-start justify-between gap-4 mb-14">
             <div>
                 <p class="label-mono mb-3">Espace client</p>
-                <h1 class="text-4xl" style="color: var(--perle)">Bonjour,<br>{{ auth()->user()->full_name }}</h1>
+                <h1 class="text-4xl" style="color: var(--carbone)">Bonjour,<br>{{ auth()->user()->full_name }}</h1>
             </div>
             <a href="{{ route('client.brief.create') }}" class="btn-primary text-sm shrink-0">
                 Nouveau brief →
@@ -45,7 +45,7 @@
                        class="card-interactive neo-tilt-card flex items-center justify-between gap-4 px-6 py-5 block">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-3 mb-2">
-                                <p class="font-medium truncate" style="color: var(--perle)">{{ $project->title }}</p>
+                                <p class="font-medium truncate" style="color: var(--carbone)">{{ $project->title }}</p>
                                 <x-status-badge :status="$statusValue" />
                             </div>
                             <p class="text-xs" style="color: var(--gris-mid)">

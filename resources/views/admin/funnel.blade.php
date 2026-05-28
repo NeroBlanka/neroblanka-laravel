@@ -5,7 +5,7 @@
 
         <div class="mb-12">
             <p class="label-mono mb-3">Admin · Analytics</p>
-            <h1 class="text-4xl" style="color: var(--perle)">Funnel Acquisition</h1>
+            <h1 class="text-4xl" style="color: var(--carbone)">Funnel Acquisition</h1>
             <p class="text-sm mt-2" style="color: var(--gris-mid)">{{ $days }} derniers jours</p>
         </div>
 
@@ -29,7 +29,7 @@
 
             {{-- UTM Sources --}}
             <div class="card p-6">
-                <p class="label-mono mb-6" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">
+                <p class="label-mono mb-6" style="border-bottom: 1px solid rgba(5,5,5,0.07); padding-bottom: 12px">
                     Sources d'acquisition
                 </p>
                 @if($utmSources->isEmpty())
@@ -40,10 +40,10 @@
                         @foreach($utmSources as $source => $count)
                             <div>
                                 <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium" style="color: var(--perle)">{{ $source }}</span>
+                                    <span class="text-sm font-medium" style="color: var(--carbone)">{{ $source }}</span>
                                     <span class="label-mono text-xs" style="color: var(--gris-mid)">{{ $count }}</span>
                                 </div>
-                                <div class="h-1.5 rounded-full" style="background: rgba(255,255,255,0.06)">
+                                <div class="h-1.5 rounded-full" style="background: rgba(5,5,5,0.07)">
                                     <div class="h-1.5 rounded-full" style="background: var(--purple); width: {{ $utmMax ? round($count / $utmMax * 100) : 0 }}%; opacity: 0.8"></div>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
 
             {{-- Services pré-sélectionnés --}}
             <div class="card p-6">
-                <p class="label-mono mb-6" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">
+                <p class="label-mono mb-6" style="border-bottom: 1px solid rgba(5,5,5,0.07); padding-bottom: 12px">
                     Services les plus demandés
                 </p>
                 @if($serviceStats->isEmpty())
@@ -66,10 +66,10 @@
                             @php $label = \App\Enums\ServiceType::tryFrom($service)?->label() ?? $service; @endphp
                             <div>
                                 <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium" style="color: var(--perle)">{{ $label }}</span>
+                                    <span class="text-sm font-medium" style="color: var(--carbone)">{{ $label }}</span>
                                     <span class="label-mono text-xs" style="color: var(--gris-mid)">{{ $count }}</span>
                                 </div>
-                                <div class="h-1.5 rounded-full" style="background: rgba(255,255,255,0.06)">
+                                <div class="h-1.5 rounded-full" style="background: rgba(5,5,5,0.07)">
                                     <div class="h-1.5 rounded-full" style="background: #34d399; width: {{ $svcMax ? round($count / $svcMax * 100) : 0 }}%; opacity: 0.8"></div>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
 
         {{-- Abandons par étape --}}
         <div class="card p-6 mb-6">
-            <p class="label-mono mb-6" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">
+            <p class="label-mono mb-6" style="border-bottom: 1px solid rgba(5,5,5,0.07); padding-bottom: 12px">
                 Complétions par étape du wizard
             </p>
             @if($stepCounts->isEmpty())
@@ -98,11 +98,11 @@
                         <div class="text-center">
                             <div class="relative mx-auto mb-2" style="width: 56px; height: 56px">
                                 <svg viewBox="0 0 36 36" class="w-14 h-14 -rotate-90">
-                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+                                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(5,5,5,0.07)" stroke-width="3"/>
                                     <circle cx="18" cy="18" r="15.9" fill="none" stroke="#7c5cfc" stroke-width="3"
                                             stroke-dasharray="{{ $pct }} {{ 100 - $pct }}" stroke-linecap="round"/>
                                 </svg>
-                                <span class="absolute inset-0 flex items-center justify-center text-xs font-semibold" style="color: var(--perle)">{{ $count }}</span>
+                                <span class="absolute inset-0 flex items-center justify-center text-xs font-semibold" style="color: var(--carbone)">{{ $count }}</span>
                             </div>
                             <p class="label-mono text-[10px]" style="color: var(--gris-mid)">Étape {{ $step }}</p>
                             <p class="text-xs mt-0.5" style="color: var(--gris)">{{ $labels[(string) $step] ?? '' }}</p>
@@ -114,7 +114,7 @@
 
         {{-- Timeline --}}
         <div class="card p-6">
-            <p class="label-mono mb-6" style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px">
+            <p class="label-mono mb-6" style="border-bottom: 1px solid rgba(5,5,5,0.07); padding-bottom: 12px">
                 Activité quotidienne — {{ $days }} jours
             </p>
             @php
@@ -146,7 +146,7 @@
                             <div style="height: {{ $bh }}px; background: rgba(52,211,153,0.6); min-height: 2px" class="w-full rounded-t-sm absolute bottom-0"></div>
                         @endif
                         @if($sh === 0 && $bh === 0)
-                            <div style="height: 2px; background: rgba(255,255,255,0.06)" class="w-full"></div>
+                            <div style="height: 2px; background: rgba(5,5,5,0.07)" class="w-full"></div>
                         @endif
                     </div>
                 @endforeach

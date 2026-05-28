@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between mb-8">
             <div>
                 <p class="label-mono mb-1">Admin</p>
-                <h1 class="text-3xl" style="color: var(--perle)">Portfolio</h1>
+                <h1 class="text-3xl" style="color: var(--carbone)">Portfolio</h1>
             </div>
             <a href="{{ route('admin.portfolio.create') }}" class="btn-primary text-sm">+ Nouveau projet</a>
         </div>
@@ -20,7 +20,7 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
                         <thead>
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.06)">
+                            <tr style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                                 <th class="text-left px-5 py-3 label-mono">Titre · Client</th>
                                 <th class="text-left px-5 py-3 label-mono">Service</th>
                                 <th class="text-center px-5 py-3 label-mono">Mise en avant</th>
@@ -32,9 +32,9 @@
                         <tbody>
                             @foreach($items as $item)
                                 <tr class="transition-colors hover:bg-white/[0.025]"
-                                    style="border-bottom: 1px solid rgba(255,255,255,0.04)">
+                                    style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                                     <td class="px-5 py-3.5">
-                                        <p class="font-medium" style="color: var(--perle)">{{ $item->title }}</p>
+                                        <p class="font-medium" style="color: var(--carbone)">{{ $item->title }}</p>
                                         <p class="text-xs mt-0.5" style="color: var(--gris-mid)">{{ $item->client_name }}</p>
                                     </td>
                                     <td class="px-5 py-3.5" style="color: var(--gris)">{{ $item->service_type->label() }}</td>
@@ -71,7 +71,7 @@
                                             <a href="{{ route('work.show', $item->slug) }}" target="_blank"
                                                class="text-xs transition-opacity hover:opacity-60" style="color: var(--gris)">↗</a>
                                             <a href="{{ route('admin.portfolio.edit', $item) }}"
-                                               class="text-xs transition-opacity hover:opacity-60" style="color: var(--perle)">Éditer</a>
+                                               class="text-xs transition-opacity hover:opacity-60" style="color: var(--carbone)">Éditer</a>
                                             <form method="POST" action="{{ route('admin.portfolio.toggle-published', $item) }}">
                                                 @csrf
                                                 <button type="submit" class="text-xs transition-opacity hover:opacity-60 cursor-pointer"

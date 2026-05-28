@@ -7,7 +7,7 @@
             <a href="{{ route('admin.dashboard') }}" class="label-mono inline-flex items-center gap-2 mb-6 hover:opacity-70 transition-opacity">
                 ← Dashboard
             </a>
-            <h1 class="text-2xl font-semibold mb-2" style="color: var(--perle)">
+            <h1 class="text-2xl font-semibold mb-2" style="color: var(--carbone)">
                 Authentification 2FA
             </h1>
             <p class="text-sm" style="color: var(--gris)">
@@ -35,7 +35,7 @@
 
             <p class="text-xs text-center mb-2" style="color: var(--gris-mid)">Ou entrez manuellement ce code secret :</p>
             <p class="text-center font-mono text-sm px-4 py-2.5 rounded-xl tracking-widest select-all"
-               style="background: rgba(0,0,0,0.3); color: var(--perle); border: 1px solid rgba(255,255,255,0.08); letter-spacing: 0.25em">
+               style="background: rgba(0,0,0,0.3); color: var(--carbone); border: 1px solid rgba(5,5,5,0.10); letter-spacing: 0.25em">
                 {{ $secret }}
             </p>
         </div>
@@ -55,7 +55,7 @@
                     </button>
                 </div>
                 @error('code')
-                    <p class="text-xs mt-2" style="color: #f87171">{{ $message }}</p>
+                    <p class="text-xs mt-2" style="color: var(--status-danger)">{{ $message }}</p>
                 @enderror
             </form>
         </div>

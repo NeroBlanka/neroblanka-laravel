@@ -8,7 +8,7 @@
                 ← Services
             </a>
             <p class="label-mono mb-2">Admin · Catalogue</p>
-            <h1 class="text-3xl" style="color: var(--perle)">
+            <h1 class="text-3xl" style="color: var(--carbone)">
                 {{ $service->exists ? 'Modifier le service' : 'Nouveau service' }}
             </h1>
         </div>
@@ -27,7 +27,7 @@
                     <label for="name" class="block label-mono mb-2">Nom du service</label>
                     <input id="name" type="text" name="name" value="{{ old('name', $service->name) }}"
                            class="input-base w-full" placeholder="Ex : Identité Visuelle Premium" required />
-                    @error('name') <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p> @enderror
+                    @error('name') <p class="text-xs mt-1" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
@@ -43,14 +43,14 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('type') <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p> @enderror
+                    @error('type') <p class="text-xs mt-1" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <label for="description" class="block label-mono mb-2">Description <span class="font-normal" style="color: var(--gris-mid)">(optionnel)</span></label>
                     <textarea id="description" name="description" rows="3"
                               class="input-base w-full resize-none">{{ old('description', $service->description) }}</textarea>
-                    @error('description') <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p> @enderror
+                    @error('description') <p class="text-xs mt-1" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -59,14 +59,14 @@
                         <input id="price_da" type="number" name="price_da" min="0"
                                value="{{ old('price_da', $service->price_da) }}"
                                class="input-base w-full" placeholder="80000" required />
-                        @error('price_da') <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p> @enderror
+                        @error('price_da') <p class="text-xs mt-1" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label for="delivery_days" class="block label-mono mb-2">Délai (jours)</label>
                         <input id="delivery_days" type="number" name="delivery_days" min="1"
                                value="{{ old('delivery_days', $service->delivery_days) }}"
                                class="input-base w-full" placeholder="21" required />
-                        @error('delivery_days') <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p> @enderror
+                        @error('delivery_days') <p class="text-xs mt-1" style="color: var(--status-danger)">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
                     <input type="checkbox" name="is_active" value="1"
                            {{ old('is_active', $service->is_active ?? true) ? 'checked' : '' }}
                            style="accent-color: var(--purple); width: 16px; height: 16px" />
-                    <span class="text-sm" style="color: var(--perle)">Service actif (visible dans le portail client)</span>
+                    <span class="text-sm" style="color: var(--carbone)">Service actif (visible dans le portail client)</span>
                 </label>
 
             </div>

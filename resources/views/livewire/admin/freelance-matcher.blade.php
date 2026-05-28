@@ -6,8 +6,8 @@
     @endif
 
     <div class="card overflow-hidden">
-        <div class="px-5 py-4 flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.06)">
-            <p class="label-mono" style="color: var(--perle)">Matching freelances</p>
+        <div class="px-5 py-4 flex items-center justify-between" style="border-bottom: 1px solid rgba(5,5,5,0.07)">
+            <p class="label-mono" style="color: var(--carbone)">Matching freelances</p>
             <span class="text-xs" style="color: var(--gris-mid)">
                 Service : {{ is_string($project->service_type) ? $project->service_type : $project->service_type?->label() }}
             </span>
@@ -27,7 +27,7 @@
                         $profile = $freelance->freelanceProfile;
                     @endphp
                     <div class="px-5 py-4 flex items-start gap-4 transition-colors hover:bg-white/[0.02] {{ !$freelance->is_available ? 'opacity-50' : '' }}"
-                         style="border-bottom: 1px solid rgba(255,255,255,0.04)">
+                         style="border-bottom: 1px solid rgba(5,5,5,0.07)">
 
                         {{-- Score badge --}}
                         <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold"
@@ -35,17 +35,17 @@
                                  ? 'background: rgba(52,211,153,0.12); color: #6ee7b7; border: 1px solid rgba(52,211,153,0.25)'
                                  : ($score >= 40
                                      ? 'background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25)'
-                                     : 'background: rgba(255,255,255,0.05); color: var(--gris); border: 1px solid rgba(255,255,255,0.08)') }}">
+                                     : 'background: rgba(5,5,5,0.07); color: var(--gris); border: 1px solid rgba(5,5,5,0.10)') }}">
                             {{ $score }}
                         </div>
 
                         {{-- Info --}}
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-2 mb-1">
-                                <p class="font-medium text-sm" style="color: var(--perle)">{{ $freelance->full_name }}</p>
+                                <p class="font-medium text-sm" style="color: var(--carbone)">{{ $freelance->full_name }}</p>
                                 @if(!$freelance->is_available)
                                     <span class="text-xs px-2 py-0.5 rounded-lg"
-                                          style="color: var(--gris); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08)">
+                                          style="color: var(--gris); background: rgba(5,5,5,0.07); border: 1px solid rgba(5,5,5,0.10)">
                                         Indisponible
                                     </span>
                                 @else

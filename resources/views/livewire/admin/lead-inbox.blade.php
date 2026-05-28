@@ -29,7 +29,7 @@
 
         @if($filterStatus || $filterService || $filterBudget || $onlyHot)
             <button wire:click="$set('filterStatus', ''); $set('filterService', ''); $set('filterBudget', ''); $set('onlyHot', false)"
-                class="text-xs transition-opacity hover:opacity-60" style="color: #f87171">
+                class="text-xs transition-opacity hover:opacity-60" style="color: var(--status-danger)">
                 Réinitialiser
             </button>
         @endif
@@ -40,7 +40,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead>
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06)">
+                    <tr style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                         <th class="text-left px-5 py-3 label-mono">Nom · Entreprise</th>
                         <th class="text-left px-5 py-3 label-mono">Service</th>
                         <th class="text-left px-5 py-3 label-mono">Budget</th>
@@ -54,9 +54,9 @@
                 <tbody>
                     @forelse($leads as $lead)
                         <tr class="transition-colors hover:bg-white/[0.025]"
-                            style="border-bottom: 1px solid rgba(255,255,255,0.04)">
+                            style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                             <td class="px-5 py-3.5">
-                                <div class="font-medium" style="color: var(--perle)">{{ $lead->full_name }}</div>
+                                <div class="font-medium" style="color: var(--carbone)">{{ $lead->full_name }}</div>
                                 @if($lead->company)
                                     <div class="text-xs mt-0.5" style="color: var(--gris-mid)">{{ $lead->company }}</div>
                                 @endif

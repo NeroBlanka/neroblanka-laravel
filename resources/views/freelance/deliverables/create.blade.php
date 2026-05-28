@@ -9,7 +9,7 @@
 
         <div class="mb-10">
             <p class="label-mono mb-3">Mission</p>
-            <h1 class="text-4xl" style="color: var(--perle)">Soumettre votre livrable</h1>
+            <h1 class="text-4xl" style="color: var(--carbone)">Soumettre votre livrable</h1>
         </div>
 
         {{-- Mission summary --}}
@@ -18,11 +18,11 @@
             <div class="grid grid-cols-2 gap-5">
                 <div>
                     <p class="label-mono mb-1.5">Projet</p>
-                    <p class="text-sm font-medium" style="color: var(--perle)">{{ $assignment->project->title ?? '—' }}</p>
+                    <p class="text-sm font-medium" style="color: var(--carbone)">{{ $assignment->project->title ?? '—' }}</p>
                 </div>
                 <div>
                     <p class="label-mono mb-1.5">Client</p>
-                    <p class="text-sm" style="color: var(--perle)">{{ $assignment->project->client->full_name ?? '—' }}</p>
+                    <p class="text-sm" style="color: var(--carbone)">{{ $assignment->project->client->full_name ?? '—' }}</p>
                 </div>
                 <div>
                     <p class="label-mono mb-1.5">Statut</p>
@@ -31,12 +31,12 @@
                 @if($assignment->project->deadline ?? null)
                     <div>
                         <p class="label-mono mb-1.5">Deadline</p>
-                        <p class="text-sm" style="color: var(--perle)">{{ \Carbon\Carbon::parse($assignment->project->deadline)->format('d/m/Y') }}</p>
+                        <p class="text-sm" style="color: var(--carbone)">{{ \Carbon\Carbon::parse($assignment->project->deadline)->format('d/m/Y') }}</p>
                     </div>
                 @endif
             </div>
             @if($assignment->project->description ?? null)
-                <div class="mt-5 pt-5" style="border-top: 1px solid rgba(255,255,255,0.04)">
+                <div class="mt-5 pt-5" style="border-top: 1px solid rgba(5,5,5,0.07)">
                     <p class="label-mono mb-1.5">Description</p>
                     <p class="text-sm leading-relaxed" style="color: var(--gris)">{{ $assignment->project->description }}</p>
                 </div>
@@ -50,8 +50,8 @@
                 <p class="label-mono mb-5">Nouveau livrable</p>
 
                 <div class="mb-5">
-                    <label for="file" class="block text-sm font-medium mb-2" style="color: var(--perle)">
-                        Fichier <span style="color: #f87171">*</span>
+                    <label for="file" class="block text-sm font-medium mb-2" style="color: var(--carbone)">
+                        Fichier <span style="color: var(--status-danger)">*</span>
                         <span class="text-xs font-normal ml-1" style="color: var(--gris-mid)">pdf, png, jpg, zip — max 10 Mo</span>
                     </label>
                     <div class="neo-sunken rounded-xl px-4 py-3">
@@ -60,22 +60,22 @@
                                       file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0
                                       file:text-xs file:font-medium file:cursor-pointer file:transition-all"
                                style="color: var(--gris)"
-                               onchange="this.style.cssText += '; --file-bg: rgba(255,255,255,0.06)'" />
+                               onchange="this.style.cssText += '; --file-bg: rgba(5,5,5,0.07)'" />
                     </div>
                     @error('file')
-                        <p class="text-xs mt-1.5" style="color: #f87171">{{ $message }}</p>
+                        <p class="text-xs mt-1.5" style="color: var(--status-danger)">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="message" class="block text-sm font-medium mb-2" style="color: var(--perle)">
+                    <label for="message" class="block text-sm font-medium mb-2" style="color: var(--carbone)">
                         Message <span class="font-normal" style="color: var(--gris-mid)">(optionnel)</span>
                     </label>
                     <textarea id="message" name="message" rows="3"
                               class="input-base resize-none"
                               placeholder="Notes sur cette version, changements effectués…">{{ old('message') }}</textarea>
                     @error('message')
-                        <p class="text-xs mt-1.5" style="color: #f87171">{{ $message }}</p>
+                        <p class="text-xs mt-1.5" style="color: var(--status-danger)">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -88,15 +88,15 @@
         {{-- History --}}
         @if(isset($deliverables) && $deliverables->isNotEmpty())
             <div class="mt-8 card overflow-hidden">
-                <div class="px-6 py-4" style="border-bottom: 1px solid rgba(255,255,255,0.04)">
+                <div class="px-6 py-4" style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                     <p class="label-mono">Historique des livrables</p>
                 </div>
                 <div>
                     @foreach($deliverables as $deliverable)
                         <div class="px-6 py-4 flex items-center justify-between gap-4"
-                             style="{{ !$loop->last ? 'border-bottom: 1px solid rgba(255,255,255,0.03)' : '' }}">
+                             style="{{ !$loop->last ? 'border-bottom: 1px solid rgba(5,5,5,0.07)' : '' }}">
                             <div>
-                                <p class="text-sm font-medium" style="color: var(--perle)">Version {{ $deliverable->version ?? $loop->iteration }}</p>
+                                <p class="text-sm font-medium" style="color: var(--carbone)">Version {{ $deliverable->version ?? $loop->iteration }}</p>
                                 <p class="text-xs mt-0.5" style="color: var(--gris-mid)">
                                     {{ $deliverable->submitted_at?->format('d/m/Y à H:i') ?? '—' }}
                                     @if($deliverable->message)

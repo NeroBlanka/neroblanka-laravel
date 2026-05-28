@@ -14,7 +14,7 @@
 
         <div class="mb-10">
             <p class="label-mono mb-3">{{ $serviceLabel }}</p>
-            <h1 class="text-4xl mb-4" style="color: var(--perle)">{{ $project->title }}</h1>
+            <h1 class="text-4xl mb-4" style="color: var(--carbone)">{{ $project->title }}</h1>
             <x-status-badge :status="$statusValue" />
         </div>
 
@@ -27,16 +27,16 @@
             <div class="card p-6 neo-tilt-card grid grid-cols-2 gap-6">
                 <div>
                     <p class="label-mono mb-1.5">Créé le</p>
-                    <p class="text-sm" style="color: var(--perle)">{{ $project->created_at->format('d/m/Y') }}</p>
+                    <p class="text-sm" style="color: var(--carbone)">{{ $project->created_at->format('d/m/Y') }}</p>
                 </div>
                 @if($project->deadline)
                     <div>
                         <p class="label-mono mb-1.5">Deadline</p>
-                        <p class="text-sm" style="color: var(--perle)">{{ \Carbon\Carbon::parse($project->deadline)->format('d/m/Y') }}</p>
+                        <p class="text-sm" style="color: var(--carbone)">{{ \Carbon\Carbon::parse($project->deadline)->format('d/m/Y') }}</p>
                     </div>
                 @endif
                 @if($project->notes)
-                    <div class="col-span-2 pt-4" style="border-top: 1px solid rgba(255,255,255,0.04)">
+                    <div class="col-span-2 pt-4" style="border-top: 1px solid rgba(5,5,5,0.07)">
                         <p class="label-mono mb-1.5">Notes</p>
                         <p class="text-sm" style="color: var(--gris)">{{ $project->notes }}</p>
                     </div>
@@ -45,8 +45,8 @@
 
             {{-- Deliverables --}}
             <div class="card overflow-hidden">
-                <div class="px-6 py-4" style="border-bottom: 1px solid rgba(255,255,255,0.04)">
-                    <p class="text-sm font-semibold" style="color: var(--perle)">Livrables</p>
+                <div class="px-6 py-4" style="border-bottom: 1px solid rgba(5,5,5,0.07)">
+                    <p class="text-sm font-semibold" style="color: var(--carbone)">Livrables</p>
                 </div>
 
                 @if($deliverables->isEmpty())
@@ -55,10 +55,10 @@
                     </div>
                 @else
                     @foreach($deliverables as $deliverable)
-                        <div class="px-6 py-5" style="{{ !$loop->last ? 'border-bottom: 1px solid rgba(255,255,255,0.03)' : '' }}">
+                        <div class="px-6 py-5" style="{{ !$loop->last ? 'border-bottom: 1px solid rgba(5,5,5,0.07)' : '' }}">
                             <div class="flex items-start justify-between gap-4">
                                 <div>
-                                    <p class="text-sm font-medium" style="color: var(--perle)">Version {{ $deliverable->version ?? $loop->iteration }}</p>
+                                    <p class="text-sm font-medium" style="color: var(--carbone)">Version {{ $deliverable->version ?? $loop->iteration }}</p>
                                     <p class="text-xs mt-0.5" style="color: var(--gris-mid)">{{ $deliverable->submitted_at?->format('d/m/Y à H:i') ?? '—' }}</p>
                                     @if($deliverable->message)
                                         <p class="text-sm mt-2" style="color: var(--gris)">{{ $deliverable->message }}</p>
@@ -73,7 +73,7 @@
                             </div>
 
                             @if($statusValue === 'submitted')
-                                <div class="mt-5 pt-4 flex items-start gap-3" style="border-top: 1px solid rgba(255,255,255,0.04)">
+                                <div class="mt-5 pt-4 flex items-start gap-3" style="border-top: 1px solid rgba(5,5,5,0.07)">
                                     <form method="POST" action="{{ route('client.deliverables.approve', $deliverable->id) }}">
                                         @csrf
                                         <button type="submit" class="btn-primary text-xs px-4 py-2">Approuver</button>
@@ -86,7 +86,7 @@
                                             <button type="submit" class="btn-secondary text-xs px-4 py-2 self-end whitespace-nowrap">Demander révision</button>
                                         </div>
                                         @error('revision_notes')
-                                            <p class="text-xs mt-1" style="color: #f87171">{{ $message }}</p>
+                                            <p class="text-xs mt-1" style="color: var(--status-danger)">{{ $message }}</p>
                                         @enderror
                                     </form>
                                 </div>

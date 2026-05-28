@@ -4,7 +4,7 @@
     <div class="max-w-4xl mx-auto px-6 py-14">
         <div class="mb-14">
             <p class="label-mono mb-3">Espace freelance</p>
-            <h1 class="text-4xl" style="color: var(--perle)">Vos missions actives</h1>
+            <h1 class="text-4xl" style="color: var(--carbone)">Vos missions actives</h1>
         </div>
 
         @if($assignments->isEmpty())
@@ -24,7 +24,7 @@
                        class="card-interactive neo-tilt-card flex items-center justify-between gap-4 px-6 py-5 block">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-3 mb-2">
-                                <p class="font-medium truncate" style="color: var(--perle)">{{ $assignment->project->title ?? '—' }}</p>
+                                <p class="font-medium truncate" style="color: var(--carbone)">{{ $assignment->project->title ?? '—' }}</p>
                                 <x-status-badge :status="$sv" />
                             </div>
                             <p class="text-xs" style="color: var(--gris-mid)">

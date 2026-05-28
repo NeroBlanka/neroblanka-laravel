@@ -5,7 +5,7 @@
 
         <div class="mb-12">
             <p class="label-mono mb-3">Admin · Production</p>
-            <h1 class="text-4xl" style="color: var(--perle)">Projets</h1>
+            <h1 class="text-4xl" style="color: var(--carbone)">Projets</h1>
         </div>
 
         @if($projects->isEmpty())
@@ -22,7 +22,7 @@
                     <a href="{{ route('admin.projects.show', $project) }}"
                        class="card px-6 py-5 flex items-center justify-between gap-6 hover:opacity-80 transition-opacity block">
                         <div class="min-w-0">
-                            <p class="font-medium truncate" style="color: var(--perle)">{{ $project->title }}</p>
+                            <p class="font-medium truncate" style="color: var(--carbone)">{{ $project->title }}</p>
                             <p class="text-xs mt-0.5" style="color: var(--gris-mid)">
                                 {{ $project->client->full_name ?? '—' }}
                                 @if($activeAssignment)

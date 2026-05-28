@@ -12,7 +12,7 @@
         <div class="flex items-start justify-between mb-8 gap-4">
             <div>
                 <a href="{{ route('admin.leads') }}" class="text-sm mb-3 inline-block transition-opacity hover:opacity-60" style="color: var(--gris)">← Lead Inbox</a>
-                <h1 class="text-3xl" style="color: var(--perle)">{{ $lead->full_name }}</h1>
+                <h1 class="text-3xl" style="color: var(--carbone)">{{ $lead->full_name }}</h1>
                 @if($lead->company)
                     <p class="text-sm mt-1" style="color: var(--gris)">{{ $lead->company }}</p>
                 @endif
@@ -102,7 +102,7 @@
                                 <li class="flex items-start gap-3 text-sm">
                                     <span class="text-xs mt-0.5 whitespace-nowrap" style="color: var(--gris-mid)">{{ $event->created_at->format('d/m H:i') }}</span>
                                     <div>
-                                        <span style="color: var(--perle)">{{ $event->type }}</span>
+                                        <span style="color: var(--carbone)">{{ $event->type }}</span>
                                         @if($event->note)
                                             <p class="mt-0.5 text-xs" style="color: var(--gris)">{{ $event->note }}</p>
                                         @endif
@@ -121,16 +121,16 @@
                 <div class="card p-5">
                     <p class="label-mono mb-4">Informations</p>
                     <dl class="space-y-3 text-sm">
-                        <div><dt class="label-mono mb-0.5">Email</dt><dd style="color: var(--perle)">{{ $lead->email }}</dd></div>
+                        <div><dt class="label-mono mb-0.5">Email</dt><dd style="color: var(--carbone)">{{ $lead->email }}</dd></div>
                         @if($lead->phone)
-                            <div><dt class="label-mono mb-0.5">Téléphone</dt><dd style="color: var(--perle)">{{ $lead->phone }}</dd></div>
+                            <div><dt class="label-mono mb-0.5">Téléphone</dt><dd style="color: var(--carbone)">{{ $lead->phone }}</dd></div>
                         @endif
-                        <div><dt class="label-mono mb-0.5">Service</dt><dd style="color: var(--perle)">{{ $lead->service_type->label() }}</dd></div>
-                        <div><dt class="label-mono mb-0.5">Budget</dt><dd style="color: var(--perle)">{{ $lead->budget_range }}</dd></div>
-                        <div><dt class="label-mono mb-0.5">Délai</dt><dd style="color: var(--perle)">{{ $lead->deadline_range }}</dd></div>
+                        <div><dt class="label-mono mb-0.5">Service</dt><dd style="color: var(--carbone)">{{ $lead->service_type->label() }}</dd></div>
+                        <div><dt class="label-mono mb-0.5">Budget</dt><dd style="color: var(--carbone)">{{ $lead->budget_range }}</dd></div>
+                        <div><dt class="label-mono mb-0.5">Délai</dt><dd style="color: var(--carbone)">{{ $lead->deadline_range }}</dd></div>
                         <div>
                             <dt class="label-mono mb-0.5">Statut</dt>
-                            <dd style="color: var(--perle)">{{ $lead->status->label() }}</dd>
+                            <dd style="color: var(--carbone)">{{ $lead->status->label() }}</dd>
                         </div>
                         @if($lead->no_fit_reason)
                             <div>

@@ -33,6 +33,22 @@
   --status-warning:  #c87f0a;
   --status-danger:   #b91c1c;
   --status-info:     #2563eb;
+
+  /* ─── Alias legacy (migration portail dark→éditorial) ───
+     Les vues portail historiques référencent ces noms.
+     Mappés vers la palette claire ; accents purple/pink neutralisés vers carbone. */
+  --bg:            var(--papier);
+  --bg-surface:    var(--perle);
+  --glass:         var(--papier);
+  --glass-hover:   var(--gris-section);
+  --glass-border:  var(--gris-bord);
+  --gris:          var(--gris-texte);
+  --gris-mid:      var(--gris-texte-soft);
+  --purple:        var(--accent);
+  --pink:          var(--accent-rose);
+  --blue:          var(--status-info);
+  --gradient:      var(--carbone);
+  --border:        var(--gris-bord-soft);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -292,6 +308,15 @@ h1, h2, h3, h4 {
     @apply inline-flex items-center justify-center rounded-full w-9 h-9 transition-all duration-200;
     background: var(--carbone);
     color: var(--papier);
+  }
+
+  /* ── Legacy portail helpers (light) ── */
+  .neo-sunken {
+    background: var(--perle);
+    border: 1px solid var(--gris-bord);
+  }
+  .neo-tilt-card {
+    transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease;
   }
 
   /* ── Process card tilts (desktop only) ── */

@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between mb-8">
             <div>
                 <p class="label-mono mb-2">Administration</p>
-                <h1 class="text-3xl" style="color: var(--perle)">Freelances</h1>
+                <h1 class="text-3xl" style="color: var(--carbone)">Freelances</h1>
             </div>
             <a href="{{ route('admin.dashboard') }}" class="btn-ghost text-sm">← Dashboard</a>
         </div>
@@ -19,10 +19,10 @@
             <div class="card overflow-hidden">
                 @foreach($freelances as $freelance)
                     <div class="px-6 py-5 flex items-center justify-between gap-4"
-                         style="{{ !$loop->last ? 'border-bottom: 1px solid rgba(255,255,255,0.05)' : '' }}">
+                         style="{{ !$loop->last ? 'border-bottom: 1px solid rgba(5,5,5,0.07)' : '' }}">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-3 mb-1">
-                                <p class="font-medium" style="color: var(--perle)">{{ $freelance->full_name }}</p>
+                                <p class="font-medium" style="color: var(--carbone)">{{ $freelance->full_name }}</p>
                                 <span class="inline-flex items-center text-xs px-2.5 py-1 rounded-lg font-mono uppercase tracking-wider"
                                       style="{{ $freelance->is_available
                                         ? 'color:#6ee7b7; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.3)'

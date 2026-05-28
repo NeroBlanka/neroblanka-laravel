@@ -5,7 +5,7 @@
 
         <div class="mb-12">
             <p class="label-mono mb-3">Admin</p>
-            <h1 class="text-4xl" style="color: var(--perle)">Dashboard</h1>
+            <h1 class="text-4xl" style="color: var(--carbone)">Dashboard</h1>
         </div>
 
         {{-- Stats 3D --}}
@@ -30,8 +30,8 @@
         {{-- Projects table --}}
         <div class="card overflow-hidden">
             <div class="px-6 py-5 flex items-center justify-between"
-                 style="border-bottom: 1px solid rgba(255,255,255,0.04)">
-                <h2 class="text-sm font-semibold" style="color: var(--perle)">Projets</h2>
+                 style="border-bottom: 1px solid rgba(5,5,5,0.07)">
+                <h2 class="text-sm font-semibold" style="color: var(--carbone)">Projets</h2>
                 @if(($stats['leads_new'] ?? 0) > 0)
                     <a href="{{ route('admin.leads') }}" class="flex items-center gap-2 text-xs transition-opacity hover:opacity-70"
                        style="color: #34d399">
@@ -49,7 +49,7 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
                         <thead>
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.04)">
+                            <tr style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                                 <th class="text-left px-6 py-3 label-mono">Projet</th>
                                 <th class="text-left px-6 py-3 label-mono">Client</th>
                                 <th class="text-left px-6 py-3 label-mono">Date</th>
@@ -62,8 +62,8 @@
                             @foreach($projects as $project)
                                 @php $sv = $project->status instanceof \BackedEnum ? $project->status->value : (string) $project->status; @endphp
                                 <tr class="transition-colors hover:bg-white/[0.02]"
-                                    style="border-bottom: 1px solid rgba(255,255,255,0.03)">
-                                    <td class="px-6 py-4 font-medium" style="color: var(--perle)">{{ $project->title }}</td>
+                                    style="border-bottom: 1px solid rgba(5,5,5,0.07)">
+                                    <td class="px-6 py-4 font-medium" style="color: var(--carbone)">{{ $project->title }}</td>
                                     <td class="px-6 py-4">
                                         <span style="color: var(--gris)">{{ $project->client->full_name ?? '—' }}</span>
                                         @if($project->client->company ?? null)
@@ -98,7 +98,7 @@
                     </table>
                 </div>
                 @if($projects->hasPages())
-                    <div class="px-6 py-4" style="border-top: 1px solid rgba(255,255,255,0.04)">
+                    <div class="px-6 py-4" style="border-top: 1px solid rgba(5,5,5,0.07)">
                         {{ $projects->links() }}
                     </div>
                 @endif
