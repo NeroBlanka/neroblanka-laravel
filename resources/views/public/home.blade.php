@@ -1,38 +1,76 @@
 <x-public-layout>
 
     {{-- ═══════════════════════════════════════════════════════
-         HERO — Sombre, headline massive, deux boutons
+         HERO — Deux colonnes, titre massif éditorial
     ═══════════════════════════════════════════════════════ --}}
-    <section class="min-h-screen flex flex-col justify-center px-6 pt-32 pb-16 relative overflow-hidden">
-        <div class="max-w-6xl mx-auto w-full">
-            <div class="max-w-3xl">
+    <section class="px-6 pt-20 pb-24 md:pt-28 md:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
-                {{-- Pill tag Creatiwise style --}}
-                <div class="inline-flex items-center gap-2 mb-8 fade-in"
-                     style="border: 1px solid rgba(255,255,255,0.15); border-radius: 999px; padding: 5px 14px">
-                    <span class="w-1.5 h-1.5 rounded-full" style="background: var(--purple)"></span>
-                    <span class="label-mono" style="color: var(--gris)">Studio créatif · Alger</span>
+                {{-- Left: text --}}
+                <div class="lg:col-span-7 fade-up">
+                    <div class="label-pill mb-8">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background: var(--status-success)"></span>
+                        <span>Studio premium basé à Blida · Algérie</span>
+                    </div>
+
+                    <h1 class="display mb-8" style="font-size: clamp(2.5rem, 6.5vw, 5.5rem)">
+                        Nous concevons des marques,<br>
+                        des visuels 3D &amp; des expériences<br>
+                        digitales <span style="color: var(--gris-texte-soft)">premium.</span>
+                    </h1>
+
+                    <p class="text-lg leading-relaxed text-gris max-w-xl mb-10">
+                        Neroblanka Studio accompagne les marques ambitieuses avec une direction artistique exigeante : identité visuelle, 3D, motion, web, campagnes social media et systèmes IA.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                        <a href="/brief" id="hero-cta" class="btn-primary px-7 py-4 text-base">
+                            Demander un diagnostic créatif
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="/work" class="btn-secondary px-7 py-4 text-base">
+                            Voir le portfolio
+                        </a>
+                    </div>
                 </div>
 
-                <h1 class="font-clash font-semibold leading-[1.02] tracking-tight mb-8 fade-up"
-                    style="font-size: clamp(3rem, 8vw, 6.5rem); color: var(--perle)">
-                    Du contraste<br>naît la clarté.
-                </h1>
+                {{-- Right: visual card --}}
+                <div class="lg:col-span-5 fade-up" style="transition-delay: 100ms;">
+                    <div class="relative">
+                        <div class="aspect-[4/5] rounded-3xl overflow-hidden relative"
+                             style="background: linear-gradient(135deg, var(--noir) 0%, var(--carbone) 100%); border: 1px solid var(--gris-bord-soft);">
+                            {{-- Pattern grid --}}
+                            <div class="absolute inset-0 opacity-20"
+                                 style="background-image:
+                                    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+                                    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+                                    background-size: 32px 32px;"></div>
 
-                <p class="text-lg max-w-xl leading-relaxed mb-4 fade-up" style="color: var(--gris); transition-delay: 80ms;">
-                    Branding premium, 3D, motion, web et systèmes IA pour les marques qui refusent l'ordinaire.
-                </p>
-                <p class="text-base max-w-xl leading-relaxed mb-12 fade-up" style="color: var(--gris-mid); transition-delay: 120ms;">
-                    Supprimer les compromis est notre point de départ — pas notre limite.
-                </p>
+                            {{-- Central glyph --}}
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="font-clash font-semibold tracking-tighter text-perle opacity-90"
+                                     style="font-size: clamp(8rem, 22vw, 14rem); line-height: 0.85;">
+                                    N<span style="color: var(--accent-rose); opacity: 0.7">·</span>
+                                </div>
+                            </div>
 
-                <div class="flex flex-col sm:flex-row items-start gap-4 fade-up" style="transition-delay: 160ms;">
-                    <a href="/brief" id="hero-cta" class="btn-primary px-7 py-4 text-base">
-                        Démarrer un projet
-                    </a>
-                    <a href="/work" class="btn-secondary px-7 py-4 text-base">
-                        Voir les réalisations
-                    </a>
+                            {{-- Floating badge top-left --}}
+                            <div class="absolute top-6 left-6 rounded-2xl px-4 py-3"
+                                 style="background: rgba(251,250,247,0.95); backdrop-filter: blur(12px);">
+                                <p class="label-mono mb-1" style="color: var(--gris-texte)">Triple expertise</p>
+                                <p class="text-sm font-medium text-carbone">Design · 3D · IA</p>
+                            </div>
+
+                            {{-- Floating badge bottom-right --}}
+                            <div class="absolute bottom-6 right-6 rounded-2xl px-4 py-3 max-w-[200px]"
+                                 style="background: rgba(251,250,247,0.95); backdrop-filter: blur(12px);">
+                                <p class="text-sm font-medium text-carbone leading-snug">15–20 directions créatives explorées en 48h</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -40,130 +78,85 @@
     </section>
 
     {{-- ═══════════════════════════════════════════════════════
-         MARQUEE
+         MARQUEE — Capabilities band
     ═══════════════════════════════════════════════════════ --}}
-    <div class="py-4 overflow-hidden select-none"
-         style="border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06)">
-        <div class="marquee-track font-mono tracking-widest uppercase text-xs" style="color: var(--gris-mid)">
-            @foreach(['Branding', 'Motion Design', '3D Event', 'Product Studio', 'Campagnes Social', 'Site Web', 'Systèmes IA', 'Automation', 'Branding', 'Motion Design', '3D Event', 'Product Studio', 'Campagnes Social', 'Site Web', 'Systèmes IA', 'Automation'] as $item)
-                <span class="px-8">{{ $item }}</span><span style="color: rgba(255,255,255,0.12)">·</span>
+    <div class="py-6 border-y overflow-hidden select-none"
+         style="border-color: var(--gris-bord-soft); background: var(--perle);">
+        <div class="marquee-track">
+            @foreach(['Branding', '3D Product', 'Event Stand', 'Motion', 'Web', 'Social Campaign', 'AI Image', 'Automation', 'Branding', '3D Product', 'Event Stand', 'Motion', 'Web', 'Social Campaign', 'AI Image', 'Automation'] as $item)
+                <span class="px-10 text-sm font-medium tracking-wide text-carbone whitespace-nowrap">{{ $item }}</span>
+                <span class="text-gris-soft" aria-hidden="true">·</span>
             @endforeach
         </div>
     </div>
 
     {{-- ═══════════════════════════════════════════════════════
-         WHAT WE DO — Section sombre, grille 3×2 comme Creatiwise
+         ABOUT — Studio d'auteur
     ═══════════════════════════════════════════════════════ --}}
-    <section class="py-28" style="background: var(--bg-surface); border-bottom: 1px solid rgba(255,255,255,0.05)">
-        <div class="max-w-6xl mx-auto px-6">
+    <section class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
-            <div class="grid lg:grid-cols-2 gap-12 mb-16 fade-up">
-                <div>
-                    <div class="inline-block mb-5 px-3 py-1.5 rounded-full text-xs font-mono tracking-wider"
-                         style="border: 1px solid rgba(255,255,255,0.12); color: var(--gris)">Ce qu'on fait</div>
-                    <h2 class="font-clash text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight" style="color: var(--perle)">
-                        Nous créons ce<br>qui ne s'oublie pas.
-                    </h2>
-                </div>
-                <div class="flex items-end">
-                    <p class="text-base leading-relaxed max-w-md" style="color: var(--gris)">
-                        Du concept à la production, un studio complet pour les marques qui ont l'ambition de s'imposer — en Algérie et au-delà.
-                    </p>
-                </div>
-            </div>
-
-            @php
-            $serviceDescriptions = [
-                'branding'              => 'Logo, charte graphique, typographies — le système de marque pensé pour durer.',
-                'event_stand_3d'        => 'Stands et scénographies 3D photoréalistes pour salons et événements.',
-                'product_rendering_3d'  => 'Packshots, rendus studio et visuels produit haute fidélité.',
-                'motion_design'         => 'Animation, génération de motion graphics et contenus vidéo.',
-                'social_campaign'       => 'Stratégie visuelle et contenus performants pour les réseaux.',
-                'website'               => 'Sites vitrines, portfolios et landing pages sur mesure.',
-                'ai_image_video'        => 'Images et vidéos IA intégrées au pipeline créatif.',
-                'automation'            => 'Automatisation de processus créatifs et reporting.',
-            ];
-
-            $serviceIcons = [
-                'branding'              => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
-                'event_stand_3d'        => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>',
-                'product_rendering_3d'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>',
-                'motion_design'         => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
-                'social_campaign'       => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>',
-                'website'               => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
-                'ai_image_video'        => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M22 2 12 12"/></svg>',
-                'automation'            => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
-            ];
-            @endphp
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                @foreach(\App\Enums\ServiceType::cases() as $service)
-                    @if($service !== \App\Enums\ServiceType::MIXED_PROJECT)
-                        <a href="/services"
-                           class="group block rounded-2xl p-7 transition-all duration-300 fade-up cursor-pointer"
-                           style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);"
-                           onmouseover="this.style.background='rgba(255,255,255,0.06)'; this.style.borderColor='rgba(255,255,255,0.12)';"
-                           onmouseout="this.style.background='rgba(255,255,255,0.03)'; this.style.borderColor='rgba(255,255,255,0.07)';">
-                            <div class="mb-5 text-white opacity-60 group-hover:opacity-100 transition-opacity duration-300">
-                                {!! $serviceIcons[$service->value] ?? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>' !!}
-                            </div>
-                            <h3 class="font-semibold text-base mb-3 transition-colors duration-300" style="color: var(--perle)">
-                                {{ $service->label() }}
-                            </h3>
-                            <p class="text-xs leading-relaxed" style="color: var(--gris-mid)">
-                                {{ $serviceDescriptions[$service->value] ?? '' }}
+                {{-- Left: visual --}}
+                <div class="lg:col-span-5 order-2 lg:order-1 fade-up">
+                    <div class="aspect-square rounded-3xl overflow-hidden relative"
+                         style="background: var(--perle); border: 1px solid var(--gris-bord-soft);">
+                        {{-- Diagonal contrast --}}
+                        <div class="absolute inset-0"
+                             style="background: linear-gradient(135deg, var(--carbone) 0%, var(--carbone) 50%, var(--perle) 50%, var(--perle) 100%);"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <p class="font-clash text-7xl md:text-8xl font-semibold tracking-tighter"
+                               style="background: linear-gradient(135deg, var(--perle) 0%, var(--perle) 50%, var(--carbone) 50%, var(--carbone) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                                N·A
                             </p>
-                        </a>
-                    @endif
-                @endforeach
-            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="mt-10 text-center fade-up">
-                <a href="/services" class="btn-secondary inline-flex items-center gap-2 px-6 py-3">
-                    Tous les services →
-                </a>
-            </div>
+                {{-- Right: text --}}
+                <div class="lg:col-span-7 order-1 lg:order-2 fade-up">
+                    <p class="label-mono mb-5">À propos</p>
+                    <h2 class="display text-4xl md:text-5xl lg:text-6xl mb-8">
+                        Un studio d'auteur,<br>pas une agence anonyme.
+                    </h2>
+                    <p class="text-lg leading-relaxed text-gris mb-6 max-w-xl">
+                        Neroblanka est dirigé par <span class="text-carbone font-medium">Nadir Allek</span>. Chaque projet passe par une direction artistique claire, une exigence visuelle forte et une combinaison rare en Algérie : design graphique, 3D et IA générative.
+                    </p>
+                    <div class="inline-block rounded-2xl px-6 py-5 mt-2"
+                         style="background: var(--carbone); color: var(--perle);">
+                        <p class="label-mono mb-2" style="color: rgba(245,242,236,0.5)">3 expertises</p>
+                        <p class="font-clash text-xl font-semibold">Graphic Design · 3D · IA générative</p>
+                    </div>
+                </div>
 
+            </div>
         </div>
     </section>
 
     {{-- ═══════════════════════════════════════════════════════
-         HOW WE WORK — Process steps inclinés, style Creatiwise
+         PROCESS — 4 cartes inclinées
     ═══════════════════════════════════════════════════════ --}}
-    <section class="py-28 overflow-hidden" style="border-bottom: 1px solid rgba(255,255,255,0.05)">
-        <div class="max-w-6xl mx-auto px-6">
+    <section id="process" class="py-24 md:py-32 px-6 border-y" style="background: var(--perle); border-color: var(--gris-bord-soft);">
+        <div class="max-w-7xl mx-auto">
 
-            <div class="grid lg:grid-cols-2 gap-12 mb-20 fade-up">
-                <div>
-                    <div class="inline-block mb-5 px-3 py-1.5 rounded-full text-xs font-mono tracking-wider"
-                         style="border: 1px solid rgba(255,255,255,0.12); color: var(--gris)">Notre process</div>
-                    <h2 class="font-clash text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight" style="color: var(--perle)">
-                        Du brief au lancement,<br>on vous guide.
-                    </h2>
-                </div>
-                <div class="flex items-end">
-                    <p class="text-base leading-relaxed max-w-md" style="color: var(--gris)">
-                        Un process clair, des jalons maîtrisés et une communication directe — pas de zones d'ombre, pas de mauvaises surprises.
-                    </p>
-                </div>
+            <div class="max-w-3xl mb-16 fade-up">
+                <p class="label-mono mb-5">Process</p>
+                <h2 class="display text-4xl md:text-5xl">
+                    Un process clair pour transformer une demande floue en direction visuelle forte.
+                </h2>
             </div>
 
-            {{-- Process cards — inclinés style Creatiwise --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
                 @foreach([
-                    ['num' => '01', 'title' => 'Analyser', 'desc' => 'On étudie votre marché, vos concurrents et vos objectifs avant de tracer la moindre ligne.', 'rotate' => '-3deg'],
-                    ['num' => '02', 'title' => 'Concevoir', 'desc' => 'Exploration visuelle, proposition de directions artistiques et itérations rapides.', 'rotate' => '2deg'],
-                    ['num' => '03', 'title' => 'Produire', 'desc' => 'Exécution pixel-perfect avec des outils de production modernes — 3D, motion, code.', 'rotate' => '-2deg'],
-                    ['num' => '04', 'title' => 'Livrer', 'desc' => 'Fichiers sources organisés, brief de brand et accompagnement au déploiement.', 'rotate' => '3deg'],
+                    ['num' => '01', 'title' => 'Clarifier', 'desc' => "Analyse du brief, du marché, de la cible et du niveau d'ambition.", 'tilt' => 'tilt-1'],
+                    ['num' => '02', 'title' => 'Diriger',  'desc' => 'Création d\'une direction artistique : moodboard, références, système visuel.', 'tilt' => 'tilt-2'],
+                    ['num' => '03', 'title' => 'Produire', 'desc' => 'Design, 3D, motion, web ou IA selon le besoin du projet.', 'tilt' => 'tilt-3'],
+                    ['num' => '04', 'title' => 'Livrer',   'desc' => 'Validation Neroblanka, livraison sécurisée, révisions cadrées.', 'tilt' => 'tilt-4'],
                 ] as $step)
-                    <div class="neo-tilt-card rounded-2xl p-7 fade-up"
-                         style="background: var(--glass); backdrop-filter: blur(16px);
-                                border: 1px solid rgba(255,255,255,0.10);
-                                transform: rotate({{ $step['rotate'] }});
-                                transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                        <p class="font-clash text-4xl font-semibold mb-5 opacity-20" style="color: var(--perle)">{{ $step['num'] }}</p>
-                        <h3 class="font-clash text-xl font-semibold mb-3" style="color: var(--perle)">{{ $step['title'] }}</h3>
-                        <p class="text-sm leading-relaxed" style="color: var(--gris)">{{ $step['desc'] }}</p>
+                    <div class="card-on-perle rounded-3xl p-7 {{ $step['tilt'] }} fade-up transition-transform duration-300 hover:!rotate-0 hover:-translate-y-1">
+                        <p class="font-clash text-3xl font-semibold mb-6" style="color: var(--gris-texte-soft)">{{ $step['num'] }}</p>
+                        <h3 class="font-clash text-xl font-semibold mb-3 text-carbone">{{ $step['title'] }}</h3>
+                        <p class="text-sm leading-relaxed text-gris">{{ $step['desc'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -172,25 +165,71 @@
     </section>
 
     {{-- ═══════════════════════════════════════════════════════
-         PORTFOLIO — Projects cards style Creatiwise
+         SERVICES — Section noire 8 cartes
     ═══════════════════════════════════════════════════════ --}}
-    <section class="py-28" style="border-bottom: 1px solid rgba(255,255,255,0.05)">
-        <div class="max-w-6xl mx-auto px-6">
+    <section class="py-24 md:py-32 px-6 bg-carbone">
+        <div class="max-w-7xl mx-auto">
 
-            <div class="flex items-end justify-between mb-16 fade-up">
-                <div>
-                    <div class="inline-block mb-5 px-3 py-1.5 rounded-full text-xs font-mono tracking-wider"
-                         style="border: 1px solid rgba(255,255,255,0.12); color: var(--gris)">Portfolio</div>
-                    <h2 class="font-clash text-3xl md:text-4xl font-semibold" style="color: var(--perle)">
-                        Explorez nos projets<br>les plus marquants.
+            <div class="max-w-3xl mb-16 fade-up">
+                <p class="label-mono mb-5" style="color: rgba(245,242,236,0.5)">Services</p>
+                <h2 class="display text-4xl md:text-5xl lg:text-6xl" style="color: var(--perle)">
+                    Nous ne produisons pas juste du contenu.<br>
+                    <span style="color: var(--gris-texte-soft)">Nous construisons une présence visuelle cohérente.</span>
+                </h2>
+            </div>
+
+            @php
+            $services = [
+                ['title' => 'Identité Visuelle Premium', 'desc' => 'Logo, charte, système visuel, direction artistique.', 'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>'],
+                ['title' => '3D Event & Stand Design', 'desc' => 'Modélisation de stands pour foires, salons et événements.', 'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-6 9 6v12H3V9z"/><path d="M9 21V12h6v9"/></svg>'],
+                ['title' => '3D Product Studio', 'desc' => 'Modélisation produit, rendu studio, packshot, visuels publicitaires.', 'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>'],
+                ['title' => 'Motion Design', 'desc' => 'Animation logo, reels, launch videos, animations produit.', 'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6 4 20 12 6 20 6 4"/></svg>'],
+                ['title' => 'Campagnes Réseaux Sociaux', 'desc' => 'Concepts créatifs, visuels, posts, stories, reels, direction de campagne.', 'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11V20M12 4V20M20 14V20"/></svg>'],
+                ['title' => 'Sites Web Premium', 'desc' => 'Landing pages, sites vitrines, portfolios, sites de marque.', 'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>'],
+                ['title' => 'IA Image & Vidéo', 'desc' => 'Génération d\'images, vidéos IA, exploration créative sous direction.', 'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/></svg>'],
+                ['title' => 'Automation Créative', 'desc' => 'Workflows IA, automatisation de contenu, systèmes internes.', 'icon' => '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>'],
+            ];
+            @endphp
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                @foreach($services as $service)
+                    <div class="card-on-dark rounded-2xl p-6 transition-all duration-200 hover:border-white/20 fade-up group">
+                        <div class="mb-5 text-perle opacity-70 group-hover:opacity-100 transition-opacity">
+                            {!! $service['icon'] !!}
+                        </div>
+                        <h3 class="text-base font-medium mb-2 text-perle">{{ $service['title'] }}</h3>
+                        <p class="text-xs leading-relaxed" style="color: rgba(245,242,236,0.55)">{{ $service['desc'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="mt-12 fade-up">
+                <a href="/services" class="btn-secondary btn-secondary-on-dark px-6 py-3 text-sm">
+                    Tous les services
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    {{-- ═══════════════════════════════════════════════════════
+         PORTFOLIO PREVIEW
+    ═══════════════════════════════════════════════════════ --}}
+    <section class="py-24 md:py-32 px-6" style="background: var(--perle);">
+        <div class="max-w-7xl mx-auto">
+
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14 fade-up">
+                <div class="max-w-2xl">
+                    <p class="label-mono mb-5">Portfolio</p>
+                    <h2 class="display text-4xl md:text-5xl">
+                        Projets sélectionnés.<br>
+                        <span class="text-gris">Directions visuelles, 3D, campagnes et systèmes digitaux.</span>
                     </h2>
                 </div>
-                <a href="/work"
-                   class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full text-sm transition-all duration-200"
-                   style="border: 1px solid rgba(255,255,255,0.12); color: var(--gris)"
-                   onmouseover="this.style.background='rgba(255,255,255,0.06)'; this.style.color='var(--perle)';"
-                   onmouseout="this.style.background='transparent'; this.style.color='var(--gris)';">
-                    Voir tous les projets →
+                <a href="/work" class="btn-secondary px-5 py-2.5 text-sm self-start lg:self-end">
+                    Voir tous les projets
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             </div>
 
@@ -202,67 +241,41 @@
             @endphp
 
             @if($featured->isEmpty())
-                <div class="rounded-2xl px-6 py-16 text-center fade-up"
-                     style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06)">
-                    <p class="text-sm" style="color: var(--gris-mid)">Portfolio en cours de construction — bientôt.</p>
+                <div class="card-on-perle rounded-3xl px-6 py-20 text-center fade-up">
+                    <p class="label-mono mb-4">Portfolio en cours de construction</p>
+                    <p class="text-base text-gris max-w-md mx-auto">Les premières sélections seront publiées prochainement. Vous avez un projet exigeant ? Parlons-en.</p>
+                    <a href="/brief" class="btn-primary mt-8 px-6 py-3 text-sm">Démarrer une conversation</a>
                 </div>
             @else
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     @foreach($featured as $item)
-                        @php
-                            $gradients = [
-                                'branding'              => 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-                                'event_stand_3d'        => 'linear-gradient(135deg, #0d1b2a 0%, #1a2a3a 100%)',
-                                'product_rendering_3d'  => 'linear-gradient(135deg, #16213e 0%, #0f3460 100%)',
-                                'motion_design'         => 'linear-gradient(135deg, #1a0a2e 0%, #2d1b5e 100%)',
-                                'social_campaign'       => 'linear-gradient(135deg, #0a1a1a 0%, #0d2d2d 100%)',
-                                'website'               => 'linear-gradient(135deg, #0a1a0a 0%, #0d2a0d 100%)',
-                                'ai_image_video'        => 'linear-gradient(135deg, #1a1a0a 0%, #2a2a0d 100%)',
-                                'automation'            => 'linear-gradient(135deg, #1a0a0a 0%, #2a1010 100%)',
-                                'mixed_project'         => 'linear-gradient(135deg, #1a1010 0%, #2a1a1a 100%)',
-                            ];
-                            $bg = $gradients[$item->service_type->value] ?? 'linear-gradient(135deg, #111 0%, #1a1a1a 100%)';
-                            $icon = $item->service_type->icon();
-                        @endphp
-                        <a href="/work/{{ $item->slug }}"
-                           class="group block rounded-2xl overflow-hidden transition-all duration-300 fade-up"
-                           style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07)"
-                           onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.transform='translateY(-4px)'"
-                           onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'; this.style.transform='translateY(0)'">
-
-                            {{-- Image area --}}
-                            <div class="w-full h-48 flex items-center justify-center relative overflow-hidden"
-                                 style="background: {{ $bg }}">
-                                <span class="text-4xl opacity-20 transition-transform duration-500 group-hover:scale-110">{{ $icon }}</span>
-                                {{-- Arrow button Creatiwise style --}}
-                                <div class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-y-1 group-hover:translate-y-0"
-                                     style="background: var(--perle); color: var(--bg)">
+                        <a href="/work/{{ $item->slug }}" class="card-interactive rounded-3xl overflow-hidden group fade-up">
+                            <div class="aspect-[4/3] relative overflow-hidden"
+                                 style="background: linear-gradient(135deg, var(--noir) 0%, var(--carbone) 100%);">
+                                {{-- Pattern --}}
+                                <div class="absolute inset-0 opacity-30"
+                                     style="background-image:
+                                        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+                                        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+                                        background-size: 24px 24px;"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-5xl opacity-50">{{ $item->service_type?->icon() ?? '◉' }}</span>
+                                </div>
+                                <div class="absolute top-5 right-5 arrow-circle opacity-0 group-hover:opacity-100 transition-opacity">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                                        <path d="M7 17L17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </div>
                             </div>
-
-                            {{-- Meta --}}
-                            <div class="p-5">
-                                <p class="text-xs uppercase tracking-wider mb-2" style="color: var(--gris-mid)">
-                                    {{ $item->service_type->label() }}
-                                </p>
-                                <h3 class="font-semibold" style="color: var(--perle)">
-                                    {{ $item->title }}
-                                </h3>
+                            <div class="p-6">
+                                <p class="label-mono mb-2">{{ $item->service_type?->label() ?? 'Projet' }}</p>
+                                <h3 class="font-clash text-xl font-semibold text-carbone mb-1">{{ $item->title }}</h3>
                                 @if($item->client_name)
-                                    <p class="text-xs mt-1" style="color: var(--gris-mid)">{{ $item->client_name }}</p>
+                                    <p class="text-sm text-gris">{{ $item->client_name }}</p>
                                 @endif
                             </div>
                         </a>
                     @endforeach
-                </div>
-
-                <div class="mt-10 text-center sm:hidden fade-up">
-                    <a href="/work" class="btn-secondary inline-flex items-center gap-2 px-6 py-3">
-                        Voir tous les projets →
-                    </a>
                 </div>
             @endif
 
@@ -270,72 +283,56 @@
     </section>
 
     {{-- ═══════════════════════════════════════════════════════
-         MANIFESTE — Quote forte
+         MANIFESTE
     ═══════════════════════════════════════════════════════ --}}
-    <section class="py-28" style="border-bottom: 1px solid rgba(255,255,255,0.05)">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="max-w-4xl fade-up">
-                <p class="font-clash text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight" style="color: var(--perle)">
-                    "La médiocrité<br>coûte plus cher<br>que l'excellence."
-                </p>
-                <p class="mt-8 text-base leading-relaxed max-w-lg" style="color: var(--gris)">
-                    Nadir Allek — fondateur Neroblanka, directeur artistique depuis 10 ans à Alger.
-                </p>
-            </div>
+    <section class="py-24 md:py-32 px-6">
+        <div class="max-w-5xl mx-auto fade-up">
+            <p class="label-mono mb-8">Manifeste</p>
+            <h2 class="display text-4xl md:text-6xl lg:text-7xl mb-10 leading-[0.95]">
+                Le premium n'est pas<br>une décoration.<br>
+                <span style="color: var(--gris-texte-soft)">C'est une discipline.</span>
+            </h2>
+            <p class="text-lg leading-relaxed text-gris max-w-2xl">
+                Chaque ligne, chaque contraste, chaque rendu et chaque interaction doit servir une perception plus claire de la marque.
+            </p>
         </div>
     </section>
 
     {{-- ═══════════════════════════════════════════════════════
-         CTA FINAL — Dark rounded card comme Creatiwise
+         CTA FINAL — Grande carte noire
     ═══════════════════════════════════════════════════════ --}}
-    <section class="py-24 px-6">
-        <div class="max-w-5xl mx-auto">
-            <div class="rounded-2xl p-12 md:p-20 text-center relative overflow-hidden"
-                 style="background: linear-gradient(135deg, rgba(124,92,252,0.15) 0%, rgba(0,0,0,0) 60%, rgba(240,89,218,0.08) 100%);
-                        border: 1px solid rgba(255,255,255,0.1)">
+    <section id="contact" class="px-6 pb-24 md:pb-32">
+        <div class="max-w-7xl mx-auto">
+            <div class="rounded-3xl px-8 py-16 md:px-16 md:py-24 lg:py-28 relative overflow-hidden bg-carbone fade-up">
+                {{-- Pattern grid --}}
+                <div class="absolute inset-0 opacity-10 pointer-events-none"
+                     style="background-image:
+                        linear-gradient(rgba(245,242,236,0.5) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(245,242,236,0.5) 1px, transparent 1px);
+                        background-size: 40px 40px;"></div>
 
-                {{-- Ambient blob --}}
-                <div class="absolute inset-0 pointer-events-none opacity-40"
-                     style="background: radial-gradient(ellipse at 30% 50%, rgba(124,92,252,0.25) 0%, transparent 55%),
-                                        radial-gradient(ellipse at 70% 50%, rgba(240,89,218,0.15) 0%, transparent 55%)"></div>
-
-                <div class="relative fade-up">
-                    <div class="inline-block mb-8 px-3 py-1.5 rounded-full text-xs font-mono tracking-wider"
-                         style="border: 1px solid rgba(255,255,255,0.12); color: var(--gris)">Démarrez aujourd'hui</div>
-                    <h2 class="font-clash text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight mb-6" style="color: var(--perle)">
-                        Votre projet mérite<br>mieux que l'ordinaire.
+                <div class="relative max-w-3xl mx-auto text-center">
+                    <div class="label-pill label-pill-on-dark mb-8 mx-auto">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background: var(--status-success)"></span>
+                        <span>Disponible pour 2-3 projets par trimestre</span>
+                    </div>
+                    <h2 class="display text-4xl md:text-5xl lg:text-6xl text-perle mb-8 leading-[1.05]">
+                        Tu veux construire une image plus claire, plus forte, plus premium ?
                     </h2>
-                    <p class="text-lg mb-10 max-w-lg mx-auto" style="color: var(--gris)">
-                        Décrivez votre besoin en 5 minutes. On répond avec une vision, pas un devis générique.
+                    <p class="text-lg leading-relaxed mb-10 max-w-xl mx-auto" style="color: rgba(245,242,236,0.7)">
+                        Envoie ton brief. Neroblanka analyse chaque demande manuellement pour vérifier si le projet correspond au niveau d'exigence du studio.
                     </p>
-                    <a href="/brief" class="btn-primary px-8 py-4 text-base inline-flex items-center gap-2">
-                        Démarrer le diagnostic créatif
+                    <a href="/brief" class="btn-primary px-8 py-4 text-base"
+                       style="background: var(--perle); color: var(--carbone); border-color: var(--perle);">
+                        Demander un diagnostic créatif
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
+                    <p class="text-xs mt-6" style="color: rgba(245,242,236,0.5)">
+                        Réponse sous 24–48h si le projet est compatible.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
-
-    {{-- STICKY CTA --}}
-    <div id="sticky-cta"
-        class="fixed bottom-6 right-6 z-40 transition-all duration-300"
-        style="opacity: 0; transform: translateY(1rem); pointer-events: none"
-        x-data="{ visible: false }"
-        x-init="
-            const hero = document.getElementById('hero-cta');
-            if (hero) {
-                const obs = new IntersectionObserver(([e]) => {
-                    visible = !e.isIntersecting;
-                    $el.style.opacity = visible ? '1' : '0';
-                    $el.style.transform = visible ? 'translateY(0)' : 'translateY(1rem)';
-                    $el.style.pointerEvents = visible ? 'auto' : 'none';
-                });
-                obs.observe(hero);
-            }
-        ">
-        <a href="/brief" class="btn-primary px-5 py-3 shadow-2xl text-sm inline-flex items-center gap-2">
-            Diagnostic créatif →
-        </a>
-    </div>
 
 </x-public-layout>
