@@ -1,8 +1,14 @@
 <div>
-    @if($success)
-        <div class="mb-4 text-sm px-4 py-3 rounded-xl" style="color: #15803d; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
-            {{ $message }}
-        </div>
+    @if($message)
+        @if($success)
+            <div class="mb-4 text-sm px-4 py-3 rounded-xl" style="color: #15803d; background: rgba(31,157,85,0.08); border: 1px solid rgba(31,157,85,0.25)">
+                {{ $message }}
+            </div>
+        @else
+            <div class="mb-4 text-sm px-4 py-3 rounded-xl" style="color: #b91c1c; background: rgba(185,28,28,0.06); border: 1px solid rgba(185,28,28,0.25)">
+                {{ $message }}
+            </div>
+        @endif
     @endif
 
     <div class="card overflow-hidden">
@@ -94,11 +100,19 @@
 
                         {{-- Assign button --}}
                         <div class="shrink-0">
-                            <button wire:click="assign('{{ $freelance->id }}')"
-                                    wire:confirm="Assigner {{ $freelance->full_name }} à ce projet ?"
-                                    class="{{ $freelance->is_available ? 'btn-primary' : 'btn-secondary' }} text-xs px-3 py-1.5 cursor-pointer">
-                                Assigner
-                            </button>
+                            @if(in_array($freelance->id, $assignedIds, true))
+                                <span class="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full"
+                                      style="color: #15803d; background: rgba(31,157,85,0.08); border: 1px solid rgba(31,157,85,0.25)">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    Déjà assigné
+                                </span>
+                            @else
+                                <button wire:click="assign('{{ $freelance->id }}')"
+                                        wire:confirm="Assigner {{ $freelance->full_name }} à ce projet ?"
+                                        class="{{ $freelance->is_available ? 'btn-primary' : 'btn-secondary' }} text-xs px-3 py-1.5 cursor-pointer">
+                                    Assigner
+                                </button>
+                            @endif
                         </div>
                     </div>
                 @endforeach

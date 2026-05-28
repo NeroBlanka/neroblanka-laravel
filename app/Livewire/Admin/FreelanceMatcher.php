@@ -2,13 +2,15 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Assignment;
 use App\Models\Project;
 use App\Models\User;
 use App\Scopes\ClientOwnedScope;
+use App\Scopes\FreelanceOwnedScope;
 use App\Services\AssignmentService;
 use App\Services\FreelanceMatchingService;
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class FreelanceMatcher extends Component
 {
@@ -22,7 +24,7 @@ class FreelanceMatcher extends Component
         $this->projectId = $projectId;
     }
 
-    public function assign(string $freelanceId, FreelanceMatchingService $matcher, AssignmentService $assignmentService): void
+    public function assign(string $freelanceId, AssignmentService $assignmentService): void
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
 
@@ -31,7 +33,13 @@ class FreelanceMatcher extends Component
 
         abort_unless($freelance->role === 'freelance', 422);
 
-        $assignmentService->create($project, $freelance, null);
+        try {
+            $assignmentService->create($project, $freelance, null);
+        } catch (HttpException $e) {
+            $this->success = false;
+            $this->message = $e->getMessage() ?: "Impossible d'assigner ce freelance.";
+            return;
+        }
 
         $this->success = true;
         $this->message = $freelance->full_name . ' assigné avec succès.';
@@ -42,6 +50,12 @@ class FreelanceMatcher extends Component
         $project = Project::withoutGlobalScope(ClientOwnedScope::class)->findOrFail($this->projectId);
         $ranked = $matcher->rankForProject($project);
 
-        return view('livewire.admin.freelance-matcher', compact('ranked', 'project'));
+        $assignedIds = Assignment::withoutGlobalScope(FreelanceOwnedScope::class)
+            ->where('project_id', $this->projectId)
+            ->where('status', 'active')
+            ->pluck('freelance_id')
+            ->all();
+
+        return view('livewire.admin.freelance-matcher', compact('ranked', 'project', 'assignedIds'));
     }
 }
