@@ -9,11 +9,11 @@
 
         <div class="mb-10">
             <p class="label-mono mb-3">Mission</p>
-            <h1 class="text-4xl" style="color: var(--carbone)">Soumettre votre livrable</h1>
+            <h1 class="font-clash text-4xl md:text-5xl font-semibold" style="color: var(--carbone)">Soumettre votre livrable</h1>
         </div>
 
         {{-- Mission summary --}}
-        <div class="card p-6 mb-5 neo-tilt-card">
+        <div class="card p-6 mb-5">
             <p class="label-mono mb-5">Détails de la mission</p>
             <div class="grid grid-cols-2 gap-5">
                 <div>
@@ -57,10 +57,10 @@
                     <div class="neo-sunken rounded-xl px-4 py-3">
                         <input id="file" type="file" name="file" required
                                class="block w-full text-sm cursor-pointer
-                                      file:mr-4 file:py-1.5 file:px-4 file:rounded-lg file:border-0
-                                      file:text-xs file:font-medium file:cursor-pointer file:transition-all"
-                               style="color: var(--gris)"
-                               onchange="this.style.cssText += '; --file-bg: rgba(5,5,5,0.07)'" />
+                                      file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
+                                      file:text-xs file:font-medium file:cursor-pointer file:transition-colors
+                                      file:bg-[#050505] file:text-[#F5F2EC] hover:file:bg-[#1c1c1c]"
+                               style="color: var(--gris-texte)" />
                     </div>
                     @error('file')
                         <p class="text-xs mt-1.5" style="color: var(--status-danger)">{{ $message }}</p>
@@ -81,7 +81,8 @@
             </div>
 
             <button type="submit" class="btn-primary w-full py-4 text-base">
-                Envoyer le livrable →
+                Envoyer le livrable
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
         </form>
 
