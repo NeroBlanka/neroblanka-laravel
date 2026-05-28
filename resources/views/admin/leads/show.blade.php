@@ -19,9 +19,9 @@
             </div>
             <div class="flex items-center gap-3 shrink-0">
                 <span class="inline-block px-3 py-1.5 text-sm font-semibold rounded-xl"
-                      style="color: {{ $lead->isHot() ? '#6ee7b7' : ($lead->isWarm() ? '#fbbf24' : '#fca5a5') }};
-                             background: {{ $lead->isHot() ? 'rgba(52,211,153,0.1)' : ($lead->isWarm() ? 'rgba(251,191,36,0.1)' : 'rgba(248,113,113,0.1)') }};
-                             border: 1px solid {{ $lead->isHot() ? 'rgba(52,211,153,0.3)' : ($lead->isWarm() ? 'rgba(251,191,36,0.3)' : 'rgba(248,113,113,0.3)') }}">
+                      style="color: {{ $lead->isHot() ? '#15803d' : ($lead->isWarm() ? '#c87f0a' : '#b91c1c') }};
+                             background: {{ $lead->isHot() ? 'rgba(31,157,85,0.08)' : ($lead->isWarm() ? 'rgba(200,127,10,0.08)' : 'rgba(185,28,28,0.06)') }};
+                             border: 1px solid {{ $lead->isHot() ? 'rgba(31,157,85,0.25)' : ($lead->isWarm() ? 'rgba(200,127,10,0.25)' : 'rgba(185,28,28,0.25)') }}">
                     Score {{ $lead->score }}/100
                 </span>
 
@@ -50,7 +50,7 @@
                         </div>
                         <p class="text-sm leading-relaxed" style="color: var(--gris)">{{ $lead->ai_summary }}</p>
                         @if($lead->ai_score_adjustment !== 0)
-                            <p class="text-xs mt-2" style="color: {{ $lead->ai_score_adjustment > 0 ? '#6ee7b7' : '#fca5a5' }}">
+                            <p class="text-xs mt-2" style="color: {{ $lead->ai_score_adjustment > 0 ? '#15803d' : '#b91c1c' }}">
                                 Ajustement score IA : {{ $lead->ai_score_adjustment > 0 ? '+' : '' }}{{ $lead->ai_score_adjustment }} pts
                             </p>
                         @endif

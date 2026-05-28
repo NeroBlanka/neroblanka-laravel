@@ -269,7 +269,7 @@ h1, h2, h3, h4 {
 
   /* ── Labels mono ── */
   .label-mono {
-    @apply inline-block text-[10px] uppercase font-medium;
+    @apply text-[10px] uppercase font-medium;
     font-family: 'Inter', sans-serif;
     letter-spacing: 0.18em;
     color: var(--gris-texte);

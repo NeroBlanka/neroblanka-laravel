@@ -75,7 +75,7 @@
                                             <form method="POST" action="{{ route('admin.portfolio.toggle-published', $item) }}">
                                                 @csrf
                                                 <button type="submit" class="text-xs transition-opacity hover:opacity-60 cursor-pointer"
-                                                        style="color: {{ $item->published_at ? '#fca5a5' : '#6ee7b7' }}">
+                                                        style="color: {{ $item->published_at ? '#b91c1c' : '#15803d' }}">
                                                     {{ $item->published_at ? 'Dépublier' : 'Publier' }}
                                                 </button>
                                             </form>

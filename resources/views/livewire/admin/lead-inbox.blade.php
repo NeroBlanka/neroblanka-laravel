@@ -65,10 +65,10 @@
                             <td class="px-5 py-3.5 whitespace-nowrap" style="color: var(--gris)">{{ $lead->budget_range }}</td>
                             <td class="px-5 py-3.5 whitespace-nowrap" style="color: var(--gris)">{{ $lead->deadline_range }}</td>
                             <td class="px-5 py-3.5 text-center">
-                                <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-lg text-white"
-                                      style="background: {{ $lead->isHot() ? 'rgba(52,211,153,0.3)' : ($lead->isWarm() ? 'rgba(251,191,36,0.3)' : 'rgba(248,113,113,0.3)') }};
-                                             color: {{ $lead->isHot() ? '#6ee7b7' : ($lead->isWarm() ? '#fbbf24' : '#fca5a5') }};
-                                             border: 1px solid {{ $lead->isHot() ? 'rgba(52,211,153,0.4)' : ($lead->isWarm() ? 'rgba(251,191,36,0.4)' : 'rgba(248,113,113,0.4)') }}">
+                                <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-lg"
+                                      style="background: {{ $lead->isHot() ? 'rgba(31,157,85,0.10)' : ($lead->isWarm() ? 'rgba(200,127,10,0.10)' : 'rgba(185,28,28,0.08)') }};
+                                             color: {{ $lead->isHot() ? '#15803d' : ($lead->isWarm() ? '#c87f0a' : '#b91c1c') }};
+                                             border: 1px solid {{ $lead->isHot() ? 'rgba(31,157,85,0.25)' : ($lead->isWarm() ? 'rgba(200,127,10,0.25)' : 'rgba(185,28,28,0.25)') }}">
                                     {{ $lead->score }}
                                 </span>
                             </td>
