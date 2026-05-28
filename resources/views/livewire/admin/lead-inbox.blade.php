@@ -6,21 +6,21 @@
             <span class="font-medium">Hot leads (≥ 80)</span>
         </label>
 
-        <select wire:model.live="filterStatus" class="select-dark text-xs" style="width:auto">
+        <select wire:model.live="filterStatus" class="select-base text-xs" style="width:auto">
             <option value="">Tous les statuts</option>
             @foreach($statuses as $status)
                 <option value="{{ $status->value }}">{{ $status->label() }}</option>
             @endforeach
         </select>
 
-        <select wire:model.live="filterService" class="select-dark text-xs" style="width:auto">
+        <select wire:model.live="filterService" class="select-base text-xs" style="width:auto">
             <option value="">Tous les services</option>
             @foreach($services as $service)
                 <option value="{{ $service->value }}">{{ $service->label() }}</option>
             @endforeach
         </select>
 
-        <select wire:model.live="filterBudget" class="select-dark text-xs" style="width:auto">
+        <select wire:model.live="filterBudget" class="select-base text-xs" style="width:auto">
             <option value="">Tous les budgets</option>
             @foreach(['< 500$', '500$ – 2 000$', '2 000$ – 10 000$', '10 000$ – 30 000$', '> 30 000$'] as $b)
                 <option value="{{ $b }}">{{ $b }}</option>
@@ -74,7 +74,7 @@
                             </td>
                             <td class="px-5 py-3.5">
                                 <select wire:change="changeStatus('{{ $lead->id }}', $event.target.value)"
-                                    class="select-dark text-xs" style="width:auto">
+                                    class="select-base text-xs" style="width:auto">
                                     @foreach($statuses as $status)
                                         <option value="{{ $status->value }}" @selected($lead->status === $status)>
                                             {{ $status->label() }}

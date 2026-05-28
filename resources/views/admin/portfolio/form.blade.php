@@ -45,7 +45,7 @@
 
                     <div>
                         <label class="block label-mono mb-2">Service *</label>
-                        <select name="service_type" class="select-dark">
+                        <select name="service_type" class="select-base">
                             <option value="">Choisir...</option>
                             @foreach($services as $service)
                                 <option value="{{ $service->value }}"
@@ -91,14 +91,23 @@
                         <p class="text-xs mt-1" style="color:var(--gris-mid)">Vide = brouillon</p>
                     </div>
 
-                    <div class="flex items-center pt-5">
+                    <div class="flex flex-col gap-4 pt-5">
                         <label class="flex items-center gap-3 cursor-pointer">
                             <input type="checkbox" name="featured" value="1"
                                    @checked(old('featured', $item?->featured))
-                                   class="w-4 h-4" style="accent-color: var(--purple)">
+                                   class="w-4 h-4" style="accent-color: var(--carbone)">
                             <div>
                                 <span class="text-sm font-medium" style="color:var(--carbone)">Mise en avant</span>
                                 <p class="text-xs" style="color:var(--gris-mid)">Affiché en priorité sur la homepage</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" name="is_concept" value="1"
+                                   @checked(old('is_concept', $item?->is_concept))
+                                   class="w-4 h-4" style="accent-color: var(--carbone)">
+                            <div>
+                                <span class="text-sm font-medium" style="color:var(--carbone)">Projet concept</span>
+                                <p class="text-xs" style="color:var(--gris-mid)">Badge « Concept » — projet non commandé / étude visuelle</p>
                             </div>
                         </label>
                     </div>

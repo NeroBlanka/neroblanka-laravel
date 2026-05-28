@@ -23,6 +23,7 @@ class PortfolioItem extends Model
         'gallery',
         'tags',
         'featured',
+        'is_concept',
         'published_at',
     ];
 
@@ -33,6 +34,7 @@ class PortfolioItem extends Model
             'gallery' => 'array',
             'tags' => 'array',
             'featured' => 'boolean',
+            'is_concept' => 'boolean',
             'published_at' => 'date',
         ];
     }

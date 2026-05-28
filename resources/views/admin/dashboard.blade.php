@@ -76,7 +76,7 @@
                                         <form method="POST" action="{{ route('admin.assignments.store') }}" class="flex items-center gap-2">
                                             @csrf
                                             <input type="hidden" name="project_id" value="{{ $project->id }}" />
-                                            <select name="freelance_id" class="select-dark text-xs">
+                                            <select name="freelance_id" class="select-base text-xs">
                                                 <option value="">Choisir…</option>
                                                 @foreach($freelances as $f)
                                                     @if($f->is_available)

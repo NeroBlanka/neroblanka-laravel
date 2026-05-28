@@ -147,7 +147,7 @@
                         <p class="label-mono mb-4">Marquer no-fit</p>
                         <form method="POST" action="{{ route('admin.leads.no-fit', $lead) }}">
                             @csrf
-                            <select name="no_fit_reason" required class="select-dark w-full mb-3">
+                            <select name="no_fit_reason" required class="select-base w-full mb-3">
                                 <option value="">Raison...</option>
                                 @foreach(\App\Enums\NoFitReason::cases() as $reason)
                                     <option value="{{ $reason->value }}">{{ $reason->label() }}</option>

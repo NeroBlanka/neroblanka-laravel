@@ -99,6 +99,7 @@ class PortfolioController extends Controller
             'content'      => 'nullable|string',
             'tags'         => 'nullable|string|max:500',
             'featured'     => 'boolean',
+            'is_concept'   => 'boolean',
             'published_at' => 'nullable|date',
         ]);
 
@@ -108,6 +109,7 @@ class PortfolioController extends Controller
             : null;
 
         $data['featured'] = $request->boolean('featured');
+        $data['is_concept'] = $request->boolean('is_concept');
 
         return $data;
     }
