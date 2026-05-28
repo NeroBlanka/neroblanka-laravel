@@ -34,7 +34,7 @@
                 <h2 class="text-sm font-semibold" style="color: var(--carbone)">Projets</h2>
                 @if(($stats['leads_new'] ?? 0) > 0)
                     <a href="{{ route('admin.leads') }}" class="flex items-center gap-2 text-xs transition-opacity hover:opacity-70"
-                       style="color: #34d399">
+                       style="color: #15803d">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         {{ $stats['leads_new'] }} nouveau{{ $stats['leads_new'] > 1 ? 'x' : '' }} lead{{ $stats['leads_new'] > 1 ? 's' : '' }}
                     </a>
@@ -61,7 +61,7 @@
                         <tbody>
                             @foreach($projects as $project)
                                 @php $sv = $project->status instanceof \BackedEnum ? $project->status->value : (string) $project->status; @endphp
-                                <tr class="transition-colors hover:bg-white/[0.02]"
+                                <tr class="transition-colors hover:bg-black/[0.03]"
                                     style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                                     <td class="px-6 py-4 font-medium" style="color: var(--carbone)">{{ $project->title }}</td>
                                     <td class="px-6 py-4">

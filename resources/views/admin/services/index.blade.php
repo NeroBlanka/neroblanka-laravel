@@ -14,7 +14,7 @@
         </div>
 
         @if(session('success'))
-            <div class="mb-6 px-5 py-3 rounded-xl text-sm" style="background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); color: #34d399">
+            <div class="mb-6 px-5 py-3 rounded-xl text-sm" style="background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); color: #15803d">
                 {{ session('success') }}
             </div>
         @endif

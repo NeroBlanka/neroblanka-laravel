@@ -25,7 +25,7 @@
                                 <p class="font-medium" style="color: var(--carbone)">{{ $freelance->full_name }}</p>
                                 <span class="inline-flex items-center text-xs px-2.5 py-1 rounded-lg font-mono uppercase tracking-wider"
                                       style="{{ $freelance->is_available
-                                        ? 'color:#6ee7b7; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.3)'
+                                        ? 'color: #15803d; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.3)'
                                         : 'color:var(--gris-mid); background:rgba(122,120,117,0.06); border:1px solid rgba(122,120,117,0.2)' }}">
                                     {{ $freelance->is_available ? 'Disponible' : 'Indisponible' }}
                                 </span>

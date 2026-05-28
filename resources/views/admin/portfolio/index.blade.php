@@ -31,7 +31,7 @@
                         </thead>
                         <tbody>
                             @foreach($items as $item)
-                                <tr class="transition-colors hover:bg-white/[0.025]"
+                                <tr class="transition-colors hover:bg-black/[0.03]"
                                     style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                                     <td class="px-5 py-3.5">
                                         <p class="font-medium" style="color: var(--carbone)">{{ $item->title }}</p>
@@ -48,12 +48,12 @@
                                     <td class="px-5 py-3.5">
                                         @if($item->published_at && $item->published_at <= today())
                                             <span class="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-lg"
-                                                  style="color:#6ee7b7; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.25)">
+                                                  style="color: #15803d; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.25)">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Publié
                                             </span>
                                         @elseif($item->published_at)
                                             <span class="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-lg"
-                                                  style="color:#60a5fa; background:rgba(96,165,250,0.08); border:1px solid rgba(96,165,250,0.25)">
+                                                  style="color: #1d4ed8; background:rgba(96,165,250,0.08); border:1px solid rgba(96,165,250,0.25)">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Planifié
                                             </span>
                                         @else
@@ -84,7 +84,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-xs transition-opacity hover:opacity-60 cursor-pointer"
-                                                        style="color: #fca5a5">✕</button>
+                                                        style="color: #b91c1c">✕</button>
                                             </form>
                                         </div>
                                     </td>

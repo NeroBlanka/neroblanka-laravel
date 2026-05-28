@@ -1,8 +1,8 @@
 <div>
     {{-- Filtres --}}
     <div class="flex flex-wrap items-center gap-3 mb-6">
-        <label class="flex items-center gap-2 text-sm cursor-pointer" style="color: #6ee7b7">
-            <input type="checkbox" wire:model.live="onlyHot" style="accent-color: #6ee7b7">
+        <label class="flex items-center gap-2 text-sm cursor-pointer" style="color: #15803d">
+            <input type="checkbox" wire:model.live="onlyHot" style="accent-color: #15803d">
             <span class="font-medium">Hot leads (≥ 80)</span>
         </label>
 
@@ -53,7 +53,7 @@
                 </thead>
                 <tbody>
                     @forelse($leads as $lead)
-                        <tr class="transition-colors hover:bg-white/[0.025]"
+                        <tr class="transition-colors hover:bg-black/[0.03]"
                             style="border-bottom: 1px solid rgba(5,5,5,0.07)">
                             <td class="px-5 py-3.5">
                                 <div class="font-medium" style="color: var(--carbone)">{{ $lead->full_name }}</div>

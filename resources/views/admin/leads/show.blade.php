@@ -4,7 +4,7 @@
     <div class="max-w-4xl mx-auto px-6 py-10">
 
         @if(session('success'))
-            <div class="mb-6 text-sm px-4 py-3 rounded-xl" style="color: #6ee7b7; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
+            <div class="mb-6 text-sm px-4 py-3 rounded-xl" style="color: #15803d; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
                 {{ session('success') }}
             </div>
         @endif
@@ -135,7 +135,7 @@
                         @if($lead->no_fit_reason)
                             <div>
                                 <dt class="label-mono mb-0.5">Raison no-fit</dt>
-                                <dd style="color: #fca5a5">{{ $lead->no_fit_reason->label() }}</dd>
+                                <dd style="color: #b91c1c">{{ $lead->no_fit_reason->label() }}</dd>
                             </div>
                         @endif
                         <div><dt class="label-mono mb-0.5">Reçu</dt><dd style="color: var(--gris)">{{ $lead->created_at->format('d/m/Y à H:i') }}</dd></div>
@@ -156,7 +156,7 @@
                             <input type="text" name="note" placeholder="Note optionnelle"
                                    class="input-base w-full mb-3" maxlength="500">
                             <button type="submit" class="w-full text-sm py-2 rounded-xl transition-opacity hover:opacity-80 text-center"
-                                    style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #fca5a5">
+                                    style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #b91c1c">
                                 Confirmer no-fit
                             </button>
                         </form>

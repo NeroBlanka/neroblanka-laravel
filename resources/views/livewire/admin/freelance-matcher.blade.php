@@ -1,6 +1,6 @@
 <div>
     @if($success)
-        <div class="mb-4 text-sm px-4 py-3 rounded-xl" style="color: #6ee7b7; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
+        <div class="mb-4 text-sm px-4 py-3 rounded-xl" style="color: #15803d; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
             {{ $message }}
         </div>
     @endif
@@ -26,15 +26,15 @@
                         $bd = $item['breakdown'];
                         $profile = $freelance->freelanceProfile;
                     @endphp
-                    <div class="px-5 py-4 flex items-start gap-4 transition-colors hover:bg-white/[0.02] {{ !$freelance->is_available ? 'opacity-50' : '' }}"
+                    <div class="px-5 py-4 flex items-start gap-4 transition-colors hover:bg-black/[0.03] {{ !$freelance->is_available ? 'opacity-50' : '' }}"
                          style="border-bottom: 1px solid rgba(5,5,5,0.07)">
 
                         {{-- Score badge --}}
                         <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold"
                              style="{{ $score >= 70
-                                 ? 'background: rgba(52,211,153,0.12); color: #6ee7b7; border: 1px solid rgba(52,211,153,0.25)'
+                                 ? 'background: rgba(52,211,153,0.12); color: #15803d; border: 1px solid rgba(52,211,153,0.25)'
                                  : ($score >= 40
-                                     ? 'background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25)'
+                                     ? 'background: rgba(251,191,36,0.12); color: #c87f0a; border: 1px solid rgba(251,191,36,0.25)'
                                      : 'background: rgba(5,5,5,0.07); color: var(--gris); border: 1px solid rgba(5,5,5,0.10)') }}">
                             {{ $score }}
                         </div>
@@ -50,7 +50,7 @@
                                     </span>
                                 @else
                                     <span class="text-xs px-2 py-0.5 rounded-lg"
-                                          style="color: #6ee7b7; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
+                                          style="color: #15803d; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
                                         Disponible
                                     </span>
                                 @endif

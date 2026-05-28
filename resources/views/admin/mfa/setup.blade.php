@@ -16,7 +16,7 @@
         </div>
 
         @if(session('success'))
-            <div class="mb-6 text-sm px-4 py-3 rounded-xl" style="color: #6ee7b7; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
+            <div class="mb-6 text-sm px-4 py-3 rounded-xl" style="color: #15803d; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25)">
                 {{ session('success') }}
             </div>
         @endif
@@ -62,7 +62,7 @@
 
         @if(auth()->user()->totp_enabled)
             <div class="card p-6" style="border-color: rgba(248,113,113,0.2)">
-                <p class="label-mono mb-4" style="color: #fca5a5">Désactiver le MFA</p>
+                <p class="label-mono mb-4" style="color: #b91c1c">Désactiver le MFA</p>
                 <form method="POST" action="{{ route('admin.mfa.disable') }}">
                     @csrf
                     <div class="flex gap-3">
@@ -71,7 +71,7 @@
                                placeholder="000000">
                         <button type="submit"
                                 class="btn-secondary whitespace-nowrap text-sm"
-                                style="color: #fca5a5; border-color: rgba(248,113,113,0.3)">
+                                style="color: #b91c1c; border-color: rgba(248,113,113,0.3)">
                             Désactiver
                         </button>
                     </div>
