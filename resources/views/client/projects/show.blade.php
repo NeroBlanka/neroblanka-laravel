@@ -72,7 +72,14 @@
                                 </div>
                             </div>
 
-                            @if($statusValue === 'submitted')
+                            @if($deliverable->status === 'revision_requested' && filled($deliverable->revision_notes))
+                                <div class="mt-3 rounded-xl px-4 py-3" style="background: rgba(234,88,12,0.05); border: 1px solid rgba(234,88,12,0.2)">
+                                    <p class="text-[10px] uppercase tracking-[0.14em] font-medium mb-1" style="color: #9a3412">Révision demandée</p>
+                                    <p class="text-sm leading-relaxed" style="color: var(--gris-texte)">{{ $deliverable->revision_notes }}</p>
+                                </div>
+                            @endif
+
+                            @if($deliverable->status === 'submitted')
                                 <div class="mt-5 pt-4 flex items-start gap-3" style="border-top: 1px solid rgba(5,5,5,0.07)">
                                     <form method="POST" action="{{ route('client.deliverables.approve', $deliverable->id) }}">
                                         @csrf
@@ -81,7 +88,7 @@
                                     <form method="POST" action="{{ route('client.deliverables.revision', $deliverable->id) }}" class="flex-1">
                                         @csrf
                                         <div class="flex gap-2">
-                                            <textarea name="revision_notes" rows="2" class="input-base text-xs resize-none flex-1"
+                                            <textarea name="revision_notes" rows="2" required class="input-base text-xs resize-none flex-1"
                                                       placeholder="Décrivez les modifications souhaitées…"></textarea>
                                             <button type="submit" class="btn-secondary text-xs px-4 py-2 self-end whitespace-nowrap">Demander révision</button>
                                         </div>
