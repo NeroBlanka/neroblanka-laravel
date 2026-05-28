@@ -14,9 +14,10 @@ class ContentSecurityPolicy
 
         $directives = implode('; ', [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline'",       // Livewire + Alpine.js inline
-            "style-src 'self' 'unsafe-inline' https://api.fontshare.com https://fonts.googleapis.com",
-            "font-src 'self' https://api.fontshare.com https://fonts.gstatic.com",
+            // Livewire 4 + Alpine.js v3 evaluate expressions via new Function() → requires 'unsafe-eval'
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+            "style-src 'self' 'unsafe-inline' https://api.fontshare.com https://fonts.googleapis.com https://fonts.bunny.net",
+            "font-src 'self' https://api.fontshare.com https://fonts.gstatic.com https://fonts.bunny.net",
             "img-src 'self' data: https:",
             "connect-src 'self'",
             "frame-ancestors 'none'",
