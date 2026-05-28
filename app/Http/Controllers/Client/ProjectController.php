@@ -26,8 +26,9 @@ class ProjectController extends Controller
         $deliverableUrls = $deliverables
             ->filter(fn($d) => $d->file_url)
             ->mapWithKeys(fn($d) => [
-                $d->id => Storage::disk('s3')->temporaryUrl($d->file_url, now()->addMinutes(30)),
-            ]);
+                $d->id => rescue(fn() => Storage::disk('s3')->temporaryUrl($d->file_url, now()->addMinutes(30)), null, false),
+            ])
+            ->filter();
 
         return view('client.projects.show', compact('project', 'deliverables', 'deliverableUrls'));
     }
