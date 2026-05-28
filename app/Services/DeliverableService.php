@@ -7,7 +7,6 @@ use App\Jobs\SendDeliverableRevision;
 use App\Jobs\SendDeliverableSubmitted;
 use App\Models\Assignment;
 use App\Models\Deliverable;
-use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +34,11 @@ class DeliverableService
                 return $deliverable;
             });
         } catch (\Throwable $e) {
-            Storage::disk('s3')->delete($path);
+            try {
+                Storage::disk('s3')->delete($path);
+            } catch (\Throwable) {
+                // S3 delete failed — original DB error takes priority
+            }
             throw $e;
         }
 
@@ -46,20 +49,26 @@ class DeliverableService
 
     public function approve(Deliverable $deliverable): Deliverable
     {
-        $locked = DB::transaction(function () use ($deliverable) {
+        $wasAlreadyApproved = false;
+
+        $locked = DB::transaction(function () use ($deliverable, &$wasAlreadyApproved) {
             $locked = Deliverable::lockForUpdate()->findOrFail($deliverable->id);
 
-            abort_if($locked->approved_at !== null, 422, 'Ce livrable est déjà approuvé.');
+            if ($locked->approved_at !== null) {
+                $wasAlreadyApproved = true;
+                return $locked;
+            }
 
             $locked->update(['approved_at' => now()]);
-
             $locked->assignment->update(['status' => 'completed']);
             $locked->assignment->project->update(['status' => 'approved']);
 
             return $locked;
         });
 
-        SendDeliverableApproved::dispatch($locked->assignment->freelance, $locked)->onQueue('emails')->afterCommit();
+        if (! $wasAlreadyApproved) {
+            SendDeliverableApproved::dispatch($locked->assignment->freelance, $locked)->onQueue('emails')->afterCommit();
+        }
 
         return $locked;
     }

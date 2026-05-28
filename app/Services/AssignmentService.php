@@ -14,13 +14,14 @@ class AssignmentService
     public function create(Project $project, User $freelance, ?string $internalNotes = null): Assignment
     {
         $assignment = DB::transaction(function () use ($project, $freelance, $internalNotes) {
-            $hasActive = Assignment::withoutGlobalScope(FreelanceOwnedScope::class)
+            $alreadyAssigned = Assignment::withoutGlobalScope(FreelanceOwnedScope::class)
                 ->where('project_id', $project->id)
+                ->where('freelance_id', $freelance->id)
                 ->where('status', 'active')
                 ->lockForUpdate()
                 ->exists();
 
-            abort_if($hasActive, 422, 'Ce projet a déjà un freelance actif assigné.');
+            abort_if($alreadyAssigned, 422, 'Ce freelance est déjà actif sur ce projet.');
 
             $assignment = Assignment::withoutGlobalScope(FreelanceOwnedScope::class)->create([
                 'project_id' => $project->id,

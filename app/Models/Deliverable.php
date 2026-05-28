@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DeliverableStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -11,6 +12,7 @@ class Deliverable extends Model
     public $timestamps = false;
     protected $keyType = 'string';
     public $incrementing = false;
+    protected $appends = ['status'];
 
     protected $fillable = [
         'assignment_id',
@@ -40,12 +42,15 @@ class Deliverable extends Model
     public function getStatusAttribute(): string
     {
         if ($this->approved_at !== null) {
-            return 'approved';
+            return DeliverableStatus::APPROVED->value;
         }
-        if ($this->revision_notes !== null) {
-            return 'revision';
+        if (filled($this->revision_notes)) {
+            return DeliverableStatus::REVISION_REQUESTED->value;
         }
-        return 'submitted';
+        if ($this->submitted_at !== null) {
+            return DeliverableStatus::SUBMITTED->value;
+        }
+        return DeliverableStatus::DRAFT->value;
     }
 
     public function assignment(): BelongsTo

@@ -85,14 +85,13 @@ class ProjectAdminTest extends TestCase
             'revision_notes' => 'Please fix X',
         ]);
 
-        $this->assertSame('revision', $deliverable->status);
+        $this->assertSame('revision_requested', $deliverable->status);
     }
 
-    public function test_assignment_service_blocks_duplicate_active_assignment(): void
+    public function test_assignment_service_blocks_same_freelance_twice_on_same_project(): void
     {
         $client = $this->makeClient();
-        $freelance1 = $this->makeFreelance();
-        $freelance2 = $this->makeFreelance();
+        $freelance = $this->makeFreelance();
 
         $project = Project::withoutGlobalScope(ClientOwnedScope::class)->create([
             'client_id' => $client->id,
@@ -102,10 +101,34 @@ class ProjectAdminTest extends TestCase
         ]);
 
         $service = app(AssignmentService::class);
-        $service->create($project, $freelance1);
+        $service->create($project, $freelance);
 
         $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $service->create($project, $freelance);
+    }
+
+    public function test_assignment_service_allows_different_freelances_on_same_project(): void
+    {
+        $client = $this->makeClient();
+        $freelance1 = $this->makeFreelance();
+        $freelance2 = $this->makeFreelance();
+
+        $project = Project::withoutGlobalScope(ClientOwnedScope::class)->create([
+            'client_id' => $client->id,
+            'title' => 'Test multi-role',
+            'description' => 'desc',
+            'status' => 'draft',
+        ]);
+
+        $service = app(AssignmentService::class);
+        $service->create($project, $freelance1);
         $service->create($project, $freelance2);
+
+        $count = Assignment::withoutGlobalScope(FreelanceOwnedScope::class)
+            ->where('project_id', $project->id)
+            ->count();
+
+        $this->assertSame(2, $count);
     }
 
     public function test_admin_approve_deliverable_is_idempotency_safe(): void
@@ -134,8 +157,11 @@ class ProjectAdminTest extends TestCase
             ->post(route('admin.deliverables.approve', $deliverable))
             ->assertRedirect();
 
+        // Double-click → no-op, pas d'erreur ni de re-dispatch
         $this->actingAs($admin)
             ->post(route('admin.deliverables.approve', $deliverable))
-            ->assertStatus(422);
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('deliverables', ['id' => $deliverable->id]);
     }
 }
