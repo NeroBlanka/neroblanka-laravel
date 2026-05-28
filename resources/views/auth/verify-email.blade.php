@@ -1,30 +1,30 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    <div class="mb-6">
+        <p class="label-mono mb-3">Vérification</p>
+        <h1 class="font-clash text-2xl font-semibold text-carbone mb-3">Vérifiez votre email</h1>
+        <p class="text-sm leading-relaxed text-gris">
+            Merci de votre inscription. Avant de commencer, veuillez vérifier votre adresse email en cliquant sur le lien que nous venons de vous envoyer. Vous ne l'avez pas reçu ? Nous vous en renverrons un volontiers.
+        </p>
     </div>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+        <div class="mb-5 text-sm px-4 py-3 rounded-xl" style="color: #15803d; background: rgba(31,157,85,0.08); border: 1px solid rgba(31,157,85,0.25)">
+            Un nouveau lien de vérification a été envoyé à votre adresse email.
         </div>
     @endif
 
-    <div class="mt-4 flex items-center justify-between">
+    <div class="flex items-center justify-between gap-4">
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
-
-            <div>
-                <x-primary-button>
-                    {{ __('Resend Verification Email') }}
-                </x-primary-button>
-            </div>
+            <button type="submit" class="btn-primary px-5 py-3">
+                Renvoyer l'email
+            </button>
         </form>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-
-            <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {{ __('Log Out') }}
+            <button type="submit" class="btn-ghost text-sm">
+                Se déconnecter
             </button>
         </form>
     </div>
