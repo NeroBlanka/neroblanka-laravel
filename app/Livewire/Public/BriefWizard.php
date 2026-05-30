@@ -62,9 +62,12 @@ class BriefWizard extends Component
     // Step 5 — Questions spécifiques au service (dynamique)
     public array $service_answers = [];
 
-    // Step 6 — Fichiers
+    // Step 6 — Fichiers + lien de transfert externe (pour > 400 Mo)
     #[Rule('nullable|array|max:5')]
     public array $uploaded_files = [];
+
+    #[Rule('nullable|url|max:500')]
+    public string $transfer_url = '';
 
     // Step 7 — Confirmation
     public bool $terms_accepted = false;
@@ -132,6 +135,10 @@ class BriefWizard extends Component
             ['competitors' => $this->competitors],
             $this->service_answers,
         );
+
+        if ($this->transfer_url !== '') {
+            $answers['transfer_url'] = $this->transfer_url;
+        }
 
         $files = collect($this->uploaded_files)
             ->filter(fn($f) => $f instanceof UploadedFile)
@@ -204,7 +211,10 @@ class BriefWizard extends Component
                 'competitors'         => 'nullable|string|max:500',
             ],
             5 => $this->serviceSpecificRules(),
-            6 => ['uploaded_files.*' => 'nullable|file|mimes:pdf,png,jpg,jpeg|max:10240'],
+            6 => [
+                'uploaded_files.*' => 'nullable|file|mimes:pdf,png,jpg,jpeg,zip,rar,mp4,mov,webm,mkv|max:409600', // 400 Mo
+                'transfer_url'     => 'nullable|url|max:500',
+            ],
         ];
 
         if (isset($rulesByStep[$this->step])) {

@@ -162,36 +162,56 @@
                     @endforeach
                 </div>
 
-            {{-- STEP 6 — Fichiers --}}
+            {{-- STEP 6 — Fichiers + lien transfert --}}
             @elseif($step === 6)
-                <div>
-                    <p class="text-sm mb-6 text-gris">Formats acceptés: PDF, PNG, JPEG — 10 Mo max par fichier, 5 fichiers max.</p>
-                    <label class="flex flex-col items-center justify-center w-full h-40 rounded-2xl cursor-pointer transition-all"
-                        style="border: 1px dashed var(--gris-bord); background: var(--perle)"
-                        x-data="{ dragging: false }"
-                        @dragover.prevent="dragging = true"
-                        @dragleave.prevent="dragging = false"
-                        @drop.prevent="dragging = false"
-                        :style="dragging ? 'border-color: var(--carbone); background: var(--gris-section)' : ''">
-                        <input type="file" wire:model="uploaded_files" multiple accept=".pdf,.png,.jpg,.jpeg" class="sr-only">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mb-2" style="color: var(--gris-texte)"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        <span class="text-sm text-gris">
-                            Glissez vos fichiers ici ou <span class="text-carbone underline">parcourez</span>
-                        </span>
-                    </label>
-                    @error('uploaded_files.*')
-                        <p class="mt-3 text-sm" style="color: var(--status-danger)">{{ $message }}</p>
-                    @enderror
-                    @if(count($uploaded_files) > 0)
-                        <ul class="mt-4 space-y-2">
-                            @foreach($uploaded_files as $file)
-                                <li class="flex items-center gap-3 text-sm text-gris">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                    {{ is_object($file) ? $file->getClientOriginalName() : $file }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+                <div class="space-y-8">
+                    <div>
+                        <p class="text-sm mb-6 text-gris">
+                            Formats : PDF, PNG, JPEG, ZIP, RAR, MP4, MOV, WEBM, MKV — <span class="text-carbone font-medium">400 Mo max par fichier</span>, 5 fichiers max.
+                        </p>
+                        <label class="flex flex-col items-center justify-center w-full h-40 rounded-2xl cursor-pointer transition-all"
+                            style="border: 1px dashed var(--gris-bord); background: var(--perle)"
+                            x-data="{ dragging: false }"
+                            @dragover.prevent="dragging = true"
+                            @dragleave.prevent="dragging = false"
+                            @drop.prevent="dragging = false"
+                            :style="dragging ? 'border-color: var(--carbone); background: var(--gris-section)' : ''">
+                            <input type="file" wire:model="uploaded_files" multiple
+                                   accept=".pdf,.png,.jpg,.jpeg,.zip,.rar,.mp4,.mov,.webm,.mkv"
+                                   class="sr-only">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mb-2" style="color: var(--gris-texte)"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span class="text-sm text-gris">
+                                Glissez vos fichiers ici ou <span class="text-carbone underline">parcourez</span>
+                            </span>
+                            <span wire:loading wire:target="uploaded_files" class="mt-2 text-xs text-gris-soft">Envoi en cours…</span>
+                        </label>
+                        @error('uploaded_files.*')
+                            <p class="mt-3 text-sm" style="color: var(--status-danger)">{{ $message }}</p>
+                        @enderror
+                        @if(count($uploaded_files) > 0)
+                            <ul class="mt-4 space-y-2">
+                                @foreach($uploaded_files as $file)
+                                    <li class="flex items-center gap-3 text-sm text-gris">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        {{ is_object($file) ? $file->getClientOriginalName() : $file }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+
+                    <div class="pt-6" style="border-top: 1px solid var(--gris-bord-soft)">
+                        <label for="transfer_url" class="block text-sm font-medium text-carbone mb-2">
+                            Ou un lien de transfert <span class="text-gris-soft font-normal">(Swisstransfer, WeTransfer, Drive…)</span>
+                        </label>
+                        <p class="text-xs text-gris mb-3">Pour les fichiers volumineux dépassant 400 Mo — collez ici le lien de partage.</p>
+                        <input id="transfer_url" type="url" wire:model.blur="transfer_url"
+                               placeholder="https://swisstransfer.com/d/…"
+                               class="input-base">
+                        @error('transfer_url')
+                            <p class="mt-2 text-sm" style="color: var(--status-danger)">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
             {{-- STEP 7 — Confirmation --}}
@@ -214,6 +234,18 @@
                             <span class="text-gris">Délai</span>
                             <span class="text-carbone font-medium">{{ $deadline_range }}</span>
                         </div>
+                        @if(count($uploaded_files) > 0)
+                            <div class="flex justify-between pt-3" style="border-top: 1px solid var(--gris-bord-soft)">
+                                <span class="text-gris">Fichiers</span>
+                                <span class="text-carbone font-medium">{{ count($uploaded_files) }} fichier{{ count($uploaded_files) > 1 ? 's' : '' }}</span>
+                            </div>
+                        @endif
+                        @if($transfer_url !== '')
+                            <div class="flex justify-between pt-3 gap-4" style="border-top: 1px solid var(--gris-bord-soft)">
+                                <span class="text-gris shrink-0">Lien transfert</span>
+                                <span class="text-carbone font-medium truncate max-w-[60%]" title="{{ $transfer_url }}">{{ $transfer_url }}</span>
+                            </div>
+                        @endif
                     </div>
 
                     <label class="flex items-start gap-3 cursor-pointer">

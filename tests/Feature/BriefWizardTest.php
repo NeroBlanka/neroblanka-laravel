@@ -68,6 +68,56 @@ class BriefWizardTest extends TestCase
             ->assertSet('step', 4);
     }
 
+    public function test_step_6_accepts_valid_transfer_url(): void
+    {
+        Livewire::test(BriefWizard::class)
+            ->set('service_type', 'branding')
+            ->set('step', 6)
+            ->set('transfer_url', 'https://swisstransfer.com/d/abc123')
+            ->call('advance')
+            ->assertHasNoErrors()
+            ->assertSet('step', 7);
+    }
+
+    public function test_step_6_rejects_invalid_transfer_url(): void
+    {
+        Livewire::test(BriefWizard::class)
+            ->set('service_type', 'branding')
+            ->set('step', 6)
+            ->set('transfer_url', 'pas-une-url')
+            ->call('advance')
+            ->assertHasErrors(['transfer_url'])
+            ->assertSet('step', 6);
+    }
+
+    public function test_step_6_can_be_skipped_without_files_or_link(): void
+    {
+        Livewire::test(BriefWizard::class)
+            ->set('service_type', 'branding')
+            ->set('step', 6)
+            ->call('advance')
+            ->assertHasNoErrors()
+            ->assertSet('step', 7);
+    }
+
+    public function test_transfer_url_lands_in_brief_answers(): void
+    {
+        Livewire::test(BriefWizard::class)
+            ->set('service_type', 'branding')
+            ->set('full_name', 'Jean Dupont')
+            ->set('email', 'jean@example.com')
+            ->set('budget_range', '2 000$ – 10 000$')
+            ->set('deadline_range', '1 – 3 mois')
+            ->set('project_description', 'Description longue suffisante pour le brief, plus de 20 caractères.')
+            ->set('transfer_url', 'https://wetransfer.com/downloads/abcdef')
+            ->set('terms_accepted', true)
+            ->set('step', 7)
+            ->call('advance');
+
+        $lead = Lead::where('email', 'jean@example.com')->firstOrFail();
+        $this->assertSame('https://wetransfer.com/downloads/abcdef', $lead->brief?->answers['transfer_url'] ?? null);
+    }
+
     public function test_full_wizard_submission_creates_lead(): void
     {
         Livewire::test(BriefWizard::class)
