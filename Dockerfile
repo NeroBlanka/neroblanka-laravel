@@ -25,8 +25,11 @@ COPY . .
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# PHP dependencies — --no-scripts évite le catch-22 package:discover :
+# le hook lit routes/web.php qui référence BriefWizard::class, dont le binding
+# Livewire n'est pas encore registré (c'est justement ce que package:discover
+# fait). On régénère packages.php au boot (start.sh) sans charger les routes.
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # JS build
 RUN rm -f package-lock.json && npm install && npm run build

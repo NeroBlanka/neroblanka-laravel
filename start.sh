@@ -28,6 +28,17 @@ if [ "$WARN_COUNT" -gt 0 ]; then
   echo "⚠️  $WARN_COUNT variable(s) optionnelle(s) manquante(s). Boot continue."
 fi
 
+# ── Build packages.php SANS booter les routes ──────────────────────────────
+# composer install est lancé avec --no-scripts dans le Dockerfile pour éviter
+# le catch-22 package:discover ↔ routes Livewire. On construit ici le manifest
+# manuellement via PackageManifest::build() qui scanne vendor/ sans charger
+# routes/web.php (qui réfère BriefWizard::class, binding registré par Livewire).
+echo "🟢 Building package manifest (sans charger les routes)…"
+if ! php -r 'require "vendor/autoload.php"; (new Illuminate\Foundation\PackageManifest(new Illuminate\Filesystem\Filesystem(), getcwd(), getcwd() . "/bootstrap/cache/packages.php"))->build();'; then
+  echo "❌ FATAL: package manifest build a échoué."
+  exit 1
+fi
+
 # ── Validation Laravel : si la config charge pas, on le voit AVANT le serveur ─
 echo "🟢 Caching config + routes (canary du boot Laravel)…"
 if ! php artisan config:cache 2>&1; then
