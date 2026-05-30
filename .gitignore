@@ -18,6 +18,8 @@
 /public/fonts-manifest.dev.json
 /public/hot
 /public/storage
+# Note: ne PAS ajouter "/Public/" ni "Public/" — sur macOS (FS case-insensitive)
+# ça matche tout /public/ et ignore silencieusement tous les assets statiques.
 /storage/*.key
 /storage/pail
 /vendor

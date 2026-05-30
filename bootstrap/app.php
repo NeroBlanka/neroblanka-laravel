@@ -30,5 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*', headers: \Illuminate\Http\Request::HEADER_X_FORWARDED_FOR | \Illuminate\Http\Request::HEADER_X_FORWARDED_HOST | \Illuminate\Http\Request::HEADER_X_FORWARDED_PORT | \Illuminate\Http\Request::HEADER_X_FORWARDED_PROTO | \Illuminate\Http\Request::HEADER_X_FORWARDED_PREFIX);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Sentry — actif uniquement si SENTRY_LARAVEL_DSN est défini en env.
+        // Sans DSN, l'intégration est no-op (les tests et le local ne paient rien).
+        \Sentry\Laravel\Integration::handles($exceptions);
     })->create();
