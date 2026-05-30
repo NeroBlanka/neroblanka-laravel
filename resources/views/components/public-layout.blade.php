@@ -1,4 +1,4 @@
-@props(['title' => null, 'description' => null])
+@props(['title' => null, 'description' => null, 'ogImage' => null, 'canonical' => null])
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,15 +8,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Neroblanka — Studio créatif premium' }}</title>
     <meta name="description" content="{{ $description ?? 'Studio de branding, 3D, motion design, web et systèmes IA. Du contraste naît la clarté.' }}">
+    <link rel="canonical" href="{{ $canonical ?? url()->current() }}">
 
     {{-- Open Graph --}}
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ $title ?? 'Neroblanka — Studio créatif premium' }}">
     <meta property="og:description" content="{{ $description ?? 'Studio de branding, 3D, motion design, web et systèmes IA. Du contraste naît la clarté.' }}">
     <meta property="og:site_name" content="Neroblanka">
+    <meta property="og:url" content="{{ $canonical ?? url()->current() }}">
+    <meta property="og:image" content="{{ $ogImage ?? asset('og-image.png') }}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $title ?? 'Neroblanka — Studio créatif premium' }}">
     <meta name="twitter:description" content="{{ $description ?? 'Studio de branding, 3D, motion design, web et systèmes IA. Du contraste naît la clarté.' }}">
+    <meta name="twitter:image" content="{{ $ogImage ?? asset('og-image.png') }}">
 
     <link rel="preconnect" href="https://api.fontshare.com">
     <link rel="preconnect" href="https://fonts.bunny.net">

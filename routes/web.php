@@ -32,6 +32,30 @@ Route::get('/brief', BriefWizard::class)
     ->name('brief');
 Route::get('/brief/merci', fn() => view('public.brief-merci'))->name('brief.merci');
 
+// Sitemap XML — généré dynamiquement (services résolvables + portfolio publié)
+Route::get('/sitemap.xml', function () {
+    $urls = [url('/'), url('/work'), url('/services'), url('/brief')];
+
+    foreach (ServiceType::cases() as $service) {
+        if (ServiceType::fromSlug($service->slug()) !== null) {
+            $urls[] = url('/services/' . $service->slug());
+        }
+    }
+
+    foreach (PortfolioItem::published()->pluck('slug') as $slug) {
+        $urls[] = url('/work/' . $slug);
+    }
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    foreach ($urls as $loc) {
+        $xml .= '  <url><loc>' . e($loc) . '</loc></url>' . "\n";
+    }
+    $xml .= '</urlset>';
+
+    return response($xml, 200, ['Content-Type' => 'application/xml']);
+})->name('sitemap');
+
 Route::get('/dashboard', fn() => redirect(match(auth()->user()->role) {
     'admin' => '/admin',
     'freelance' => '/freelance',
