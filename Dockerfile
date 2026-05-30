@@ -19,15 +19,17 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
+# Storage + cache dirs AVANT composer install : package:discover post-autoload
+# écrit dans bootstrap/cache/packages.php et fail si le dossier n'est pas writable.
+# Doit donc précéder `composer install`, pas le suivre.
+RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
 # PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # JS build
 RUN rm -f package-lock.json && npm install && npm run build
-
-# Storage + cache dirs with correct permissions
-RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
