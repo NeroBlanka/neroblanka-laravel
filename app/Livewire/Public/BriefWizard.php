@@ -179,15 +179,37 @@ class BriefWizard extends Component
 
     private function validateCurrentStep(): void
     {
-        match($this->step) {
-            1 => $this->validateOnly('service_type'),
-            2 => $this->validateOnly(['full_name', 'email', 'phone', 'company', 'client_type']),
-            3 => $this->validateOnly(['budget_range', 'deadline_range']),
-            4 => $this->validateOnly(['project_description', 'inspirations', 'competitors']),
-            5 => $this->validate($this->serviceSpecificRules()),
-            6 => $this->validate(['uploaded_files.*' => 'nullable|file|mimes:pdf,png,jpg,jpeg|max:10240']),
-            default => null,
-        };
+        // Livewire 3+ : validateOnly() prend un seul champ string. Pour valider plusieurs
+        // champs d'un coup ET collecter toutes les erreurs en une passe (meilleure UX
+        // qu'un validateOnly en boucle qui s'arrête au 1er échec), on utilise validate()
+        // avec le sous-ensemble de rules de l'étape courante.
+        $rulesByStep = [
+            1 => [
+                'service_type' => 'required|in:branding,event_stand_3d,product_rendering_3d,motion_design,social_campaign,website,ai_image_video,automation,mixed_project',
+            ],
+            2 => [
+                'full_name'   => 'required|string|min:2|max:100',
+                'email'       => 'required|email|max:255',
+                'phone'       => 'nullable|string|max:30',
+                'company'     => 'nullable|string|max:100',
+                'client_type' => 'nullable|in:startup,pme,event,export,diaspora,autre',
+            ],
+            3 => [
+                'budget_range'   => 'required|string',
+                'deadline_range' => 'required|string',
+            ],
+            4 => [
+                'project_description' => 'required|string|min:20|max:2000',
+                'inspirations'        => 'nullable|string|max:1000',
+                'competitors'         => 'nullable|string|max:500',
+            ],
+            5 => $this->serviceSpecificRules(),
+            6 => ['uploaded_files.*' => 'nullable|file|mimes:pdf,png,jpg,jpeg|max:10240'],
+        ];
+
+        if (isset($rulesByStep[$this->step])) {
+            $this->validate($rulesByStep[$this->step]);
+        }
     }
 
     private function getServiceQuestions(): array
