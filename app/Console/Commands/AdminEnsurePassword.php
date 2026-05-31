@@ -33,13 +33,27 @@ class AdminEnsurePassword extends Command
             return self::SUCCESS;
         }
 
-        $admin = User::withoutGlobalScopes()
-            ->where('email', $email)
-            ->where('role', 'admin')
-            ->first();
+        // On vérifie d'abord s'il existe N'IMPORTE QUEL user avec ADMIN_EMAIL
+        // (pour éviter UNIQUE constraint si un client a usurpé l'email).
+        $anyUserWithEmail = User::withoutGlobalScopes()->where('email', $email)->first();
 
+        if ($anyUserWithEmail && $anyUserWithEmail->role !== 'admin') {
+            $this->warn("User à {$email} existe mais role={$anyUserWithEmail->role} (pas admin) — skip pour éviter conflit.");
+            return self::SUCCESS;
+        }
+
+        $admin = $anyUserWithEmail; // null ou role=admin
+
+        // Cas 1 : admin absent → CREATE avec ADMIN_PASSWORD courant.
+        // DatabaseSeeder fait pareil, mais n'est jamais auto-run en prod.
         if (! $admin) {
-            $this->info("Aucun admin à {$email} en DB — skip (DatabaseSeeder s'en chargera).");
+            User::withoutGlobalScopes()->create([
+                'email'     => $email,
+                'full_name' => env('ADMIN_FULL_NAME', 'Nadir Allek'),
+                'password'  => Hash::make($password),
+                'role'      => 'admin',
+            ]);
+            $this->info("✅ Admin {$email} créé en DB avec ADMIN_PASSWORD env value.");
             return self::SUCCESS;
         }
 

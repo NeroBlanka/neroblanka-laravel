@@ -76,13 +76,19 @@ class AdminEnsurePasswordTest extends TestCase
             ->assertSuccessful();
     }
 
-    public function test_skip_when_admin_does_not_exist(): void
+    public function test_creates_admin_when_does_not_exist(): void
     {
-        $this->setEnv('nobody@neroblanka.com', 'NewStrongP@ssw0rd!');
+        $this->setEnv('newadmin@neroblanka.com', 'NewStrongP@ssw0rd!');
+
+        $this->assertDatabaseMissing('users', ['email' => 'newadmin@neroblanka.com']);
 
         $this->artisan('admin:ensure-password')
-            ->expectsOutputToContain('Aucun admin')
+            ->expectsOutputToContain('créé en DB')
             ->assertSuccessful();
+
+        $admin = User::withoutGlobalScopes()->where('email', 'newadmin@neroblanka.com')->firstOrFail();
+        $this->assertSame('admin', $admin->role);
+        $this->assertTrue(Hash::check('NewStrongP@ssw0rd!', $admin->password));
     }
 
     public function test_skip_when_user_with_email_exists_but_is_not_admin(): void
@@ -95,9 +101,9 @@ class AdminEnsurePasswordTest extends TestCase
             'password' => Hash::make('changeme_before_deploy'),
         ]);
 
-        // Le command cherche role=admin, donc pas de match → skip.
+        // Le command détecte le user non-admin, skip pour éviter UNIQUE conflict.
         $this->artisan('admin:ensure-password')
-            ->expectsOutputToContain('Aucun admin')
+            ->expectsOutputToContain('skip pour éviter conflit')
             ->assertSuccessful();
     }
 }
