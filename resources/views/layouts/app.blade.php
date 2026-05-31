@@ -87,6 +87,9 @@
         </div>
     </header>
 
+    {{-- Banner config prod manquante (admin uniquement) --}}
+    <x-admin-env-warnings />
+
     <main>{{ $slot }}</main>
 
     @livewireScripts
