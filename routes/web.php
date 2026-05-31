@@ -11,8 +11,12 @@ use App\Livewire\Public\BriefWizard;
 use App\Models\PortfolioItem;
 use Illuminate\Support\Facades\Route;
 
-// Health check
+// Health check minimaliste — utilisé par Railway pour le healthcheck
 Route::get('/up', fn() => response('', 204))->name('health');
+
+// Health check étendu — protégé par HEALTH_CHECK_TOKEN
+Route::get('/healthz/deep', [\App\Http\Controllers\HealthCheckController::class, 'deep'])
+    ->name('healthz.deep');
 
 // Site public
 Route::get('/', fn() => view('public.home'))->name('home');
