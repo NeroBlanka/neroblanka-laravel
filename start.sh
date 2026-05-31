@@ -66,6 +66,12 @@ for i in 1 2 3 4 5; do
   sleep 3
 done
 
+# ── Bootstrap admin password (idempotent) ───────────────────────────────────
+# Remplace 'changeme_before_deploy' par la valeur courante d'ADMIN_PASSWORD
+# si l'admin l'a encore. No-op sinon — un mdp légitime n'est jamais écrasé.
+echo "🟢 Ensuring admin password is not the default…"
+php artisan admin:ensure-password || echo "⚠️  admin:ensure-password a échoué (non-bloquant)"
+
 # ── Queue worker détaché et auto-redémarrant ────────────────────────────────
 # Un crash du worker ne doit JAMAIS tuer le container (sinon healthcheck flap).
 echo "🟢 Starting queue worker (detached, auto-restart on crash)…"
